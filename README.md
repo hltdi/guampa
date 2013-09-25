@@ -1,4 +1,4 @@
-gn-translation
-==============
+guampa
+======
 
 the collaborative translation website
