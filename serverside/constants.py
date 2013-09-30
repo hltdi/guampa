@@ -1,0 +1,1 @@
+THEDB = 'sqlite:///guampa.db'
