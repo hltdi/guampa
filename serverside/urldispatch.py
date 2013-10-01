@@ -9,6 +9,9 @@ from bottle import static_file
 import os
 import json
 
+## XXX: needs restructuring
+import db
+
 """
 This module handles all of the URL dispatching for guampa, mapping from
 URLs to the functions that will be called in response.
@@ -17,6 +20,15 @@ URLs to the functions that will be called in response.
 @route('/')
 def index():
     return static_file('index.html', root='app')
+
+@route('/documents')
+def documents():
+    docids = db.list_documents()
+    out = "<html><body><ul>\n"
+    for docid in docids:
+        out += ("<li>%d: foo</li>\n") % (docid,)
+    out += "</ul></body></html>"
+    return out
 
 @route('/partials/<fn>')
 def partials(fn):
