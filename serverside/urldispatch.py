@@ -9,7 +9,6 @@ from bottle import static_file
 import os
 import json
 
-## XXX: needs restructuring
 import db
 
 """
@@ -21,6 +20,7 @@ URLs to the functions that will be called in response.
 def index():
     return static_file('index.html', root='app')
 
+# XXX: just to demo; make sure to take this out later.
 @route('/documents')
 def documents():
     docids = db.list_documents()
