@@ -7,6 +7,10 @@ from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
 
+## NOTE: Please keep the database design wiki page up to date if you change
+## this.
+## https://github.com/hltdi/guampa/wiki/DatabaseLayout
+
 class User(Base):
     __tablename__ = 'users'
 
@@ -23,15 +27,6 @@ class User(Base):
     def __repr__(self):
        return ("<User('%s','%s', '%s')>"
                 % (self.name, self.fullname, self.password))
-
-"""
-things about Documents:
-    have a source language (and a target language??!)
-    have many sentences (which have an order)
-    have many tags
-    have a user who uploaded them
-    have a title
-"""
 
 class Document(Base):
     __tablename__ = 'documents'
