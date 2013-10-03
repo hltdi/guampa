@@ -1,6 +1,7 @@
 import sqlalchemy
 
 from sqlalchemy import Column, Integer, String
+from sqlalchemy import ForeignKey
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -64,8 +65,8 @@ class Translation(Base):
 
     id = Column(Integer, primary_key=True)
     text = Column(String)
-    docid = Column(Integer)
-    sentenceid = Column(Integer)
+    docid = Column(Integer, ForeignKey('documents.id'))
+    sentenceid = Column(Integer, ForeignKey('sentences.id'))
 
     def __init__(self, text, docid, sentenceid):
         self.text = text
