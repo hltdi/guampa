@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker
 import constants
 import model
 from model import Document
+from model import Sentence
 
 engine = create_engine(constants.THEDB, echo=True)
 Session = sessionmaker(bind=engine)
@@ -15,4 +16,12 @@ def list_documents():
     session = Session()
     for instance in session.query(Document).order_by(Document.id): 
         out.append(instance.id)
+    return out
+
+def sentences_for_document(docid):
+    """Returns a list of sentences for the given docid."""
+    out = []
+    session = Session()
+    for instance in session.query(Sentence).filter(Sentence.docid == docid).order_by(Sentence.id): 
+        out.append(instance)
     return out

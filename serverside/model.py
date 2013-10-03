@@ -58,3 +58,20 @@ class Sentence(Base):
 
     def __repr__(self):
        return ("<Sentence(%d, '%s')>" % (self.id, self.text))
+
+
+class Translation(Base):
+    __tablename__ = 'translations'
+
+    id = Column(Integer, primary_key=True)
+    text = Column(String)
+    docid = Column(Integer)
+    sentenceid = Column(Integer)
+
+    def __init__(self, text, docid, sentenceid):
+        self.text = text
+        self.docid = docid
+        self.sentenceid = sentenceid
+
+    def __repr__(self):
+       return ("<Translation(%d, '%s')>" % (self.id, self.text))

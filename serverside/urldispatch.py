@@ -30,6 +30,17 @@ def documents():
     out += "</ul></body></html>"
     return out
 
+# XXX: just to demo; make sure to take this out later.
+@route('/document/<docid>')
+def document(docid):
+    docid = int(docid)
+    sentences = db.sentences_for_document(docid)
+    out = "<html><body><ul>\n"
+    for sent in sentences:
+        out += ("<li>%d: %s</li>\n") % (sent.id, sent.text)
+    out += "</ul></body></html>"
+    return out
+
 @route('/partials/<fn>')
 def partials(fn):
     return static_file(fn, root='app/partials')
