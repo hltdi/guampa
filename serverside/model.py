@@ -59,7 +59,6 @@ class Sentence(Base):
     def __repr__(self):
        return ("<Sentence(%d, '%s')>" % (self.id, self.text))
 
-
 class Translation(Base):
     __tablename__ = 'translations'
 

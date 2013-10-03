@@ -35,10 +35,19 @@ def documents():
 def document(docid):
     docid = int(docid)
     sentences = db.sentences_for_document(docid)
-    out = "<html><body><ul>\n"
+    translations = db.translations_for_document(docid)
+    out = "<html><body>"
+    out += "<h1>sentences</h1>\n"
+    out += "<ul>\n"
     for sent in sentences:
         out += ("<li>%d: %s</li>\n") % (sent.id, sent.text)
-    out += "</ul></body></html>"
+    out += "</ul>"
+    out += "<h1>translations</h1>\n"
+    out += "<ul>\n"
+    for translation in translations:
+        out += ("<li>%d: %s</li>\n") % (translation.id, translation.text)
+    out += "</ul>"
+    out += "</body></html>"
     return out
 
 @route('/partials/<fn>')
