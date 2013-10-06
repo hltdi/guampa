@@ -9,9 +9,9 @@ from flask import Flask, request, session, url_for, redirect, render_template,\
                   abort, g, flash, _app_ctx_stack, send_from_directory
 from werkzeug import check_password_hash, generate_password_hash
 
-PER_PAGE = 30
-DEBUG = True
+import db
 
+DEBUG = True
 app = Flask(__name__)
 
 ## this file is in serverside, but we need one directory up.
@@ -42,6 +42,36 @@ def img(fn):
 @app.route('/lib/<fn>')
 def lib(fn):
     return send_from_directory(app.root_path + 'app/lib', fn)
+
+# XXX: just to demo; make sure to take this out later.
+@app.route('/documents')
+def documents():
+    docids = db.list_documents()
+    out = "<html><body><ul>\n"
+    for docid in docids:
+        out += ("<li>%d: foo</li>\n") % (docid,)
+    out += "</ul></body></html>"
+    return out
+
+# XXX: just to demo; make sure to take this out later.
+@app.route('/document/<docid>')
+def document(docid):
+    docid = int(docid)
+    sentences = db.sentences_for_document(docid)
+    translations = db.translations_for_document(docid)
+    out = "<html><body>"
+    out += "<h1>sentences</h1>\n"
+    out += "<ul>\n"
+    for sent in sentences:
+        out += ("<li>%d: %s</li>\n") % (sent.id, sent.text)
+    out += "</ul>"
+    out += "<h1>translations</h1>\n"
+    out += "<ul>\n"
+    for translation in translations:
+        out += ("<li>%d: %s</li>\n") % (translation.id, translation.text)
+    out += "</ul>"
+    out += "</body></html>"
+    return out
 
 if __name__ == '__main__':
     app.run()
