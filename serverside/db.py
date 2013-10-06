@@ -7,6 +7,7 @@ from model import Document
 from model import Sentence
 from model import Translation
 
+## XXX: move these into guampa
 engine = create_engine(constants.THEDB, echo=True)
 Session = sessionmaker(bind=engine)
 
