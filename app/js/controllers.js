@@ -2,12 +2,16 @@
 
 /* Controllers */
 
-function MenuCtrl($scope, $location) {
-    // XXX: i18n for these interface strings.
+var mod = angular.module('guampa.controllers', []);
+
+mod.controller(
+    'MenuCtrl',
+    ['$scope','$location',
+function ($scope, $location) {
+    // TODO(alexr): i18n for these interface strings.
 	$scope.menuList = [
 	   {id:0, url:'#/start', text:"Start", style:""},
 	   {id:1, url:'#/browse', text:"Browse", style:""},
-	   // {id:2, url:'#/catalog', text:"Catalogo", style:""},
 	   ];
 	var i;
 	for(i = 0; i < $scope.menuList.length; i++) {
@@ -23,7 +27,7 @@ function MenuCtrl($scope, $location) {
 		}
 		$scope.menuList[id].style = "active";
 	}
-}
+}]);
 
 function BrowseCtrl($scope, $http, $routeParams, AllDocuments) {
   $scope.$routeParams = $routeParams;
@@ -31,3 +35,12 @@ function BrowseCtrl($scope, $http, $routeParams, AllDocuments) {
 
   $scope.allDocuments = AllDocuments.get();
 }
+
+mod.controller(
+    'TranslateCtrl',
+    ['$scope','$translate',
+function ($scope, $translate) {
+    $scope.changeLanguage = function (langKey) {
+        $translate.uses(langKey);
+    };
+}]);
