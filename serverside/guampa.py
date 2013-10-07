@@ -46,9 +46,9 @@ def img(fn):
 def lib(fn):
     return send_from_directory(app.root_path + 'app/lib', fn)
 
-@utils.nocache
-@utils.json
 @app.route('/json/documents')
+@utils.json
+@utils.nocache
 def documents():
     docs = db.list_documents()
     out = {'documents': [{'title': doc.title, 'id':doc.id} for doc in docs]}

@@ -11,6 +11,6 @@ def nocache(f):
 def json(f):
     def new_func(*args, **kwargs):
         resp = make_response(f(*args, **kwargs))
-        resp.mimetype = 'application/javascript'
+        resp.mimetype = 'application/json'
         return resp
     return update_wrapper(new_func, f)
