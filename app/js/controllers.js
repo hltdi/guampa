@@ -3,12 +3,12 @@
 /* Controllers */
 
 function MenuCtrl($scope, $location) {
+    // XXX: i18n for these interface strings.
 	$scope.menuList = [
-	   {id:0, url:'#/search', text:"Inicio", style:""},
-	   {id:1, url:'#/upload', text:"Subir un Documento", style:""},
-	   {id:2, url:'#/catalog', text:"Catalogo", style:""},
+	   {id:0, url:'#/start', text:"Start", style:""},
+	   {id:1, url:'#/browse', text:"Browse", style:""},
+	   // {id:2, url:'#/catalog', text:"Catalogo", style:""},
 	   ];
-	
 	var i;
 	for(i = 0; i < $scope.menuList.length; i++) {
 		if($location.path() === $scope.menuList[i].url.substring(1)) {
@@ -16,7 +16,6 @@ function MenuCtrl($scope, $location) {
 			break;
 		}
 	}
-	
 	$scope.changeActive = function(id) {
 		var i;
 		for(i = 0; i < $scope.menuList.length; i++) {
@@ -24,4 +23,11 @@ function MenuCtrl($scope, $location) {
 		}
 		$scope.menuList[id].style = "active";
 	}
+}
+
+function BrowseCtrl($scope, $http, $routeParams, AllDocuments) {
+  $scope.$routeParams = $routeParams;
+  $scope.query = $routeParams.query;
+
+  $scope.allDocuments = AllDocuments.get();
 }

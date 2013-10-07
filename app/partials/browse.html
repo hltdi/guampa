@@ -1,0 +1,10 @@
+<h1>browse page yeaaahhh</h1>
+
+<div ng-controller="BrowseCtrl">
+  <ul>
+    <li ng-repeat="document in allDocuments.documents">
+      <a href="/document/{{document.id}}">{{document.title}}</a>
+    </li>
+  </ul>
+</div>
+

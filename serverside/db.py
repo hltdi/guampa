@@ -21,12 +21,11 @@ def get_session():
     return top.db_session
 
 def list_documents():
-    """Returns a list of document ids."""
+    """Returns a list of all the Document objects."""
     out = []
-
     session = get_session()
     for instance in session.query(Document).order_by(Document.id): 
-        out.append(instance.id)
+        out.append(instance)
     return out
 
 def sentences_for_document(docid):
