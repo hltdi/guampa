@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app>
+    <head>
+        <title>Angular</title>
+        <link rel="stylesheet" href="bootstrap.min.css">
+        <link rel="stylesheet" href="main.css">
+        <script src="angular.min.js"></script>
+        <script src="app.js"></script>
+    </head>
+    <body>
+        <div>
+            <div class="span5" ng-controller="translateCtrl">
+                <ul ng-repeat="sentence in paragraph">
+                    <li>{{sentence.content}}</li>
+                </ul>
+            </div>
+            <div ng-app="editor" ng-controller="translateCtrl"
+                 class="span5 offset2">
+                <ul ng-repeat="sentence in paragraph">
+                    <li ng-dblclick="startEditing(sentence);">
+                        <span ng-hide="sentence.editing">
+                            {{sentence.content}}
+                        </span>
+                        <form ng-submit="doneEditing(sentence)" 
+                              ng-show="sentence.editing">
+                            <input ng-model="sentence.content">
+                        </form>
+                    </li>
+                </ul>
+             </div>
+        </div>
+    </body>
+</html>
