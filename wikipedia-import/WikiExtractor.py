@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
+# Hacked up a bit by Alex Rudnick for use in Guampa, October 2013.
+#
 # =============================================================================
 #  Version: 2.5 (May 9, 2013)
 #  Author: Giuseppe Attardi (attardi@di.unipi.it), University of Pisa
@@ -41,22 +43,11 @@ Each file contains several documents in Tanl document format:
 
 Usage:
   WikiExtractor.py [options]
-
-Options:
-  -c, --compress        : compress output files using bzip
-  -b, --bytes= n[KM]    : put specified bytes per output file (default 500K)
-  -B, --base= URL       : base URL for the Wikipedia pages
-  -l, --link            : preserve links
-  -n NS, --ns NS        : accepted namespaces (separated by commas)
-  -o, --output= dir     : place output files in specified directory (default
-                          current)
-  -s, --sections	: preserve sections
-  -h, --help            : display this help and exit
 """
 
-import sys
+import argparse
 import gc
-import getopt
+import sys
 import urllib.request, urllib.parse, urllib.error
 import re
 import bz2
@@ -123,13 +114,10 @@ def WikiDocument(out, id, title, text):
     text = clean(text)
     footer = "\n</doc>"
     out.reserve(len(header) + len(text) + len(footer))
-    ## print >> out, header
     print(header, file=out)
     for line in compact(text):
         print(line, file=out)
-        # print(line.encode('utf-8'), file=out)
     print(footer, file=out)
-    ## print >> out, footer
 
 def get_url(id, prefix):
     return "%s?curid=%s" % (prefix, id)
@@ -556,7 +544,7 @@ class OutputSplitter:
 
 tagRE = re.compile(r'(.*?)<(/?\w+)[^>]*>(?:([^<]*)(<.*?>)?)?')
 
-def process_data(input, output):
+def process_data(input, output, vital_titles=None):
     global prefix
 
     page = []
@@ -595,10 +583,10 @@ def process_data(input, output):
             colon = title.find(':')
             if (colon < 0 or title[:colon] in acceptedNamespaces) and \
                     not redirect:
-                # print(id, title.encode('utf-8'))
-                print(id, title)
-                sys.stdout.flush()
-                WikiDocument(output, id, title, ''.join(page))
+                if (not vital_titles) or (title in vital_titles):
+                    print(id, title)
+                    sys.stdout.flush()
+                    WikiDocument(output, id, title, ''.join(page))
             id = None
             page = []
         elif tag == 'base':
@@ -606,6 +594,14 @@ def process_data(input, output):
             # /mediawiki/siteinfo/base
             base = m.group(3)
             prefix = base[:base.rfind("/")]
+
+def load_vital_titles(vitalfn):
+    """Given the filename for the vital titles list (one title per line), return
+    a set of Wikipedia titles."""
+    with open(vitalfn) as infile:
+        lines = infile.readlines()
+        lines = [line.strip() for line in lines]
+        return set(lines)
 
 ### CL INTERFACE ############################################################
 
@@ -619,70 +615,46 @@ def show_usage(script_name):
 # Minimum size of output files
 minFileSize = 200 * 1024
 
+def get_argparser():
+    """Build the argument parser for main."""
+    parser = argparse.ArgumentParser(description='WikiExtractor')
+    parser.add_argument('--infn', type=str, required=True)
+    parser.add_argument('--vitalfn', type=str, required=False)
+    parser.add_argument('--all-articles',dest='allArticles',action='store_true')
+    parser.add_argument('--structure',dest='keepSections',action='store_true')
+    parser.add_argument('--no-structure',dest='keepSections',action='store_false')
+    parser.set_defaults(keepSections=True)
+    parser.set_defaults(allArticles=False)
+    return parser
+
 def main():
     global keepLinks, keepSections, prefix, acceptedNamespaces
     script_name = os.path.basename(sys.argv[0])
 
-    try:
-        long_opts = ['help', 'compress', 'bytes=', 'basename=', 'links', 'ns=', 'sections', 'output=', 'version']
-        opts, args = getopt.gnu_getopt(sys.argv[1:], 'cb:hln:o:B:sv', long_opts)
-    except getopt.GetoptError:
-        show_usage(script_name)
-        sys.exit(1)
+    parser = get_argparser()
+    args = parser.parse_args()
+    keepSections = args.keepSections
 
     compress = False
     file_size = 500 * 1024
     output_dir = '.'
 
-    for opt, arg in opts:
-        if opt in ('-h', '--help'):
-            show_help()
-            sys.exit()
-        elif opt in ('-c', '--compress'):
-            compress = True
-        elif opt in ('-l', '--links'):
-            keepLinks = True
-        elif opt in ('-s', '--sections'):
-            keepSections = True
-        elif opt in ('-B', '--base'):
-            prefix = arg
-        elif opt in ('-b', '--bytes'):
-            try:
-                if arg[-1] in 'kK':
-                    file_size = int(arg[:-1]) * 1024
-                elif arg[-1] in 'mM':
-                    file_size = int(arg[:-1]) * 1024 * 1024
-                else:
-                    file_size = int(arg)
-                if file_size < minFileSize: raise ValueError()
-            except ValueError:
-                print('%s: %s: Insufficient or invalid size' % (script_name, arg), file=sys.stderr)
-                sys.exit(2)
-        elif opt in ('-n', '--ns'):
-                acceptedNamespaces = set(arg.split(','))
-        elif opt in ('-o', '--output'):
-                output_dir = arg
-        elif opt in ('-v', '--version'):
-                print('WikiExtractor.py version:', version)
-                sys.exit(0)
-
-    if len(args) > 0:
-        show_usage(script_name)
-        sys.exit(4)
-
-    if not os.path.isdir(output_dir):
-        try:
-            os.makedirs(output_dir)
-        except:
-            print('Could not create: ', output_dir, file=sys.stderr)
-            return
-
     if not keepLinks:
         ignoreTag('a')
 
+    vital_titles = None
+    if args.vitalfn:
+        vital_titles = load_vital_titles(args.vitalfn)
+        print("Extracting {0} articles...".format(len(vital_titles)))
+    elif args.allArticles:
+        print("Extracting every article...")
+    else:
+        print("Need either --all-articles or --vitalfn")
+        sys.exit(1)
+
     output_splitter = OutputSplitter(compress, file_size, output_dir)
-    with open("gnwiki-latest-pages-articles.xml") as infile:
-        process_data(infile, output_splitter)
+    with open(args.infn) as infile:
+        process_data(infile, output_splitter, vital_titles)
     output_splitter.close()
 
 if __name__ == '__main__':
