@@ -17,7 +17,7 @@
             <div ng-app="editor" ng-controller="translateCtrl"
                  class="span5 offset2">
                 <ul ng-repeat="sentence in paragraph">
-                    <li ng-dblclick="startEditing(sentence);">
+                    <li class="translation" ng-dblclick="startEditing(sentence);">
                         <span ng-hide="sentence.editing">
                             {{sentence.content}}
                         </span>
@@ -25,6 +25,7 @@
                               ng-show="sentence.editing">
                             <input ng-model="sentence.content">
                         </form>
+                        <a href="#" ng-show="sentence.editing" ng-click="doneEditing(sentence);">Save</a>
                     </li>
                 </ul>
              </div>
