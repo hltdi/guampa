@@ -29,11 +29,12 @@ function ($scope, $location) {
 	}
 }]);
 
-function BrowseCtrl($scope, $http, $routeParams, AllDocuments) {
+function BrowseCtrl($scope, $http, $routeParams, AllDocuments, AllTags) {
   $scope.$routeParams = $routeParams;
   $scope.query = $routeParams.query;
 
   $scope.allDocuments = AllDocuments.get();
+  $scope.allTags = AllTags.get();
 }
 
 mod.controller(

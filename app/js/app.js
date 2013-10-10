@@ -4,6 +4,7 @@
 
 var app = angular.module('guampa',
                          ['allDocumentsService',
+                          'allTagsService',
                           'guampa.controllers',
                           'pascalprecht.translate']);
 

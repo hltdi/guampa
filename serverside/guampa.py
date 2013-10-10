@@ -55,6 +55,24 @@ def documents():
     print(out)
     return(json.dumps(out))
 
+@app.route('/json/tags')
+@utils.json
+@utils.nocache
+def tags():
+    tags = db.list_tags()
+    out = {'tags': [tag.text for tag in tags]}
+    print(out)
+    return(json.dumps(out))
+
+@app.route('/json/documents/<tagname>')
+@utils.json
+@utils.nocache
+def documents_for_tag(tagname):
+    docs = db.documents_for_tagname(tagname)
+    out = {'documents': [{'title': doc.title, 'id':doc.id} for doc in docs]}
+    print(out)
+    return(json.dumps(out))
+
 # XXX: just to demo; make sure to take this out later.
 @app.route('/document/<docid>')
 def document(docid):

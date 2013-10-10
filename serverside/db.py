@@ -5,6 +5,7 @@ import constants
 import model
 from model import Document
 from model import Sentence
+from model import Tag
 from model import Translation
 
 from flask import _app_ctx_stack
@@ -27,6 +28,18 @@ def list_documents():
     for instance in session.query(Document).order_by(Document.id): 
         out.append(instance)
     return out
+
+def list_tags():
+    """Returns a list of all the Tag objects."""
+    session = get_session()
+    return session.query(Tag).order_by(Tag.text)
+
+def documents_for_tagname(tagname):
+    """Returns a list of all the Documents that pertain to a certain tag."""
+    session = get_session()
+    tag = session.query(Tag).filter_by(text=tagname).first() 
+    if not tag: return out
+    return tag.documents
 
 def sentences_for_document(docid):
     """Returns a list of sentences for the given docid."""
