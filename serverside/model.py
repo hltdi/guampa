@@ -1,11 +1,18 @@
 import sqlalchemy
 
 from sqlalchemy import Column, Integer, String
+from sqlalchemy import Table
+from sqlalchemy import ForeignKey
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
+
+## NOTE: Please keep the database design wiki page up to date if you change
+## this.
+## https://github.com/hltdi/guampa/wiki/DatabaseLayout
 
 class User(Base):
     __tablename__ = 'users'
@@ -24,22 +31,14 @@ class User(Base):
        return ("<User('%s','%s', '%s')>"
                 % (self.name, self.fullname, self.password))
 
-"""
-things about Documents:
-    have a source language (and a target language??!)
-    have many sentences (which have an order)
-    have many tags
-    have a user who uploaded them
-    have a title
-"""
-
 class Document(Base):
     __tablename__ = 'documents'
 
     id = Column(Integer, primary_key=True)
     title = Column(String)
-    user = Column(String)
+    user = Column(Integer, ForeignKey('users.id'))
     sl = Column(String) ## string?
+    tags = relationship("Tag", secondary=lambda:documenttag_table)
 
     def __init__(self, title, user, sl):
         self.title = title
@@ -55,7 +54,7 @@ class Sentence(Base):
 
     id = Column(Integer, primary_key=True)
     text = Column(String)
-    docid = Column(Integer)
+    docid = Column(Integer, ForeignKey('documents.id'))
 
     def __init__(self, text, docid):
         self.text = text
@@ -63,3 +62,39 @@ class Sentence(Base):
 
     def __repr__(self):
        return ("<Sentence(%d, '%s')>" % (self.id, self.text))
+
+class Tag(Base):
+    __tablename__ = 'tags'
+
+    id = Column(Integer, primary_key=True)
+    text = Column(String)
+    documents = relationship("Document", secondary=lambda:documenttag_table)
+
+    def __init__(self, text):
+        self.text = text
+
+    def __repr__(self):
+       return ("<Tag(%d, '%s')>" % (self.id, self.text))
+
+class Translation(Base):
+    __tablename__ = 'translations'
+
+    id = Column(Integer, primary_key=True)
+    text = Column(String)
+    docid = Column(Integer, ForeignKey('documents.id'))
+    sentenceid = Column(Integer, ForeignKey('sentences.id'))
+
+    def __init__(self, text, docid, sentenceid):
+        self.text = text
+        self.docid = docid
+        self.sentenceid = sentenceid
+
+    def __repr__(self):
+       return ("<Translation(%d, '%s')>" % (self.id, self.text))
+
+### relationships.
+
+documenttag_table = Table('documenttag', Base.metadata,
+    Column('docid', Integer, ForeignKey('documents.id')),
+    Column('tagid', Integer, ForeignKey('tags.id'))
+)

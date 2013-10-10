@@ -1,0 +1,21 @@
+<h1>browse page yeaaahhh</h1>
+<hr/>
+
+<div ng-controller="BrowseCtrl">
+
+  <h1 translate>TAGS</h1>
+  <ul>
+    <li ng-repeat="tag in allTags.tags">
+      <a href="#/browse/{{tag}}">{{tag}}</a>
+    </li>
+  </ul>
+
+  <h1 translate>DOCUMENTS</h1>
+  <p ng-if="notag" translate>PLEASECLICK</p>
+  <ul ng-if="tagDocuments.documents">
+    <li ng-repeat="document in tagDocuments.documents">
+      <a href="/document/{{document.id}}">{{document.title}}</a>
+    </li>
+  </ul>
+</div>
+

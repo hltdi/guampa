@@ -1,4 +1,3 @@
 #!/bin/bash
 
-export PYTHONPATH=$PYTHONPATH:serverside
-python3 scripts/devserver.py
+python3 serverside/guampa.py || echo "GUAMPA ERRORS! Make sure you have activated the virtualenv."

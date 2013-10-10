@@ -1,0 +1,4 @@
+This document has already been split by sentence.
+One sentence per line and no other line breaks.
+I suppose we'll have to provide a script to put files into this format.
+It should be in utf-8, the civilized way to encode text.

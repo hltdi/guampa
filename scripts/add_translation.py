@@ -8,6 +8,7 @@ from sqlalchemy.orm import sessionmaker
 import model
 from model import Document
 from model import Sentence
+from model import Translation
 
 import constants
 
@@ -17,27 +18,18 @@ Session = sessionmaker(bind=engine)
 Base = model.Base
 Base.metadata.create_all(engine)
 
-def save_file(fn):
+def save_translation(docid, sentenceid, text):
     session = Session()
-    title = os.path.basename(fn)
-    document = Document(title, "bob", "en")
-    session.add(document)
-    session.commit()
+    translation = Translation(text, docid, sentenceid)
 
-    docid = document.id
-
-    with open(fn) as infile:
-        sentences = []
-        for line in infile:
-            sent = Sentence(line.strip(), docid)
-            sentences.append(sent)
-    session.add_all(sentences)
+    session.add(translation)
     session.commit()
-    print("added document:", document)
 
 def main():
     import sys
-    fn = sys.argv[1]
-    save_file(fn)
+    docid = int(sys.argv[1])
+    sentenceid = int(sys.argv[2])
+    text = sys.argv[3]
+    save_translation(docid, sentenceid, text)
 
 if __name__ == "__main__": main()
