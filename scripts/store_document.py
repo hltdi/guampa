@@ -33,6 +33,7 @@ def save_file(fn):
             sentences.append(sent)
     session.add_all(sentences)
     session.commit()
+    print("added document:", document)
 
 def main():
     import sys

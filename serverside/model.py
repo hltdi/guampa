@@ -1,9 +1,11 @@
 import sqlalchemy
 
 from sqlalchemy import Column, Integer, String
+from sqlalchemy import Table
 from sqlalchemy import ForeignKey
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
@@ -34,8 +36,9 @@ class Document(Base):
 
     id = Column(Integer, primary_key=True)
     title = Column(String)
-    user = Column(String)
+    user = Column(Integer, ForeignKey('users.id'))
     sl = Column(String) ## string?
+    tags = relationship("Tag", secondary=lambda:documenttag_table)
 
     def __init__(self, title, user, sl):
         self.title = title
@@ -51,7 +54,7 @@ class Sentence(Base):
 
     id = Column(Integer, primary_key=True)
     text = Column(String)
-    docid = Column(Integer)
+    docid = Column(Integer, ForeignKey('documents.id'))
 
     def __init__(self, text, docid):
         self.text = text
@@ -59,6 +62,19 @@ class Sentence(Base):
 
     def __repr__(self):
        return ("<Sentence(%d, '%s')>" % (self.id, self.text))
+
+class Tag(Base):
+    __tablename__ = 'tags'
+
+    id = Column(Integer, primary_key=True)
+    text = Column(String)
+    documents = relationship("Document", secondary=lambda:documenttag_table)
+
+    def __init__(self, text):
+        self.text = text
+
+    def __repr__(self):
+       return ("<Tag(%d, '%s')>" % (self.id, self.text))
 
 class Translation(Base):
     __tablename__ = 'translations'
@@ -75,3 +91,10 @@ class Translation(Base):
 
     def __repr__(self):
        return ("<Translation(%d, '%s')>" % (self.id, self.text))
+
+### relationships.
+
+documenttag_table = Table('documenttag', Base.metadata,
+    Column('docid', Integer, ForeignKey('documents.id')),
+    Column('tagid', Integer, ForeignKey('tags.id'))
+)
