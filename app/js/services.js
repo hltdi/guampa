@@ -8,7 +8,8 @@ factory('AllDocuments',
       return $resource('/json/documents',
                        {},
                        {query: {method:'GET', isArray:true}});
-    });
+    }
+);
 
 angular.module('allTagsService', ['ngResource']).
 factory('AllTags',
@@ -16,4 +17,15 @@ factory('AllTags',
       return $resource('/json/tags',
                        {},
                        {query: {method:'GET', isArray:true}});
-    });
+    }
+);
+
+
+angular.module('documentsForTagService', ['ngResource']).
+factory('DocumentsForTag',
+    function($resource){
+      return $resource('/json/documents/:tagname',
+                       {},
+                       {query: {method:'GET', isArray:true}});
+    }
+);

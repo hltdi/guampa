@@ -22,6 +22,7 @@ myfn = os.path.abspath(__file__)
 app.root_path = os.path.dirname(os.path.dirname(myfn)) + os.path.sep
 app.debug = DEBUG
 
+@utils.nocache
 @app.route('/')
 def index():
     return send_from_directory(app.root_path + 'app', 'index.html')

@@ -5,6 +5,7 @@
 var app = angular.module('guampa',
                          ['allDocumentsService',
                           'allTagsService',
+                          'documentsForTagService',
                           'guampa.controllers',
                           'pascalprecht.translate']);
 
@@ -14,10 +15,9 @@ app.config(['$locationProvider','$routeProvider',
         when('/start', {templateUrl: 'partials/start.html'}).
         when('/browse', {templateUrl: 'partials/browse.html',
                          controller: 'BrowseCtrl'}).
+        when('/browse/:tagname', {templateUrl: 'partials/browse.html',
+                                  controller: 'BrowseCtrl'}).
         otherwise({redirectTo: '/start'});
-
-      // XXX: when do we need this? ...
-      // $locationProvider.html5Mode(true);
 }]);
 
 // Load up all of our translations.

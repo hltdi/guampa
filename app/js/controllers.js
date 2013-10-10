@@ -29,12 +29,21 @@ function ($scope, $location) {
 	}
 }]);
 
-function BrowseCtrl($scope, $http, $routeParams, AllDocuments, AllTags) {
+function BrowseCtrl($scope, $http, $routeParams,
+                    AllDocuments, AllTags, DocumentsForTag) {
   $scope.$routeParams = $routeParams;
   $scope.query = $routeParams.query;
 
-  $scope.allDocuments = AllDocuments.get();
   $scope.allTags = AllTags.get();
+
+  $scope.tagname = $routeParams.tagname;
+  if ($scope.tagname) {
+      $scope.tagDocuments = DocumentsForTag.get({tagname:$scope.tagname});
+      $scope.notag = false;
+  } else {
+      $scope.tagDocuments = undefined;
+      $scope.notag = true;
+  }
 }
 
 mod.controller(
