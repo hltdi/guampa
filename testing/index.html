@@ -5,20 +5,21 @@
         <link rel="stylesheet" href="bootstrap.min.css">
         <link rel="stylesheet" href="main.css">
         <script src="angular.min.js"></script>
+        <script src="bootstrap.min.js"></script>
         <script src="app.js"></script>
     </head>
     <body>
-        <div>
+        <div class="row">
             <div class="span5" ng-controller="translateCtrl">
-                <ul ng-repeat="sentence in paragraph">
+                <ul ng-repeat="sentence in sentences">
                     <li>{{sentence.content}}</li>
                 </ul>
             </div>
             <div ng-app="editor" ng-controller="translateCtrl"
                  class="span5 offset2">
-                <ul ng-repeat="sentence in paragraph">
-                    <li class="translation" ng-dblclick="startEditing(sentence);">
-                        <span ng-hide="sentence.editing">
+                <ul ng-repeat="sentence in sentences">
+                    <li ng-dblclick="startEditing(sentence);">
+                        <span ng-hide="sentence.editing" class="translation">
                             {{sentence.content}}
                         </span>
                         <form ng-submit="doneEditing(sentence)" 
@@ -26,9 +27,14 @@
                             <input ng-model="sentence.content">
                         </form>
                         <a href="#" ng-show="sentence.editing" ng-click="doneEditing(sentence);">Save</a>
+                        <a href="#modalComments" data-toggle="modal" ng-show="sentence.editing">View Comments</a>
                     </li>
                 </ul>
              </div>
+        </div>
+        <div id="modalComments" class="modal hide fade" tabindex="-1" role="dialog"
+             aria-labeledby="modalCommentsLabel" aria-hidden="true">
+           <p>test</p> 
         </div>
     </body>
 </html>

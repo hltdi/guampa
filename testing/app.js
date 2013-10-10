@@ -1,6 +1,6 @@
 function translateCtrl($scope) {
     $scope.editedItem = null;
-    $scope.paragraph = [{ content: "My cat is brown", editing: false },
+    $scope.sentences = [{ content: "My cat is brown", editing: false },
                         { content: "My dog is black", editing: false },
                         { content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.", editing: false}];
 
