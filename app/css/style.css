@@ -137,3 +137,8 @@ span.notranslation {
     font-style: italic;
     color: #aaa;
 }
+
+span.browsetag {
+  display: inline-block;
+  color: #aaa;
+}
