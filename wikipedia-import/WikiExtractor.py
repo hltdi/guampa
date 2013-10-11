@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Hacked up a bit by Alex Rudnick for use in Guampa, October 2013.
+# Hacked up by Alex Rudnick for use in Guampa, October 2013.
 #
 # =============================================================================
 #  Version: 2.5 (May 9, 2013)
@@ -53,6 +53,10 @@ import re
 import bz2
 import os.path
 from html.entities import name2codepoint
+
+import nltk
+## NOTE: This is customizable. Your source data may not be in Spanish.
+SEGMENTER = nltk.data.load("tokenizers/punkt/spanish.pickle")
 
 ### PARAMS ####################################################################
 
@@ -110,14 +114,28 @@ def WikiDocument(out, id, title, text):
     header = '<doc id="%s" url="%s" title="%s">\n' % (id, url, title)
     # Separate header from text with a newline.
     header += title + '\n'
-    # header = header.encode('utf-8')
     text = clean(text)
     footer = "\n</doc>"
     out.reserve(len(header) + len(text) + len(footer))
     print(header, file=out)
-    for line in compact(text):
+    for line in compact(text, structure=True):
         print(line, file=out)
     print(footer, file=out)
+
+def WikiDocumentSentences(out, id, title, tags, text):
+    url = get_url(id, prefix)
+    header = '###{0}|||{1}'.format(title, "|||".join(tags))
+    # Separate header from text with a newline.
+    # header += title + '\n'
+    text = clean(text)
+    ## split out the individual sentences
+    sentences = SEGMENTER.tokenize(text)
+    text = "\n".join(sentences)
+
+    out.reserve(len(header) + len(text))
+    print(header, file=out)
+    for line in compact(text, structure=False):
+        print(line, file=out)
 
 def get_url(id, prefix):
     return "%s?curid=%s" % (prefix, id)
@@ -431,7 +449,7 @@ def clean(text):
 
 section = re.compile(r'(==+)\s*(.*?)\s*\1')
 
-def compact(text):
+def compact(text, structure=False):
     """Deal with headers, lists, empty sections, residuals of tables"""
     page = []                   # list of paragraph
     headers = {}                # Headers for unfilled sections
@@ -447,7 +465,7 @@ def compact(text):
         if m:
             title = m.group(2)
             lev = len(m.group(1))
-            if keepSections:
+            if structure:
                 page.append("<h%d>%s</h%d>" % (lev, title, lev))
             if title and title[-1] not in '!?':
                 title += '.'
@@ -467,7 +485,7 @@ def compact(text):
                 page.append(title)
         # handle lists
         elif line[0] in '*#:;':
-            if keepSections:
+            if structure:
                 page.append("<li>%s</li>" % line[1:])
             else:
                 continue
@@ -498,12 +516,13 @@ def handle_unicode(entity):
 #------------------------------------------------------------------------------
 
 class OutputSplitter:
-    def __init__(self, compress, max_file_size, path_name):
+    def __init__(self, compress, max_file_size, path_name, segment=False):
         self.dir_index = 0
         self.file_index = -1
         self.compress = compress
         self.max_file_size = max_file_size
         self.path_name = path_name
+        self.segment = segment
         self.out_file = self.open_next_file()
 
     def reserve(self, size):
@@ -533,9 +552,14 @@ class OutputSplitter:
             return open(file_name, 'w')
 
     def dir_name(self):
+        ### split into two kinds of directories:
+        ### sentences_AA and structure_AA
+
+        prefix = "sentences_" if self.segment else "structure_"
+
         char1 = self.dir_index % 26
         char2 = self.dir_index / 26 % 26
-        return os.path.join(self.path_name, '%c%c' % (ord('A') + char2, ord('A') + char1))
+        return os.path.join(self.path_name, prefix + '%c%c' % (ord('A') + char2, ord('A') + char1))
 
     def file_name(self):
         return 'wiki_%02d' % self.file_index
@@ -544,7 +568,8 @@ class OutputSplitter:
 
 tagRE = re.compile(r'(.*?)<(/?\w+)[^>]*>(?:([^<]*)(<.*?>)?)?')
 
-def process_data(input, output, vital_titles=None):
+def process_data(input, output_sentences, output_structure,
+                 vital_titles=None, vital_tags=None):
     global prefix
 
     page = []
@@ -586,7 +611,10 @@ def process_data(input, output, vital_titles=None):
                 if (not vital_titles) or (title in vital_titles):
                     print(id, title)
                     sys.stdout.flush()
-                    WikiDocument(output, id, title, ''.join(page))
+                    tags = vital_tags[title] if vital_tags else []
+                    WikiDocumentSentences(output_sentences, id, title, tags,
+                                          ''.join(page))
+                    WikiDocument(output_structure, id, title, ''.join(page))
             id = None
             page = []
         elif tag == 'base':
@@ -596,12 +624,20 @@ def process_data(input, output, vital_titles=None):
             prefix = base[:base.rfind("/")]
 
 def load_vital_titles(vitalfn):
-    """Given the filename for the vital titles list (one title per line), return
-    a set of Wikipedia titles."""
+    """Given the filename for the vital titles list (one title per line, with
+    tags), return a set of Wikipedia titles and a map from those titles to lists
+    of tags."""
     with open(vitalfn) as infile:
-        lines = infile.readlines()
-        lines = [line.strip() for line in lines]
-        return set(lines)
+        titles = set()
+        titles_to_tags = {}
+        for line in infile:
+            line = line.strip()
+            splitted = line.split("|||")
+            title = splitted[0]
+            tags = splitted[1:]
+            titles.add(title)
+            titles_to_tags[title] = tags
+        return titles, titles_to_tags
 
 ### CL INTERFACE ############################################################
 
@@ -643,8 +679,9 @@ def main():
         ignoreTag('a')
 
     vital_titles = None
+    vital_tags = None
     if args.vitalfn:
-        vital_titles = load_vital_titles(args.vitalfn)
+        vital_titles, vital_tags = load_vital_titles(args.vitalfn)
         print("Extracting {0} articles...".format(len(vital_titles)))
     elif args.allArticles:
         print("Extracting every article...")
@@ -652,10 +689,13 @@ def main():
         print("Need either --all-articles or --vitalfn")
         sys.exit(1)
 
-    output_splitter = OutputSplitter(compress, file_size, output_dir)
+    output_sentences = OutputSplitter(compress, file_size, output_dir,
+                                      segment=True)
+    output_structure = OutputSplitter(compress, file_size, output_dir)
     with open(args.infn) as infile:
-        process_data(infile, output_splitter, vital_titles)
-    output_splitter.close()
+        process_data(infile, output_sentences, output_structure, vital_titles, vital_tags)
+    output_sentences.close()
+    output_structure.close()
 
 if __name__ == '__main__':
     main()
