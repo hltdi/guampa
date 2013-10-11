@@ -1,0 +1,28 @@
+        <h1>{{thedocument}}</h1>
+        <div class="row" ng-controller="translateCtrl">
+            <div class="span5">
+                <ul ng-repeat="sentence in sentences">
+                    <li>{{sentence.content}}</li>
+                </ul>
+            </div>
+            <div ng-app="editor" 
+                 class="span5 offset2">
+                <ul ng-repeat="sentence in translations">
+                    <li ng-dblclick="startEditing(sentence);">
+                        <span ng-hide="sentence.editing" class="translation">
+                            {{sentence.content}}
+                        </span>
+                        <form ng-submit="doneEditing(sentence)" 
+                              ng-show="sentence.editing">
+                            <input ng-model="sentence.content">
+                        </form>
+                        <a href="#" ng-show="sentence.editing" ng-click="doneEditing(sentence);">Save</a>
+                        <a href="#modalComments" data-toggle="modal" ng-show="sentence.editing">View Comments</a>
+                    </li>
+                </ul>
+             </div>
+        </div>
+        <div id="modalComments" class="modal hide fade" tabindex="-1" role="dialog"
+             aria-labeledby="modalCommentsLabel" aria-hidden="true">
+           <p>test</p> 
+        </div>

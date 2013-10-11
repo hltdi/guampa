@@ -6,6 +6,7 @@ var app = angular.module('guampa',
                          ['allDocumentsService',
                           'allTagsService',
                           'documentsForTagService',
+                          'documentAndTranslationService',
                           'guampa.controllers',
                           'pascalprecht.translate']);
 
@@ -13,6 +14,8 @@ app.config(['$locationProvider','$routeProvider',
     function($locationProvider, $routeProvider) {
       $routeProvider.
         when('/start', {templateUrl: 'partials/start.html'}).
+        when('/edit/:docid', {templateUrl: 'partials/edit.html',
+                              controller: 'translateCtrl'}).
         when('/browse', {templateUrl: 'partials/browse.html',
                          controller: 'BrowseCtrl'}).
         when('/browse/:tagname', {templateUrl: 'partials/browse.html',

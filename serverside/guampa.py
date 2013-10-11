@@ -35,6 +35,7 @@ def partials(fn):
 def css(fn):
     return send_from_directory(app.root_path + 'app/css', fn)
 
+@utils.nocache
 @app.route('/js/<fn>')
 def js(fn):
     return send_from_directory(app.root_path + 'app/js', fn)
@@ -74,25 +75,24 @@ def documents_for_tag(tagname):
     print(out)
     return(json.dumps(out))
 
-# XXX: just to demo; make sure to take this out later.
-@app.route('/document/<docid>')
+@app.route('/json/document/<docid>')
+@utils.json
+@utils.nocache
 def document(docid):
+    """All the stuff you need to render a document in the editing interface."""
     docid = int(docid)
     sentences = db.sentences_for_document(docid)
-    translations = db.translations_for_document(docid)
-    out = "<html><body>"
-    out += "<h1>sentences</h1>\n"
-    out += "<ul>\n"
-    for sent in sentences:
-        out += ("<li>%d: %s</li>\n") % (sent.id, sent.text)
-    out += "</ul>"
-    out += "<h1>translations</h1>\n"
-    out += "<ul>\n"
-    for translation in translations:
-        out += ("<li>%d: %s</li>\n") % (translation.id, translation.text)
-    out += "</ul>"
-    out += "</body></html>"
-    return out
+
+    sent_texts = [sentence.text for sentence in sentences]
+    trans_texts = []
+    ## XXX(alexr): make this into a faster query or something
+    for sentence in sentences:
+        latest = db.latest_translation_for_sentence(sentence.id)
+        trans_texts.append(latest.text if latest else None)
+
+    out = {'docid': docid, 'sentences':sent_texts, 'translations':trans_texts}
+    print(out)
+    return(json.dumps(out))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

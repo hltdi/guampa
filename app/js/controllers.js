@@ -54,3 +54,33 @@ function ($scope, $translate) {
         $translate.uses(langKey);
     };
 }]);
+
+function translateCtrl($scope, $routeParams, DocumentAndTranslation) {
+    $scope.editedItem = null;
+
+    var docid = $routeParams.docid;
+
+    $scope.sentences = [];
+    $scope.translations = [];
+
+    DocumentAndTranslation.get({docid:docid},
+    // ooh child, these things take callbacks.
+    function(thedocument) {
+        for (var i=0; i < thedocument.sentences.length; i++) {
+            var sent = {content: thedocument.sentences[i], editing: false}
+            $scope.sentences.push(sent);
+            var trans = {content: thedocument.translations[i], editing: false}
+            $scope.translations.push(trans);
+        }
+    });
+
+    $scope.startEditing = function(sentence) {
+        sentence.editing = true;
+        $scope.editedItem = sentence;
+    }
+
+    $scope.doneEditing = function(sentence) {
+        sentence.editing = false;
+        $scope.editedItem = null;
+    }
+}

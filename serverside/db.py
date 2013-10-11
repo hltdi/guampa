@@ -60,3 +60,22 @@ def translations_for_document(docid):
                     order_by(Translation.sentenceid, Translation.id.desc()): 
         out.append(instance)
     return out
+
+def translations_for_sentence(sentid):
+    """Returns a list of translations for the given sentid."""
+    out = []
+    session = get_session()
+    for instance in session.query(Translation).\
+                    filter(Translation.sentenceid == sentid).\
+                    order_by(Translation.id.desc()): 
+        out.append(instance)
+    return out
+
+def latest_translation_for_sentence(sentid):
+    """Returns the latest translation for the given sentid."""
+    out = []
+    session = get_session()
+    return session.query(Translation).\
+                   filter(Translation.sentenceid == sentid).\
+                   order_by(Translation.id.desc()).\
+                   first()

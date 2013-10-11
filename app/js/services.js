@@ -29,3 +29,12 @@ factory('DocumentsForTag',
                        {query: {method:'GET', isArray:true}});
     }
 );
+
+angular.module('documentAndTranslationService', ['ngResource']).
+factory('DocumentAndTranslation',
+    function($resource){
+      return $resource('/json/document/:docid',
+                       {},
+                       {query: {method:'GET', isArray:true}});
+    }
+);
