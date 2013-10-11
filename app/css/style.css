@@ -132,3 +132,8 @@ input.check {
 	padding: 2px 16px 3px;
 	border: 2px;
 }
+
+span.notranslation {
+    font-style: italic;
+    color: #aaa;
+}

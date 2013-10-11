@@ -6,6 +6,7 @@ var translationsEN = {
   TAGS: 'available tags',
   DOCUMENTS: 'documents',
   PLEASECLICK: 'please click on a tag',
+  NOTRANSLATION: 'click to add translation',
   BUTTON_LANG_ES: 'Spanish',
   BUTTON_LANG_EN: 'English'
 };
@@ -18,6 +19,7 @@ var translationsES= {
   TAGS: 'etiquetas disponibles',
   DOCUMENTS: 'documentos',
   PLEASECLICK: 'favor de hacer clic en una etiqueta',
+  NOTRANSLATION: 'hacer clic para añadir una traducción',
   BUTTON_LANG_ES: 'Español',
   BUTTON_LANG_EN: 'Ingles'
 };

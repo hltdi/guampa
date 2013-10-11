@@ -10,6 +10,8 @@
                 <ul ng-repeat="sentence in translations">
                     <li ng-dblclick="startEditing(sentence);">
                         <span ng-hide="sentence.editing" class="translation">
+                            <span ng-if="sentence.content == null"
+                                  class="notranslation" translate>NOTRANSLATION</span>
                             {{sentence.content}}
                         </span>
                         <form ng-submit="doneEditing(sentence)" 
