@@ -14,7 +14,7 @@
   <p ng-if="notag" translate>PLEASECLICK</p>
   <ul ng-if="tagDocuments.documents">
     <li ng-repeat="document in tagDocuments.documents">
-      <a href="/document/{{document.id}}">{{document.title}}</a>
+      <a href="#/edit/{{document.id}}">{{document.title}}</a>
     </li>
   </ul>
 </div>
