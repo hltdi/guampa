@@ -79,3 +79,14 @@ def latest_translation_for_sentence(sentid):
                    filter(Translation.sentenceid == sentid).\
                    order_by(Translation.id.desc()).\
                    first()
+
+def sentences_with_translations_for_document(docid):
+    """Returns a list of translations for the given docid."""
+    session = get_session()
+    out = []
+    for s,t in session.query(Sentence,Translation).\
+                         outerjoin(Translation).\
+                         filter(Sentence.docid == docid).\
+                         order_by(Sentence.id, Translation.id.desc()):
+        out.append((s,t))
+    return out

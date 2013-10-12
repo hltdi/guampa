@@ -81,17 +81,23 @@ def documents_for_tag(tagname):
 def document(docid):
     """All the stuff you need to render a document in the editing interface."""
     docid = int(docid)
-    sentences = db.sentences_for_document(docid)
 
-    sent_texts = [sentence.text for sentence in sentences]
+    sent_texts = []
     trans_texts = []
-    ## XXX(alexr): make this into a faster query or something
-    for sentence in sentences:
-        latest = db.latest_translation_for_sentence(sentence.id)
-        trans_texts.append(latest.text if latest else None)
 
+    ## sentence ids for which we've seen a translation
+    have_translation = set()
+    for (s,t) in db.sentences_with_translations_for_document(docid):
+        if s.id in have_translation:
+            continue
+        else:
+            sent_texts.append(s.text)
+            if t:
+                have_translation.add(s.id)
+                trans_texts.append(t.text)
+            else:
+                trans_texts.append(None)
     out = {'docid': docid, 'sentences':sent_texts, 'translations':trans_texts}
-    print(out)
     return(json.dumps(out))
 
 if __name__ == '__main__':
