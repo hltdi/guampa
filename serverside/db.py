@@ -90,3 +90,14 @@ def sentences_with_translations_for_document(docid):
                          order_by(Sentence.id, Translation.id.desc()):
         out.append((s,t))
     return out
+
+def save_translation(docid, sentenceid, text):
+    session = get_session()
+
+    sentence = session.query(Sentence).get(sentenceid)
+    assert sentence.docid == docid
+
+    translation = Translation(text, docid, sentenceid)
+
+    session.add(translation)
+    session.commit()

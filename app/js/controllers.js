@@ -55,7 +55,7 @@ function ($scope, $translate) {
     };
 }]);
 
-function translateCtrl($scope, $routeParams, DocumentAndTranslation) {
+function translateCtrl($scope, $routeParams, $http, DocumentAndTranslation) {
     $scope.editedItem = null;
 
     var docid = $routeParams.docid;
@@ -79,8 +79,16 @@ function translateCtrl($scope, $routeParams, DocumentAndTranslation) {
         $scope.editedItem = sentence;
     }
 
-    $scope.doneEditing = function(sentence) {
-        sentence.editing = false;
+    $scope.doneEditing = function(translation) {
+        translation.editing = false;
         $scope.editedItem = null;
+
+        $http.post('/json/add_translation',
+                   {text:translation.content,
+                    sentenceid: 1,   // XXX: don't always do sentence 1
+                    documentid: 1}).
+            error(function(){
+                alert("oh noes couldn't post translation for some reason");
+            });
     }
 }

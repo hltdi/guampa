@@ -18,7 +18,7 @@
                               ng-show="sentence.editing">
                             <input ng-model="sentence.content">
                         </form>
-                        <a href="#" ng-show="sentence.editing" ng-click="doneEditing(sentence);">Save</a>
+                        <a ng-show="sentence.editing" ng-click="doneEditing(sentence);">Save</a>
                         <a href="#modalComments" data-toggle="modal" ng-show="sentence.editing">View Comments</a>
                     </li>
                 </ul>

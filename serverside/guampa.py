@@ -100,5 +100,22 @@ def document(docid):
     out = {'docid': docid, 'sentences':sent_texts, 'translations':trans_texts}
     return(json.dumps(out))
 
+@app.route('/json/add_translation', methods=['post'])
+@utils.json
+@utils.nocache
+def add_translation():
+    try:
+        d = request.get_json()
+        text = d['text']
+        sentenceid = d['sentenceid']
+        documentid = d['documentid']
+        db.save_translation(documentid, sentenceid, text)
+    except Exception as inst:
+        import traceback
+        traceback.print_exc()
+        print("it was an exception somewhere")
+        abort(500)
+    return "OK"
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
