@@ -143,6 +143,10 @@ span.browsetag {
   color: #aaa;
 }
 
+.translateRow {
+    padding-bottom: 1em;
+}
+
 .translation:hover {
     color: gray;
     text-decoration: underline;

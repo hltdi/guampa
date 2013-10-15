@@ -1,20 +1,20 @@
         <h1>{{thedocument}}</h1>
             <div ng-controller="translateCtrl">
-            <div class="row" ng-repeat="pair in pairs">
-                <div class="span5">
-                    {{ pair[0].content }}
-                </div>
-                <div class="span5 offset2" ng-dblclick="startEditing(pair[1])">
-                    <div class="translation" ng-hide="pair[1].editing">
-                        <span ng-if="pair[1].content == null"
-                                  class="notranslation" translate>NOTRANSLATION</span>
-                        {{ pair[1].content }}
+                <div class="row translateRow" ng-repeat="pair in pairs">
+                    <div class="span5">
+                        {{ pair[0].content }}
                     </div>
-                    <form ng-submit="doneEditing(pair[1])" 
-                          ng-show="pair[1].editing">
-                        <input ng-model="pair[1].content">
-                    </form>
-                    <a ng-show="pair[1].editing" ng-click="doneEditing(pair[1]);">Save</a>
+                    <div class="span5 offset2" ng-dblclick="startEditing(pair[1])">
+                        <div class="translation" ng-hide="pair[1].editing">
+                            <span ng-if="pair[1].content == null"
+                                      class="notranslation" translate>NOTRANSLATION</span>
+                            {{ pair[1].content }}
+                        </div>
+                        <form ng-submit="doneEditing(pair[1])" 
+                              ng-show="pair[1].editing">
+                            <input ng-model="pair[1].content">
+                        </form>
+                        <a ng-show="pair[1].editing" ng-click="doneEditing(pair[1]);">Save</a>
+                    </div>
                 </div>
             </div>
-        </div>
