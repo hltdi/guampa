@@ -13,6 +13,7 @@ from werkzeug import check_password_hash, generate_password_hash
 
 import db
 import utils
+import urllib.parse
 
 DEBUG = True
 app = Flask(__name__)
@@ -68,6 +69,7 @@ def tags():
 @utils.json
 @utils.nocache
 def documents_for_tag(tagname):
+    tagname = urllib.parse.unquote(tagname)
     docs = db.documents_for_tagname(tagname)
     out = {'documents': [{'title': doc.title, 'id':doc.id} for doc in docs]}
     return(json.dumps(out))
