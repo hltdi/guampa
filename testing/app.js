@@ -4,13 +4,11 @@ function translateCtrl($scope) {
                         { content: "My dog is black", editing: false },
                         { content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.", editing: false}];
 
-    $scope.startEditing = function(sentence) {
-        sentence.editing = true;
+    $scope.editTranslation = function(sentence) {
         $scope.editedItem = sentence;
-    }
+    };                    
 
-    $scope.doneEditing = function(sentence) {
-        sentence.editing = false;
+    $scope.finishTranslation = function(sentence) {
         $scope.editedItem = null;
-    }
+    };
 }

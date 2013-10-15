@@ -8,27 +8,25 @@
         <script src="bootstrap.min.js"></script>
         <script src="app.js"></script>
     </head>
-    <body>
+    <body ng-app="translateApp">
         <div class="row">
             <div class="span5" ng-controller="translateCtrl">
                 <ul ng-repeat="sentence in sentences">
                     <li>{{sentence.content}}</li>
                 </ul>
             </div>
-            <div ng-app="editor" ng-controller="translateCtrl"
+            <div ng-controller="translateCtrl"
                  class="span5 offset2">
-                <ul ng-repeat="sentence in sentences">
-                    <li ng-dblclick="startEditing(sentence);">
-                        <span ng-hide="sentence.editing" class="translation">
-                            {{sentence.content}}
+                <ul>
+                    <li ng-repeat="sentence in sentences">
+                        <span ng-dblclick="editTranslation(sentence)" ng-hide="editedItem == sentence">
+                            {{ sentence.content }}
                         </span>
-                        <form ng-submit="doneEditing(sentence)" 
-                              ng-show="sentence.editing">
-                            <input ng-model="sentence.content">
+                        <form ng-submit="finishTranslation(sentence)">
+                            <input ng-model="sentence.content" ng-show="editedItem == sentence">
                         </form>
-                        <a href="#" ng-show="sentence.editing" ng-click="doneEditing(sentence);">Save</a>
-                        <a href="#modalComments" data-toggle="modal" ng-show="sentence.editing">View Comments</a>
-                    </li>
+                        <a href="#" ng-show="editedItem" ng-click-></a>
+                    </li>                        
                 </ul>
              </div>
         </div>
