@@ -38,7 +38,7 @@ def documents_for_tagname(tagname):
     """Returns a list of all the Documents that pertain to a certain tag."""
     session = get_session()
     tag = session.query(Tag).filter_by(text=tagname).first() 
-    if not tag: return out
+    if not tag: return []
     return tag.documents
 
 def sentences_for_document(docid):

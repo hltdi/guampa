@@ -66,7 +66,7 @@ def tags():
     print(out)
     return(json.dumps(out))
 
-@app.route('/json/documents/<tagname>')
+@app.route('/json/documents/<path:tagname>')
 @utils.json
 @utils.nocache
 def documents_for_tag(tagname):

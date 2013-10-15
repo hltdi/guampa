@@ -18,7 +18,7 @@ app.config(['$locationProvider','$routeProvider',
                               controller: 'translateCtrl'}).
         when('/browse', {templateUrl: 'partials/browse.html',
                          controller: 'BrowseCtrl'}).
-        when('/browse/:tagname', {templateUrl: 'partials/browse.html',
+        when('/browse/*tagname', {templateUrl: 'partials/browse.html',
                                   controller: 'BrowseCtrl'}).
         otherwise({redirectTo: '/start'});
 }]);
