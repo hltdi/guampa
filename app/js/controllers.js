@@ -6,11 +6,11 @@ var mod = angular.module('guampa.controllers', []);
 
 mod.controller(
     'MenuCtrl',
-    ['$scope','$location','$translate',
-function ($scope, $location, $translate) {
+    ['$scope','$location',
+function ($scope, $location) {
 	$scope.menuList = [
-	   {id:0, url:'#/start', text:$translate('START'), style:""},
-	   {id:1, url:'#/browse', text:$translate('BROWSE'), style:""},
+	   {id:0, url:'#/start', text:'START', style:""},
+	   {id:1, url:'#/browse', text:'BROWSE', style:""},
 	   ];
 	var i;
 	for(i = 0; i < $scope.menuList.length; i++) {

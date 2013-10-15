@@ -16,7 +16,8 @@
   			<div class="navbar-inner">
     			<ul class="nav">
     				<li ng-repeat="menu in menuList" class="{{menu.style}}">
-    					<a href="{{menu.url}}" ng-click="changeActive(menu.id)" ng-bind-template="{{menu.text}}"></a>
+                    <a href="{{menu.url}}" ng-click="changeActive(menu.id)"
+                       ng-bind-template="{{menu.text}}" translate></a>
     				</li>
       			</ul>
   			</div>
