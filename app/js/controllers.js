@@ -85,7 +85,7 @@ function translateCtrl($scope, $routeParams, $http, DocumentAndTranslation) {
         translation.editing = false;
         $scope.editedItem = null;
 
-        $http.post('/json/add_translation',
+        $http.post('json/add_translation',
                    {text:translation.content,
                     sentenceid: translation.sentenceid,
                     documentid: translation.docid}).

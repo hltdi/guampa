@@ -5,7 +5,7 @@
 angular.module('allDocumentsService', ['ngResource']).
 factory('AllDocuments',
     function($resource){
-      return $resource('/json/documents',
+      return $resource('json/documents',
                        {},
                        {query: {method:'GET', isArray:true}});
     }
@@ -14,7 +14,7 @@ factory('AllDocuments',
 angular.module('allTagsService', ['ngResource']).
 factory('AllTags',
     function($resource){
-      return $resource('/json/tags',
+      return $resource('json/tags',
                        {},
                        {query: {method:'GET', isArray:true}});
     }
@@ -24,7 +24,7 @@ factory('AllTags',
 angular.module('documentsForTagService', ['ngResource']).
 factory('DocumentsForTag',
     function($resource){
-      return $resource('/json/documents/:tagname',
+      return $resource('json/documents/:tagname',
                        {},
                        {query: {method:'GET', isArray:true}});
     }
@@ -33,7 +33,7 @@ factory('DocumentsForTag',
 angular.module('documentAndTranslationService', ['ngResource']).
 factory('DocumentAndTranslation',
     function($resource){
-      return $resource('/json/document/:docid',
+      return $resource('json/document/:docid',
                        {},
                        {query: {method:'GET', isArray:true}});
     }
