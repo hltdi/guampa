@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="translateApp">
     <head>
         <title>Angular</title>
         <link rel="stylesheet" href="bootstrap.min.css">
         <link rel="stylesheet" href="main.css">
         <script src="angular.min.js"></script>
-        <script src="bootstrap.min.js"></script>
+        <script src="bootstrap-ui.min.js"></script>
         <script src="app.js"></script>
     </head>
     <body>
@@ -15,26 +15,44 @@
                     <li>{{sentence.content}}</li>
                 </ul>
             </div>
-            <div ng-app="editor" ng-controller="translateCtrl"
+            <div ng-controller="translateCtrl"
                  class="span5 offset2">
-                <ul ng-repeat="sentence in sentences">
-                    <li ng-dblclick="startEditing(sentence);">
-                        <span ng-hide="sentence.editing" class="translation">
-                            {{sentence.content}}
+                <ul>
+                    <li ng-repeat="sentence in sentences">
+                        <span class="translation" ng-dblclick="editTranslation(sentence)" 
+                                                  ng-hide="editedItem == sentence">
+                            {{ sentence.content }}
                         </span>
-                        <form ng-submit="doneEditing(sentence)" 
-                              ng-show="sentence.editing">
-                            <input ng-model="sentence.content">
+                        <form ng-submit="finishTranslation(sentence)">
+                            <input ng-model="sentence.content" ng-show="editedItem == sentence">
                         </form>
-                        <a href="#" ng-show="sentence.editing" ng-click="doneEditing(sentence);">Save</a>
-                        <a href="#modalComments" data-toggle="modal" ng-show="sentence.editing">View Comments</a>
-                    </li>
+                        <button class="btn btn-primary" ng-show="editedItem == sentence" 
+                                ng-click="finishTranslation(sentence)">
+                            save
+                        </button>
+                        <div ng-controller="commentsCtrl" ng-show="editedItem == sentence">
+                            <script type="text/ng-template" id="comments.html">
+                                <div class="modal-header">
+                                    <h3>Translation Comments</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <ul>
+                                        <li ng-repeat="comment in comments">
+                                            {{ comment }}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" ng-click="close()">close</button>
+                                </div>
+                            </script>
+                            <button class="btn" ng-click="openComments()">
+                                    View Comments
+                            </button>
+                        </div>
+                    </li>                        
                 </ul>
              </div>
-        </div>
-        <div id="modalComments" class="modal hide fade" tabindex="-1" role="dialog"
-             aria-labeledby="modalCommentsLabel" aria-hidden="true">
-           <p>test</p> 
         </div>
     </body>
 </html>
