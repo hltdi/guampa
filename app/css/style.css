@@ -142,3 +142,8 @@ span.browsetag {
   display: inline-block;
   color: #aaa;
 }
+
+.translation:hover {
+    color: gray;
+    text-decoration: underline;
+};
