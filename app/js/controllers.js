@@ -6,12 +6,11 @@ var mod = angular.module('guampa.controllers', []);
 
 mod.controller(
     'MenuCtrl',
-    ['$scope','$location',
-function ($scope, $location) {
-    // TODO(alexr): i18n for these interface strings.
+    ['$scope','$location','$translate',
+function ($scope, $location, $translate) {
 	$scope.menuList = [
-	   {id:0, url:'#/start', text:"Start", style:""},
-	   {id:1, url:'#/browse', text:"Browse", style:""},
+	   {id:0, url:'#/start', text:$translate('START'), style:""},
+	   {id:1, url:'#/browse', text:$translate('BROWSE'), style:""},
 	   ];
 	var i;
 	for(i = 0; i < $scope.menuList.length; i++) {

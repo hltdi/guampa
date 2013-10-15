@@ -1,4 +1,6 @@
 var translationsEN = {
+  START: 'Start',
+  BROWSE: 'Browse',
   STARTPAGE: 'start page yeaaahhh',
   HEADLINE: 'What an awesome module!',
   PARAGRAPH: 'Srsly!',
@@ -12,6 +14,8 @@ var translationsEN = {
 };
  
 var translationsES= {
+  START: 'Inicio',
+  BROWSE: 'Navegar',
   STARTPAGE: 'página inicial -- ya tú sabes',
   HEADLINE: '¡Qué gran módulo!',
   PARAGRAPH: '¡en serio!',
