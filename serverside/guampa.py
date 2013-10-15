@@ -94,9 +94,10 @@ def document(docid):
             sent_texts.append(s.text)
             if t:
                 have_translation.add(s.id)
-                trans_texts.append(t.text)
-            else:
-                trans_texts.append(None)
+            translation_text = t.text if t else None
+            trans_texts.append({'text':translation_text,
+                                'sentenceid':s.id,
+                                'docid':docid})
     out = {'docid': docid, 'sentences':sent_texts, 'translations':trans_texts}
     return(json.dumps(out))
 

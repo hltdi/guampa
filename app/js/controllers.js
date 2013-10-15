@@ -69,7 +69,10 @@ function translateCtrl($scope, $routeParams, $http, DocumentAndTranslation) {
         for (var i=0; i < thedocument.sentences.length; i++) {
             var sent = {content: thedocument.sentences[i], editing: false}
             $scope.sentences.push(sent);
-            var trans = {content: thedocument.translations[i], editing: false}
+            var trans = {content: thedocument.translations[i].text,
+                         docid: thedocument.translations[i].docid,
+                         sentenceid: thedocument.translations[i].sentenceid,
+                         editing: false}
             $scope.translations.push(trans);
         }
     });
@@ -85,8 +88,8 @@ function translateCtrl($scope, $routeParams, $http, DocumentAndTranslation) {
 
         $http.post('/json/add_translation',
                    {text:translation.content,
-                    sentenceid: 1,   // XXX: don't always do sentence 1
-                    documentid: 1}).
+                    sentenceid: translation.sentenceid,
+                    documentid: translation.docid}).
             error(function(){
                 alert("oh noes couldn't post translation for some reason");
             });
