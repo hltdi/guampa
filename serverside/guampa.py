@@ -54,7 +54,6 @@ def lib(fn):
 def documents():
     docs = db.list_documents()
     out = {'documents': [{'title': doc.title, 'id':doc.id} for doc in docs]}
-    print(out)
     return(json.dumps(out))
 
 @app.route('/json/tags')
@@ -63,7 +62,6 @@ def documents():
 def tags():
     tags = db.list_tags()
     out = {'tags': [tag.text for tag in tags]}
-    print(out)
     return(json.dumps(out))
 
 @app.route('/json/documents/<path:tagname>')
@@ -72,7 +70,6 @@ def tags():
 def documents_for_tag(tagname):
     docs = db.documents_for_tagname(tagname)
     out = {'documents': [{'title': doc.title, 'id':doc.id} for doc in docs]}
-    print(out)
     return(json.dumps(out))
 
 @app.route('/json/document/<docid>')

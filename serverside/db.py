@@ -16,7 +16,7 @@ def get_session():
     """
     top = _app_ctx_stack.top
     if not hasattr(top, 'db_session'):
-        engine = create_engine(constants.THEDB, echo=True)
+        engine = create_engine(constants.THEDB, echo=False)
         Session = sessionmaker(bind=engine)
         top.db_session = Session()
     return top.db_session
