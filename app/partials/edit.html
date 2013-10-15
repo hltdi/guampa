@@ -1,30 +1,20 @@
         <h1>{{thedocument}}</h1>
-        <div class="row" ng-controller="translateCtrl">
-            <div class="span5">
-                <ul ng-repeat="sentence in sentences">
-                    <li>{{sentence.content}}</li>
-                </ul>
-            </div>
-            <div ng-app="editor" 
-                 class="span5 offset2">
-                <ul ng-repeat="sentence in translations">
-                    <li ng-dblclick="startEditing(sentence);">
-                        <span ng-hide="sentence.editing" class="translation">
-                            <span ng-if="sentence.content == null"
+            <div ng-controller="translateCtrl">
+            <div class="row" ng-repeat="pair in pairs">
+                <div class="span5">
+                    {{ pair[0].content }}
+                </div>
+                <div class="span5 offset2" ng-dblclick="startEditing(pair[1])">
+                    <div class="translation" ng-hide="pair[1].editing">
+                        <span ng-if="pair[1].content == null"
                                   class="notranslation" translate>NOTRANSLATION</span>
-                            {{sentence.content}}
-                        </span>
-                        <form ng-submit="doneEditing(sentence)" 
-                              ng-show="sentence.editing">
-                            <input ng-model="sentence.content">
-                        </form>
-                        <a ng-show="sentence.editing" ng-click="doneEditing(sentence);">Save</a>
-                        <a href="#modalComments" data-toggle="modal" ng-show="sentence.editing">View Comments</a>
-                    </li>
-                </ul>
-             </div>
-        </div>
-        <div id="modalComments" class="modal hide fade" tabindex="-1" role="dialog"
-             aria-labeledby="modalCommentsLabel" aria-hidden="true">
-           <p>test</p> 
+                        {{ pair[1].content }}
+                    </div>
+                    <form ng-submit="doneEditing(pair[1])" 
+                          ng-show="pair[1].editing">
+                        <input ng-model="pair[1].content">
+                    </form>
+                    <a ng-show="pair[1].editing" ng-click="doneEditing(pair[1]);">Save</a>
+                </div>
+            </div>
         </div>

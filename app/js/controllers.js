@@ -59,20 +59,19 @@ function translateCtrl($scope, $routeParams, $http, DocumentAndTranslation) {
 
     var docid = $routeParams.docid;
 
-    $scope.sentences = [];
-    $scope.translations = [];
+    $scope.pairs = [];
 
     DocumentAndTranslation.get({docid:docid},
     // ooh child, these things take callbacks.
     function(thedocument) {
         for (var i=0; i < thedocument.sentences.length; i++) {
             var sent = {content: thedocument.sentences[i], editing: false}
-            $scope.sentences.push(sent);
             var trans = {content: thedocument.translations[i].text,
                          docid: thedocument.translations[i].docid,
                          sentenceid: thedocument.translations[i].sentenceid,
                          editing: false}
-            $scope.translations.push(trans);
+            var pair = [sent, trans];
+            $scope.pairs.push(pair);
         }
     });
 
