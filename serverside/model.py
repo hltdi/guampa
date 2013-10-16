@@ -1,6 +1,7 @@
-import sqlalchemy
+import datetime
 
-from sqlalchemy import Column, Integer, String
+import sqlalchemy
+from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy import Table
 from sqlalchemy import ForeignKey
 from sqlalchemy import create_engine
@@ -83,6 +84,7 @@ class Translation(Base):
     text = Column(String)
     docid = Column(Integer, ForeignKey('documents.id'))
     sentenceid = Column(Integer, ForeignKey('sentences.id'))
+    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
 
     def __init__(self, text, docid, sentenceid):
         self.text = text
@@ -91,6 +93,23 @@ class Translation(Base):
 
     def __repr__(self):
        return ("<Translation(%d, '%s')>" % (self.id, self.text))
+
+class Comment(Base):
+    __tablename__ = 'comments'
+
+    id = Column(Integer, primary_key=True)
+    text = Column(String)
+    docid = Column(Integer, ForeignKey('documents.id'))
+    sentenceid = Column(Integer, ForeignKey('sentences.id'))
+    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+
+    def __init__(self, text, docid, sentenceid):
+        self.text = text
+        self.docid = docid
+        self.sentenceid = sentenceid
+
+    def __repr__(self):
+       return ("<Comment(%d, '%s')>" % (self.id, self.text))
 
 ### relationships.
 
