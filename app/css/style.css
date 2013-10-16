@@ -150,4 +150,12 @@ span.browsetag {
 .translation:hover {
     color: gray;
     text-decoration: underline;
-};
+}
+
+.savebutton {
+  cursor: pointer;
+}
+
+.inputtranslation {
+  width: 100%;
+}
