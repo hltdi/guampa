@@ -163,3 +163,7 @@ span.browsetag {
 .inputtranslation {
   width: 100%;
 }
+
+p.startpage-para {
+  font-size: large;
+}

@@ -1,10 +1,23 @@
-<h1 translate>STARTPAGE</h1>
+<h1>Guampa</h1>
+<h2 translate>HEADLINE</h1>
+<hr/>
 
-<h1>{{'HEADLINE' | translate}}</h1>
-<p>{{'PARAGRAPH' | translate}}</p>
-<p translate>PARAGRAPH</p>
+<div class="row-fluid">
+  <p class="span5 startpage-para" translate>PARAGRAPH1</p>
+  <p class="span5 startpage-para" translate>PARAGRAPH2</p>
+</div>
 
+<div class="row-fluid">
+  <p class="span5 startpage-para">
+    <a href="http://github.com/hltdi/guampa">Guampa on Github</a>
+  </p>
+  <p class="span5 startpage-para">
+    <a href="http://hltdi.github.io">HLTDI</a>
+  </p>
+</div>
+
+<hr/>
 <button ng-controller="TranslateCtrl" ng-click="changeLanguage('es')"
-        translate="BUTTON_LANG_ES"></button>
+        translate>BUTTON_LANG_ES</button>
 <button ng-controller="TranslateCtrl" ng-click="changeLanguage('en')"
-        translate="BUTTON_LANG_EN"></button>
+        translate>BUTTON_LANG_EN</button>
