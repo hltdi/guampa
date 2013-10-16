@@ -43,6 +43,7 @@ def main():
 
     with open(args.sourcefn, "w") as source, open(args.targetfn, "w") as target:
         for (s,t) in sentence_translation_pairs():
+            if (not s.text) or (not t.text): continue
             assert "\n" not in s.text
             assert "\n" not in t.text
             print(s.text, file=source)
