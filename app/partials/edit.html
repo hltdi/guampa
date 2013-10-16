@@ -12,9 +12,13 @@
                         </div>
                         <form ng-submit="doneEditing(pair[1])" 
                               ng-show="pair[1].editing">
-                            <input ng-model="pair[1].content">
+                            <input class="inputtranslation"
+                                   ng-model="pair[1].content">
                         </form>
-                        <a ng-show="pair[1].editing" ng-click="doneEditing(pair[1]);">Save</a>
+                        <a class="savebutton"
+                           ng-show="pair[1].editing"
+                           ng-click="doneEditing(pair[1]);"
+                           translate>SAVE</a>
                     </div>
                 </div>
             </div>
