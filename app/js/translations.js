@@ -9,7 +9,7 @@ var translationsEN = {
   DOCUMENTS: 'documents',
   PLEASECLICK: 'please click on a tag',
   SAVE: 'Save',
-  NOTRANSLATION: 'click to add translation',
+  NOTRANSLATION: 'double-click to add translation',
   BUTTON_LANG_ES: 'Spanish',
   BUTTON_LANG_EN: 'English'
 };
