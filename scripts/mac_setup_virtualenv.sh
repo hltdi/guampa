@@ -1,6 +1,6 @@
 #!/bin/bash
 
-virtualenv -p /usr/bin/python3 venv
+virtualenv -p /usr/local/bin/python3 venv
 . venv/bin/activate
 pip install Flask
 pip install sqlalchemy
