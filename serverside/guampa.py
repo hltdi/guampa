@@ -121,7 +121,7 @@ def add_translation():
 @utils.json
 @utils.nocache
 def sentencehistory(sentenceid):
-    """All the stuff you need to render a document in the editing interface."""
+    """All the stuff you need to render the history of a sentence."""
     sentenceid = int(sentenceid)
 
     sentence = db.get_sentence(sentenceid)
