@@ -117,5 +117,24 @@ def add_translation():
         abort(500)
     return "OK"
 
+@app.route('/json/sentencehistory/<sentenceid>')
+@utils.json
+@utils.nocache
+def sentencehistory(sentenceid):
+    """All the stuff you need to render a document in the editing interface."""
+    sentenceid = int(sentenceid)
+
+    sentence = db.get_sentence(sentenceid)
+    ## get all the translations and all the comments, sort them by timestamp.
+    comments = db.comments_for_sentence(sentenceid)
+    translations = db.translations_for_sentence(sentenceid)
+    items = []
+    for item in comments:
+        items.append({'text':item.text,'ts':str(item.timestamp),'type':'comment'})
+    for item in translations:
+        items.append({'text':item.text,'ts':str(item.timestamp),'type':'translation'})
+    out = {'text': sentence.text, 'items':items}
+    return(json.dumps(out))
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

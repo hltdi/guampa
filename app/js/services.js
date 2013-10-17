@@ -38,3 +38,12 @@ factory('DocumentAndTranslation',
                        {query: {method:'GET', isArray:true}});
     }
 );
+
+angular.module('sentenceHistoryService', ['ngResource']).
+factory('SentenceHistory',
+    function($resource){
+      return $resource('json/sentencehistory/:sentenceid',
+                       {},
+                       {query: {method:'GET', isArray:true}});
+    }
+);

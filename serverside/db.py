@@ -3,6 +3,7 @@ from sqlalchemy.orm import sessionmaker
 
 import constants
 import model
+from model import Comment
 from model import Document
 from model import Sentence
 from model import Tag
@@ -71,6 +72,16 @@ def translations_for_sentence(sentid):
         out.append(instance)
     return out
 
+def comments_for_sentence(sentid):
+    """Returns a list of comments for the given sentid."""
+    out = []
+    session = get_session()
+    for instance in session.query(Comment).\
+                    filter(Comment.sentenceid == sentid).\
+                    order_by(Comment.id.desc()): 
+        out.append(instance)
+    return out
+
 def latest_translation_for_sentence(sentid):
     """Returns the latest translation for the given sentid."""
     out = []
@@ -91,10 +102,16 @@ def sentences_with_translations_for_document(docid):
         out.append((s,t))
     return out
 
+def get_sentence(sentenceid):
+    """Lookup a sentence by sentenceid. Return the model object."""
+    session = get_session()
+    sentence = session.query(Sentence).get(sentenceid)
+    return sentence
+
 def save_translation(docid, sentenceid, text):
     session = get_session()
 
-    sentence = session.query(Sentence).get(sentenceid)
+    sentence = get_sentence(sentenceid)
     assert sentence.docid == docid
 
     translation = Translation(text, docid, sentenceid)

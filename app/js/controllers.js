@@ -93,3 +93,20 @@ function translateCtrl($scope, $routeParams, $http, DocumentAndTranslation) {
             });
     }
 }
+
+function sortByTs(array) {
+    return array.sort(function(a, b) {
+        var x = a['ts']; var y = b['ts'];
+        return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+    });
+}
+
+function sentenceCtrl($scope, $routeParams, $http, SentenceHistory) {
+    var sentenceid = $routeParams.sentenceid;
+
+    SentenceHistory.get({sentenceid:sentenceid},
+    function(sentencehistory) {
+        $scope.text = sentencehistory.text;
+        $scope.items = sortByTs(sentencehistory.items);
+    });
+}
