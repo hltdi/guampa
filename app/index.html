@@ -6,8 +6,8 @@
 	<title>Guampa</title>
 	
 	<!-- css files -->
-	<link href="css/style.css" rel="stylesheet" type="text/css" />
 	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -19,7 +19,27 @@
                     <a href="{{menu.url}}" ng-click="changeActive(menu.id)"
                        ng-bind-template="{{menu.text}}" translate></a>
     				</li>
-      			</ul>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Languages
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#" ng-controller="TranslateCtrl" 
+                                            ng-click="changeLanguage('es')" translate>
+                                    BUTTON_LANG_ES
+                                </a>  
+                            </li>
+                            <li>
+                                <a href="#" ng-controller="TranslateCtrl"
+                                          ng-click="changeLanguage('en')" translate>
+                                    BUTTON_LANG_EN
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+    			</ul>
   			</div>
 		</div>
 	</div>
@@ -30,6 +50,8 @@
   	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
   	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-resource.js"></script>
     <script src="lib/angular-translate.min.js"></script>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/bootstrap-dropdown.js"></script>
     <script src="js/translations.js"></script>
   	<script src="js/app.js"></script>
   	<script src="js/services.js"></script>

@@ -4,7 +4,8 @@
 <div ng-controller="BrowseCtrl">
 
   <h1 translate>TAGS</h1>
-  <p> <span class="browsetag" ng-repeat="tag in allTags.tags">
+  <p>
+      <span class="browsetag" ng-repeat="tag in allTags.tags">
         &nbsp;[<a href="#/browse/{{tag}}">{{tag}}</a>]&nbsp;
       </span>
   </p>
