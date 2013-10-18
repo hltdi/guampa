@@ -7,6 +7,7 @@ var app = angular.module('guampa',
                           'allTagsService',
                           'documentsForTagService',
                           'documentAndTranslationService',
+                          'sentenceHistoryService',
                           'guampa.controllers',
                           'pascalprecht.translate']);
 
@@ -20,6 +21,8 @@ app.config(['$locationProvider','$routeProvider',
                          controller: 'BrowseCtrl'}).
         when('/browse/*tagname', {templateUrl: 'partials/browse.html',
                                   controller: 'BrowseCtrl'}).
+        when('/sentence/:sentenceid', {templateUrl: 'partials/sentence.html',
+                                      }).
         otherwise({redirectTo: '/start'});
 }]);
 

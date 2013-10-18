@@ -25,7 +25,7 @@ var translationsES= {
   BROWSEHEADER: 'Guampa: Navegar',
   PLEASECLICK: 'favor de hacer clic en una etiqueta',
   SAVE: 'Guardar',
-  NOTRANSLATION: 'hacer clic para añadir una traducción',
+  NOTRANSLATION: 'hacer doble clic para añadir una traducción',
   BUTTON_LANG_ES: 'Español',
   BUTTON_LANG_EN: 'Ingles'
 };
