@@ -16,7 +16,9 @@ import utils
 import urllib.parse
 
 DEBUG = True
+SECRET_KEY = 'development key'
 app = Flask(__name__)
+app.config.from_object(__name__)
 
 ## this file is in serverside, but we need one directory up.
 myfn = os.path.abspath(__file__)
@@ -135,6 +137,36 @@ def sentencehistory(sentenceid):
         items.append({'text':item.text,'ts':str(item.timestamp),'type':'translation'})
     out = {'text': sentence.text, 'items':items}
     return(json.dumps(out))
+
+
+### Dealing with logins; demonstrates sessions and the g global.
+### Need to make this work with Angular templating instead.
+@app.before_request
+def before_request():
+    g.user = None
+    if 'user_id' in session:
+        g.user = session['user_id']
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    """Logs the user in."""
+    error = None
+    if request.method == 'POST':
+        user = request.form['username']
+        if user is None:
+            error = 'Invalid username'
+        else:
+            flash('You were logged in')
+            session['user_id'] = user
+            g.user = session['user_id']
+    return render_template('login.html', error=error)
+
+@app.route('/logout')
+def logout():
+    """Logs the user out."""
+    flash('You were logged out')
+    session.pop('user_id', None)
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
