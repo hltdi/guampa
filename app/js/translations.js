@@ -11,7 +11,8 @@ var translationsEN = {
   SAVE: 'Save',
   NOTRANSLATION: 'double-click to add translation',
   BUTTON_LANG_ES: 'Spanish',
-  BUTTON_LANG_EN: 'English'
+  BUTTON_LANG_EN: 'English',
+  LANGUAGES: 'Languages'
 };
  
 var translationsES= {
@@ -27,7 +28,8 @@ var translationsES= {
   SAVE: 'Guardar',
   NOTRANSLATION: 'hacer doble clic para añadir una traducción',
   BUTTON_LANG_ES: 'Español',
-  BUTTON_LANG_EN: 'Ingles'
+  BUTTON_LANG_EN: 'Ingles',
+  LANGUAGES: 'Idiomas'
 };
 
 var codes_to_translations = {
