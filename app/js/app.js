@@ -8,6 +8,7 @@ var app = angular.module('guampa',
                           'documentsForTagService',
                           'documentAndTranslationService',
                           'sentenceHistoryService',
+                          'currentUserService',
                           'guampa.controllers',
                           'pascalprecht.translate']);
 

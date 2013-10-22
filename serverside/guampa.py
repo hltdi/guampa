@@ -149,6 +149,17 @@ def before_request():
     if 'user_id' in session:
         g.user = db.get_user(session['user_id'])
 
+@app.route('/json/currentuser')
+@utils.json
+@utils.nocache
+def currentuser():
+    """Surface the currently logged in user to the client."""
+    if g.user:
+        out = {'username': g.user.username, 'fullname':g.user.fullname}
+    else:
+        out = {'username': None, 'fullname':None}
+    return(json.dumps(out))
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """Logs the user in."""

@@ -47,3 +47,12 @@ factory('SentenceHistory',
                        {query: {method:'GET', isArray:true}});
     }
 );
+
+angular.module('currentUserService', ['ngResource']).
+factory('CurrentUser',
+    function($resource){
+      return $resource('json/currentuser',
+                       {},
+                       {query: {method:'GET', isArray:true}});
+    }
+);

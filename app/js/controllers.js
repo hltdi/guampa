@@ -6,8 +6,8 @@ var mod = angular.module('guampa.controllers', []);
 
 mod.controller(
     'MenuCtrl',
-    ['$scope','$location',
-function ($scope, $location) {
+    ['$scope','$location', 'CurrentUser',
+function ($scope, $location, CurrentUser) {
 	$scope.menuList = [
 	   {id:0, url:'#/start', text:'START', style:""},
 	   {id:1, url:'#/browse', text:'BROWSE', style:""},
@@ -26,6 +26,12 @@ function ($scope, $location) {
 		}
 		$scope.menuList[id].style = "active";
 	}
+
+    $scope.currentUser = null;
+    $scope.refreshUser = function() {
+        $scope.currentUser = CurrentUser.get();
+    }
+    $scope.refreshUser();
 }]);
 
 function BrowseCtrl($scope, $http, $routeParams,

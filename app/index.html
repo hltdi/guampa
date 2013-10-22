@@ -39,6 +39,15 @@
                             </li>
                         </ul>
                     </li>
+                    <li ng-if="currentUser.username">
+                      <a>logged in as {{currentUser.username}}</a>
+                    </li>
+                    <li ng-if="currentUser.username">
+                      <a href="logout"><em>log out</em></a>
+                    </li>
+                    <li ng-if="!currentUser.username">
+                      <a href="login"><em>log in</em></a>
+                    </li>
     			</ul>
   			</div>
 		</div>
