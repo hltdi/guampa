@@ -106,12 +106,14 @@ def document(docid):
 @utils.json
 @utils.nocache
 def add_translation():
+    if g.user is None:
+        abort(403)
     try:
         d = request.get_json()
         text = d['text']
         sentenceid = d['sentenceid']
         documentid = d['documentid']
-        db.save_translation(documentid, sentenceid, text)
+        db.save_translation(g.user.id, documentid, sentenceid, text)
     except Exception as inst:
         import traceback
         traceback.print_exc()
@@ -145,20 +147,21 @@ def sentencehistory(sentenceid):
 def before_request():
     g.user = None
     if 'user_id' in session:
-        g.user = session['user_id']
+        g.user = db.get_user(session['user_id'])
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """Logs the user in."""
     error = None
     if request.method == 'POST':
-        user = request.form['username']
+        username = request.form['username']
+        user = db.lookup_username(username)
         if user is None:
             error = 'Invalid username'
         else:
             flash('You were logged in')
-            session['user_id'] = user
-            g.user = session['user_id']
+            session['user_id'] = user.id
+            g.user = user # session['user_id']
     return render_template('login.html', error=error)
 
 @app.route('/logout')

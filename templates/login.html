@@ -6,8 +6,8 @@
 <body>
   <h1>tiny login demo</h1>
   <div>
-      {% if g.user %}logged in: {{ g.user }} 
-      <a href="{{ url_for('logout') }}">sign out [{{ g.user }}]</a>
+      {% if g.user %}logged in: {{ g.user.username }} 
+      <a href="{{ url_for('logout') }}">sign out [{{ g.user.username }}]</a>
       {% endif %}
   </div>
   {% with flashes = get_flashed_messages() %}

@@ -19,18 +19,18 @@ class User(Base):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    username = Column(String)
     fullname = Column(String)
-    password = Column(String)
+    pwhash = Column(String)
 
-    def __init__(self, name, fullname, password):
-        self.name = name
+    def __init__(self, username, fullname, pwhash):
+        self.username = username
         self.fullname = fullname
-        self.password = password
+        self.pwhash = pwhash
 
     def __repr__(self):
-       return ("<User('%s','%s', '%s')>"
-                % (self.name, self.fullname, self.password))
+       return ("<User('%d', '%s','%s')>"
+                % (self.id, self.username, self.fullname))
 
 class Document(Base):
     __tablename__ = 'documents'
@@ -85,8 +85,10 @@ class Translation(Base):
     docid = Column(Integer, ForeignKey('documents.id'))
     sentenceid = Column(Integer, ForeignKey('sentences.id'))
     timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+    userid = Column(Integer, ForeignKey('users.id'))
 
-    def __init__(self, text, docid, sentenceid):
+    def __init__(self, userid, text, docid, sentenceid):
+        self.userid = userid
         self.text = text
         self.docid = docid
         self.sentenceid = sentenceid
@@ -102,8 +104,10 @@ class Comment(Base):
     docid = Column(Integer, ForeignKey('documents.id'))
     sentenceid = Column(Integer, ForeignKey('sentences.id'))
     timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+    userid = Column(Integer, ForeignKey('users.id'))
 
-    def __init__(self, text, docid, sentenceid):
+    def __init__(self, userid, text, docid, sentenceid):
+        self.userid = userid
         self.text = text
         self.docid = docid
         self.sentenceid = sentenceid

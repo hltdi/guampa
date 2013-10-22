@@ -8,6 +8,7 @@ from model import Document
 from model import Sentence
 from model import Tag
 from model import Translation
+from model import User
 
 from flask import _app_ctx_stack
 
@@ -108,13 +109,26 @@ def get_sentence(sentenceid):
     sentence = session.query(Sentence).get(sentenceid)
     return sentence
 
-def save_translation(docid, sentenceid, text):
+def get_user(userid):
+    """Lookup a user by userid. Return the model object."""
+    session = get_session()
+    user = session.query(User).get(userid)
+    return user
+
+def lookup_username(username):
+    """Lookup a user by userid. Return the model object or None."""
+    session = get_session()
+    user = session.query(User).filter(User.username == username).first()
+    return user
+
+def save_translation(userid, docid, sentenceid, text):
     session = get_session()
 
     sentence = get_sentence(sentenceid)
     assert sentence.docid == docid
+    user = get_user(userid)
+    assert user
 
-    translation = Translation(text, docid, sentenceid)
-
+    translation = Translation(userid, text, docid, sentenceid)
     session.add(translation)
     session.commit()
