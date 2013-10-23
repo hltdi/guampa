@@ -60,7 +60,8 @@ function ($scope, $translate) {
     };
 }]);
 
-function translateCtrl($scope, $routeParams, $http, DocumentAndTranslation) {
+function translateCtrl($scope, $routeParams, $http, DocumentAndTranslation,
+                       CurrentUser) {
     $scope.editedItem = null;
 
     var docid = $routeParams.docid;
@@ -98,6 +99,12 @@ function translateCtrl($scope, $routeParams, $http, DocumentAndTranslation) {
                 alert("oh noes couldn't post translation for some reason");
             });
     }
+
+    $scope.currentUser = null;
+    $scope.refreshUser = function() {
+        $scope.currentUser = CurrentUser.get();
+    }
+    $scope.refreshUser();
 }
 
 function sortByTs(array) {

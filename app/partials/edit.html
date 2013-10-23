@@ -4,7 +4,8 @@
                     <div class="span5">
                         {{ pair[0].content }}
                     </div>
-                    <div class="span5 offset2" ng-dblclick="startEditing(pair[1])">
+                    <div ng-if="currentUser.username"
+                         class="span5 offset2" ng-dblclick="startEditing(pair[1])">
                         <div class="translation" ng-hide="pair[1].editing">
                             <span ng-if="pair[1].content == null"
                                       class="notranslation" translate>NOTRANSLATION</span>
@@ -19,6 +20,15 @@
                            ng-show="pair[1].editing"
                            ng-click="doneEditing(pair[1]);"
                            translate>SAVE</a>
+                    </div>
+                    <div ng-if="!currentUser.username"
+                         class="span5 offset2">
+                        <div class="translation-notloggedin">
+                            <span ng-if="pair[1].content == null"
+                                  class="notranslation"
+                                  translate>NOTRANSLATION_NOTLOGGEDIN</span>
+                            {{ pair[1].content }}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -10,6 +10,7 @@ var translationsEN = {
   PLEASECLICK: 'please click on a tag',
   SAVE: 'Save',
   NOTRANSLATION: 'double-click to add translation',
+  NOTRANSLATION_NOTLOGGEDIN: 'not translated yet',
   BUTTON_LANG_ES: 'Spanish',
   BUTTON_LANG_EN: 'English',
   LANGUAGES: 'Languages'
@@ -27,6 +28,7 @@ var translationsES= {
   PLEASECLICK: 'favor de hacer clic en una etiqueta',
   SAVE: 'Guardar',
   NOTRANSLATION: 'hacer doble clic para añadir una traducción',
+  NOTRANSLATION_NOTLOGGEDIN: 'todavía no tiene traducción',
   BUTTON_LANG_ES: 'Español',
   BUTTON_LANG_EN: 'Ingles',
   LANGUAGES: 'Idiomas'
