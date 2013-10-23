@@ -123,3 +123,25 @@ function sentenceCtrl($scope, $routeParams, $http, SentenceHistory) {
         $scope.items = sortByTs(sentencehistory.items);
     });
 }
+
+function LoginCtrl($scope, $route, $http, CurrentUser) {
+    $scope.username = "";
+    $scope.password = "";
+
+    $scope.doLogin = function(u,p) {
+        $http.post('json/login',
+                   {username: u, password: p}).
+            success(function() {
+                $route.reload();
+            }).
+            error(function(){
+                alert("oh noes couldn't log in for some reason");
+            });
+    }
+
+    $scope.currentUser = null;
+    $scope.refreshUser = function() {
+        $scope.currentUser = CurrentUser.get();
+    }
+    $scope.refreshUser();
+}

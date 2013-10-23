@@ -22,8 +22,10 @@ app.config(['$locationProvider','$routeProvider',
                          controller: 'BrowseCtrl'}).
         when('/browse/*tagname', {templateUrl: 'partials/browse.html',
                                   controller: 'BrowseCtrl'}).
-        when('/sentence/:sentenceid', {templateUrl: 'partials/sentence.html',
-                                      }).
+        when('/sentence/:sentenceid', {templateUrl: 'partials/sentence.html'}).
+        when('/login', {templateUrl: 'partials/login.html',
+                        controller: LoginCtrl}).
+        when('/logout', {templateUrl: 'partials/logout.html'}).
         otherwise({redirectTo: '/start'});
 }]);
 

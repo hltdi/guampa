@@ -160,6 +160,33 @@ def currentuser():
         out = {'username': None, 'fullname':None}
     return(json.dumps(out))
 
+@app.route('/json/login', methods=['POST'])
+@utils.json
+@utils.nocache
+def json_login():
+    """Logs the user in."""
+    d = request.get_json()
+    username = d['username']
+    password = d['password']
+
+    user = db.lookup_username(username)
+    ## also check password.
+    if user is None:
+        error = 'Invalid username'
+        abort(403)
+    else:
+        session['user_id'] = user.id
+        g.user = user
+    return "OK"
+
+@app.route('/json/logout')
+@utils.json
+@utils.nocache
+def json_logout():
+    """Logs the user out."""
+    session.pop('user_id', None)
+    return "OK"
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """Logs the user in."""
