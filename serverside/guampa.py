@@ -11,6 +11,7 @@ from flask import Flask, request, session, url_for, redirect, render_template,\
                   abort, g, flash, _app_ctx_stack, send_from_directory, jsonify
 from werkzeug import check_password_hash, generate_password_hash
 
+import model
 import db
 import utils
 import urllib.parse
@@ -121,6 +122,12 @@ def add_translation():
         abort(500)
     return "OK"
 
+
+def ts_format(timestamp):
+    """Given a datetime.datetime object, format it. This could/should probably
+    be localized."""
+    return timestamp.strftime("%Y-%m-%d %H:%M:%S")
+
 @app.route('/json/sentencehistory/<sentenceid>')
 @utils.json
 @utils.nocache
@@ -130,16 +137,18 @@ def sentencehistory(sentenceid):
 
     sentence = db.get_sentence(sentenceid)
     ## get all the translations and all the comments, sort them by timestamp.
-    comments = db.comments_for_sentence(sentenceid)
-    translations = db.translations_for_sentence(sentenceid)
+    comments_users = db.things_for_sentence_with_user(sentenceid, model.Comment)
+    translations_users = db.things_for_sentence_with_user(sentenceid,
+                                                          model.Translation)
     items = []
-    for item in comments:
-        items.append({'text':item.text,'ts':str(item.timestamp),'type':'comment'})
-    for item in translations:
-        items.append({'text':item.text,'ts':str(item.timestamp),'type':'translation'})
-    out = {'text': sentence.text, 'items':items}
+    for (item, user) in comments_users:
+        items.append({'text':item.text,'ts':ts_format(item.timestamp),
+                      'username':user.username,'type':'comment'})
+    for (item, user) in translations_users:
+        items.append({'text':item.text,'ts':ts_format(item.timestamp),
+                      'username':user.username, 'type':'translation'})
+    out = {'docid': sentence.docid, 'text': sentence.text, 'items':items}
     return(json.dumps(out))
-
 
 ### Dealing with logins; demonstrates sessions and the g global.
 ### Need to make this work with Angular templating instead.

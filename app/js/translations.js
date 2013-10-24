@@ -18,6 +18,9 @@ var translationsEN = {
   LOGOUT: 'Log out',
   LOGOUTMSG: 'You have successfully logged out.',
   HISTORY: 'history',
+  SENTENCEHISTORY: 'sentence history',
+  SOURCESENTENCE: 'untranslated:',
+  RETURNTODOCUMENT: 'return to document',
 };
  
 var translationsES= {
@@ -40,6 +43,9 @@ var translationsES= {
   LOGOUT: 'LOGOUT',
   LOGOUTMSG: 'LOGOUTMSG',
   HISTORY: 'historia',
+  SENTENCEHISTORY: 'historia de esta frase',
+  SOURCESENTENCE: 'en original:',
+  RETURNTODOCUMENT: 'regresar al documento',
 };
 
 var codes_to_translations = {

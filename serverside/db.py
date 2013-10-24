@@ -83,6 +83,16 @@ def comments_for_sentence(sentid):
         out.append(instance)
     return out
 
+def things_for_sentence_with_user(sentid, klass):
+    session = get_session()
+    out = []
+    for thing,user in session.query(klass,User).\
+                         join(User).\
+                         filter(klass.userid == User.id).\
+                         filter(klass.sentenceid == sentid):
+        out.append((thing,user))
+    return out
+
 def latest_translation_for_sentence(sentid):
     """Returns the latest translation for the given sentid."""
     out = []

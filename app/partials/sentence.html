@@ -1,12 +1,17 @@
-<h1>YEAAAAAHHH!!</h1>
+<h1 translate>SENTENCEHISTORY</h1>
 
 <div ng-controller="sentenceCtrl">
-    <p>{{text}}</p>
-    <div class="row-fluid" ng-repeat="item in items">
-        <div class="span2">
+    <p><i translate>SOURCESENTENCE</i> {{text}}</p>
+    <p>[<a href="#/edit/{{docid}}" translate>RETURNTODOCUMENT</a>]</p>
+    <hr/>
+    <div class="row-fluid translateRow" ng-repeat="item in items">
+        <div class="span5">
             {{item.text}}
         </div>
-        <div class="span2">
+        <div class="span1">
+            {{item.username}}
+        </div>
+        <div class="span1">
             {{item.type}}
         </div>
         <div class="span2">

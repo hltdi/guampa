@@ -128,6 +128,7 @@ function sentenceCtrl($scope, $routeParams, $http, SentenceHistory) {
     SentenceHistory.get({sentenceid:sentenceid},
     function(sentencehistory) {
         $scope.text = sentencehistory.text;
+        $scope.docid = sentencehistory.docid;
         $scope.items = sortByTs(sentencehistory.items);
     });
 }
