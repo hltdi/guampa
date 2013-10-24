@@ -21,6 +21,7 @@ var translationsEN = {
   SENTENCEHISTORY: 'sentence history',
   SOURCESENTENCE: 'untranslated:',
   RETURNTODOCUMENT: 'return to document',
+  ADDCOMMENT: 'add comment',
 };
  
 var translationsES= {
@@ -46,6 +47,7 @@ var translationsES= {
   SENTENCEHISTORY: 'historia de esta frase',
   SOURCESENTENCE: 'en original:',
   RETURNTODOCUMENT: 'regresar al documento',
+  ADDCOMMENT: 'enviar un comentario',
 };
 
 var codes_to_translations = {

@@ -122,14 +122,42 @@ function sortByTs(array) {
     });
 }
 
-function sentenceCtrl($scope, $routeParams, $http, SentenceHistory) {
+function sentenceCtrl($scope, $routeParams, $http, SentenceHistory,
+                      CurrentUser) {
+    $scope.newcomment = {text:""};
     var sentenceid = $routeParams.sentenceid;
 
-    SentenceHistory.get({sentenceid:sentenceid},
-    function(sentencehistory) {
-        $scope.text = sentencehistory.text;
-        $scope.docid = sentencehistory.docid;
-        $scope.items = sortByTs(sentencehistory.items);
+    $scope.refreshHistory = function() {
+        SentenceHistory.get({sentenceid:sentenceid},
+        function(sentencehistory) {
+            $scope.text = sentencehistory.text;
+            $scope.docid = sentencehistory.docid;
+            $scope.items = sortByTs(sentencehistory.items);
+        });
+    }
+    $scope.refreshHistory();
+
+    $scope.sendComment = function(newcomment) {
+        $http.post('json/add_comment',
+                   {text: newcomment.text,
+                    sentenceid: sentenceid,
+                    documentid: $scope.docid}).
+            success(function(){
+                $scope.newcomment.text = "";
+                $scope.refreshHistory();
+            }).
+            error(function(){
+                alert("oh noes couldn't post comment for some reason");
+            });
+    }
+
+    $scope.currentUser = null;
+    $scope.refreshUser = function() {
+        $scope.currentUser = CurrentUser.get();
+    }
+    $scope.refreshUser();
+    $scope.$on('UserChanged', function(event, user) {
+        $scope.currentUser = user;
     });
 }
 

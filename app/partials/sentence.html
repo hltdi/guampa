@@ -4,6 +4,15 @@
     <p><i translate>SOURCESENTENCE</i> {{text}}</p>
     <p>[<a href="#/edit/{{docid}}" translate>RETURNTODOCUMENT</a>]</p>
     <hr/>
+
+    <div class="row-fluid" ng-if="currentUser.username">
+        <form ng-submit="sendComment(newcomment);">
+            <input class="span5 inputComment" ng-model="newcomment.text">
+            <a class="savebutton" ng-click="sendComment(newcomment);" translate>ADDCOMMENT</a>
+        </form>
+        <hr/>
+    </div>
+
     <div class="row-fluid translateRow" ng-repeat="item in items">
         <div class="span5">
             {{item.text}}

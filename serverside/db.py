@@ -131,7 +131,8 @@ def lookup_username(username):
     user = session.query(User).filter(User.username == username).first()
     return user
 
-def save_translation(userid, docid, sentenceid, text):
+def save_thing(klass, userid, docid, sentenceid, text):
+    """Save either a translation or a comment."""
     session = get_session()
 
     sentence = get_sentence(sentenceid)
@@ -139,6 +140,12 @@ def save_translation(userid, docid, sentenceid, text):
     user = get_user(userid)
     assert user
 
-    translation = Translation(userid, text, docid, sentenceid)
-    session.add(translation)
+    item = klass(userid, text, docid, sentenceid)
+    session.add(item)
     session.commit()
+
+def save_translation(userid, docid, sentenceid, text):
+    save_thing(Translation, userid, docid, sentenceid, text)
+
+def save_comment(userid, docid, sentenceid, text):
+    save_thing(Comment, userid, docid, sentenceid, text)

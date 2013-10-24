@@ -122,6 +122,25 @@ def add_translation():
         abort(500)
     return "OK"
 
+@app.route('/json/add_comment', methods=['post'])
+@utils.json
+@utils.nocache
+def add_comment():
+    if g.user is None:
+        abort(403)
+    try:
+        d = request.get_json()
+        text = d['text']
+        sentenceid = d['sentenceid']
+        documentid = d['documentid']
+        db.save_comment(g.user.id, documentid, sentenceid, text)
+    except Exception as inst:
+        import traceback
+        traceback.print_exc()
+        print("it was an exception somewhere")
+        abort(500)
+    return "OK"
+
 
 def ts_format(timestamp):
     """Given a datetime.datetime object, format it. This could/should probably
