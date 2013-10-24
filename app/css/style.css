@@ -167,3 +167,8 @@ span.browsetag {
 p.startpage-para {
   font-size: large;
 }
+
+.historylink {
+    font-style: italic;
+    color: #aaa;
+}

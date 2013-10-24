@@ -30,5 +30,10 @@
                             {{ pair[1].content }}
                         </div>
                     </div>
+                    <div class="span1" ng-if="pair[1].content">
+                        [<a class="historylink"
+                           href="#/sentence/{{pair[1].sentenceid}}"
+                           translate>HISTORY</a>]
+                    </div>
                 </div>
             </div>

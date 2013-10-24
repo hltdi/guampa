@@ -17,6 +17,7 @@ var translationsEN = {
   LOGIN: 'Log in',
   LOGOUT: 'Log out',
   LOGOUTMSG: 'You have successfully logged out.',
+  HISTORY: 'history',
 };
  
 var translationsES= {
@@ -38,6 +39,7 @@ var translationsES= {
   LOGIN: 'LOGIN',
   LOGOUT: 'LOGOUT',
   LOGOUTMSG: 'LOGOUTMSG',
+  HISTORY: 'historia',
 };
 
 var codes_to_translations = {
