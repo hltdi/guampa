@@ -2,6 +2,8 @@
 \usepackage{lrec2006}
 \usepackage{graphicx}
 \usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\interfootnotelinepenalty=10000
 
 \title{Guampa: a Toolkit for Collaborative Translation}
 
@@ -70,12 +72,12 @@ software and run their own instance for their own purposes.
 There is a wealth of software, both open-source and proprietary, to assist
 translators in their work, but we are not aware of computer-assisted
 translation systems that are designed specifically for collaboration among
-non-professional translators. Tatoeba (\url{http://tatoeba.org/eng/}) is a
+non-professional translators. Tatoeba \cite{tatoeba} is a
 project dedicated to collecting translations of sentences in many languages.
 Users may add translations or correct the translations of other users by
 providing alternate translations. However, genuine collaboration is not
 facilitated since no history is available, and the focus is on the sentence
-rather than the document. Traduwiki (\url{http://traduwiki.org/}) comes closer
+rather than the document. Traduwiki \cite{traduwiki} comes closer
 to our goals; while it is intended for the collaborative translation of
 documents, it is not open-source, and does not offer an easy way to export
 training data for machine translation systems. In addition, development appears
@@ -130,16 +132,16 @@ development version has interfaces in English and Spanish, with Guarani coming
 soon. Adding more languages as appropriate is straightforward, requiring very
 few code changes. Additionally, the sentence segmenter can easily be changed
 for locating sentence boundaries in different languages; our development
-version uses the Punkt segmenter for Spanish from NLTK.
+version uses the Punkt segmenter for Spanish from NLTK \cite{nltkbook}.
 
 
 \subsection{Importing Documents, Exporting Bitext}
 For populating a new instance of Guampa, we include scripts to extract
 plain-text versions of Wikipedia articles from Wikipedia database dumps
-\footnote{Complete copies of Wikipedias can be downloaded at
-\url{http://dumps.wikimedia.org/}; our tool builds on the Wikipedia Extractor
-script from the Medialab at the University of Pisa. }, providing
-source-language documents for a new installation of Guampa.
+\footnote{Complete copies of Wikipedias can be downloaded at \\
+\url{http://dumps.wikimedia.org/}}, providing source-language documents for a
+new installation of Guampa. Our tool builds on the Wikipedia Extractor
+script from the Medialab at the University of Pisa \cite{pisa-wp-extractor}.
 
 However, for some source languages, such as English or Spanish, importing an
 entire Wikipedia would overwhelm both the server and the users. Fortunately,
@@ -151,8 +153,7 @@ appropriate subcategories (such as "Science" or "Biography"), which are pulled
 from the list structure of the document.
 
 For some language pairs and user communities, it may be appropriate to import
-an entire Wikipedia into Guampa \footnote{As of this writing, there are fewer
-than three thousand articles in the Guarani Wikipedia, for example.} for
+an entire Wikipedia into Guampa \footnote{For example, as of this writing there are fewer than three thousand articles in the Guarani Wikipedia.} for
 translation into another language. This approach is also supported.
 
 We also include a script for easy export of bitext sentences; since the system
@@ -165,13 +166,14 @@ translated documents and adding them to the target-language Wikipedia.
 
 
 \section{Implementation}
-Guampa is a web application, with a user interface made of the AngularJS and
-Bootstrap toolkits. We internationalize the user interface with the
-angular-translate package. The server side of the application is implemented in
-Python 3, using the Flask micro-framework to manage the web application,
-SQLAlchemy for object-relational mapping, and SQLite as a database. SQLite
-could easily be replaced with a more industrial-scale database, should the need
-arise.
+Guampa is a web application, with a user interface made of the AngularJS
+\cite{angularjs} and Bootstrap \cite{bootstrap} toolkits. We internationalize
+the user interface with the angular-translate package \cite{angular-translate}.
+The server side of the application is implemented in Python 3, using the Flask
+micro-framework \cite{flask}, SQLAlchemy
+\cite{sqlalchemy} for object-relational mapping, and SQLite \cite{sqlite} as a
+database. SQLite could easily be replaced with a more industrial-scale
+database, should the need arise.
 
 \section{Conclusions and Future Work}
 In collaboration with language learners and activists in Paraguay, we will use
@@ -193,13 +195,13 @@ in a translation memory, with pluggable morphological analysis, and integrated
 suggestions from machine translation. Our long-term goal is for Guampa to
 become a collaborative computer-assisted translation tool.
 
-Guampa is free software, released under the GPLv3 and available on GitHub at
-\url{http://github.com/hltdi/guampa}, with a live demo server linked from that
+Guampa is free software, released under the GPLv3 and available on GitHub at:
+\\
+\url{http://github.com/hltdi/guampa} , with a live demo server linked from that
 site. It is under active development, but is already relatively easy to install
 and adapt the particularities of different language pairs and the needs of
-different translation communities. We
-welcome suggestions, bug reports, questions, doubts, and development
-collaborators!
+different translation communities. We welcome suggestions, bug reports,
+questions, doubts, and development collaborators!
 
 \bibliographystyle{lrec2006}
 \bibliography{guampa}
