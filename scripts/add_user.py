@@ -6,7 +6,7 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from werkzeug import check_password_hash, generate_password_hash
+from werkzeug import generate_password_hash
 
 import constants
 import model
@@ -19,13 +19,14 @@ Session = sessionmaker(bind=engine)
 Base = model.Base
 Base.metadata.create_all(engine)
 
-def save_user(username, fullname, pwhash):
+def save_user(username, fullname, password):
     session = Session()
     user = session.query(User).filter(User.username == username).first()
     if user is not None:
         print("username already exists: {0}".format(username))
         print(user)
         return
+    pwhash = generate_password_hash(password)
     user = User(username, fullname, pwhash)
     session.add(user)
     session.commit()

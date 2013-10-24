@@ -9,7 +9,7 @@ import os
 
 from flask import Flask, request, session, url_for, redirect, render_template,\
                   abort, g, flash, _app_ctx_stack, send_from_directory, jsonify
-from werkzeug import check_password_hash, generate_password_hash
+from werkzeug import check_password_hash
 
 import model
 import db
@@ -198,9 +198,12 @@ def json_login():
     password = d['password']
 
     user = db.lookup_username(username)
-    ## also check password.
+    success = check_password_hash(user.pwhash, password)
     if user is None:
         error = 'Invalid username'
+        abort(403)
+    elif not success:
+        error = 'Invalid password'
         abort(403)
     else:
         session['user_id'] = user.id
@@ -214,28 +217,6 @@ def json_logout():
     """Logs the user out."""
     session.pop('user_id', None)
     return "OK"
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    """Logs the user in."""
-    error = None
-    if request.method == 'POST':
-        username = request.form['username']
-        user = db.lookup_username(username)
-        if user is None:
-            error = 'Invalid username'
-        else:
-            flash('You were logged in')
-            session['user_id'] = user.id
-            g.user = user # session['user_id']
-    return render_template('login.html', error=error)
-
-@app.route('/logout')
-def logout():
-    """Logs the user out."""
-    flash('You were logged out')
-    session.pop('user_id', None)
-    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
