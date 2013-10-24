@@ -1,0 +1,25 @@
+<h1 translate>LOGIN</h1>
+
+<div ng-controller="LoginCtrl">
+  <ul>
+      <li ng-if="currentUser.username">
+        <a>currently logged in as {{currentUser.username}}</a>
+      </li>
+      <li ng-if="currentUser.username">
+        <a href="#/logout"><em>log out</em></a>
+      </li>
+  </ul>
+
+  <form ng-submit="doLogin(username,password)" 
+        ng-if="!currentUser.username">
+    <dl>
+      <dt>Username:
+      <dd><input type=text name=username size=30
+                 ng-model="username"/>
+      <dt>Password:
+      <dd><input type=password name=password size=30
+                 ng-model="password"/>
+    </dl>
+    <div class=actions><input type=submit value="Sign In"></div>
+  </form>
+</div>

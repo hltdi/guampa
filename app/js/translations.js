@@ -13,7 +13,10 @@ var translationsEN = {
   NOTRANSLATION_NOTLOGGEDIN: 'not translated yet',
   BUTTON_LANG_ES: 'Spanish',
   BUTTON_LANG_EN: 'English',
-  LANGUAGES: 'Languages'
+  LANGUAGES: 'Languages',
+  LOGIN: 'Log in',
+  LOGOUT: 'Log out',
+  LOGOUTMSG: 'You have successfully logged out.',
 };
  
 var translationsES= {
@@ -31,7 +34,10 @@ var translationsES= {
   NOTRANSLATION_NOTLOGGEDIN: 'todavía no tiene traducción',
   BUTTON_LANG_ES: 'Español',
   BUTTON_LANG_EN: 'Ingles',
-  LANGUAGES: 'Idiomas'
+  LANGUAGES: 'Idiomas',
+  LOGIN: 'LOGIN',
+  LOGOUT: 'LOGOUT',
+  LOGOUTMSG: 'LOGOUTMSG',
 };
 
 var codes_to_translations = {

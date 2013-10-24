@@ -32,6 +32,10 @@ function ($scope, $location, CurrentUser) {
         $scope.currentUser = CurrentUser.get();
     }
     $scope.refreshUser();
+
+    $scope.$on('UserChanged', function(event, user) {
+        $scope.currentUser = user;
+    });
 }]);
 
 function BrowseCtrl($scope, $http, $routeParams,
@@ -105,6 +109,10 @@ function translateCtrl($scope, $routeParams, $http, DocumentAndTranslation,
         $scope.currentUser = CurrentUser.get();
     }
     $scope.refreshUser();
+
+    $scope.$on('UserChanged', function(event, user) {
+        $scope.currentUser = user;
+    });
 }
 
 function sortByTs(array) {
@@ -124,24 +132,50 @@ function sentenceCtrl($scope, $routeParams, $http, SentenceHistory) {
     });
 }
 
-function LoginCtrl($scope, $route, $http, CurrentUser) {
+function LoginCtrl($scope, $route, $http, $rootScope, CurrentUser) {
     $scope.username = "";
     $scope.password = "";
+    $scope.currentUser = null;
 
     $scope.doLogin = function(u,p) {
         $http.post('json/login',
                    {username: u, password: p}).
-            success(function() {
-                $route.reload();
+            success(function(data) {
+                var user = CurrentUser.get();
+                $scope.currentUser = user;
+                $rootScope.$broadcast('UserChanged', user);
             }).
             error(function(){
                 alert("oh noes couldn't log in for some reason");
             });
     }
-
-    $scope.currentUser = null;
     $scope.refreshUser = function() {
-        $scope.currentUser = CurrentUser.get();
+        var user = CurrentUser.get();
+        $scope.currentUser = user;
+        $rootScope.$broadcast('UserChanged', user);
     }
     $scope.refreshUser();
+
+    $scope.$on('UserChanged', function(event, user) {
+        $scope.currentUser = user;
+    });
+}
+
+function LogoutCtrl($scope, $http, $rootScope, CurrentUser) {
+    $scope.username = "";
+    $scope.password = "";
+    $scope.doLogout = function() {
+        $http.get('json/logout').
+            success(function() {
+                $rootScope.$broadcast('UserChanged', null);
+            }).
+            error(function(){
+                alert("oh noes couldn't log out for some reason");
+            });
+    }
+    $scope.doLogout();
+
+    $scope.$on('UserChanged', function(event, user) {
+        $scope.currentUser = user;
+    });
 }

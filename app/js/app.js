@@ -25,7 +25,8 @@ app.config(['$locationProvider','$routeProvider',
         when('/sentence/:sentenceid', {templateUrl: 'partials/sentence.html'}).
         when('/login', {templateUrl: 'partials/login.html',
                         controller: LoginCtrl}).
-        when('/logout', {templateUrl: 'partials/logout.html'}).
+        when('/logout', {templateUrl: 'partials/logout.html',
+                        controller: LogoutCtrl}).
         otherwise({redirectTo: '/start'});
 }]);
 
