@@ -1,7 +1,10 @@
 guampa
 ======
 
-the collaborative translation website
+The collaborative translation website from [HLTDI](http://hltdi.github.io).
+
+## are you a reviewer from LREC?
+Please see this wiki page: [NotesForLRECReviewers](https://github.com/hltdi/guampa/wiki/NotesForLRECReviewers).
 
 
 libraries and other people's code included
