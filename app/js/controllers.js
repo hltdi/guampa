@@ -9,8 +9,8 @@ mod.controller(
     ['$scope','$location', 'CurrentUser',
 function ($scope, $location, CurrentUser) {
 	$scope.menuList = [
-	   {id:0, url:'#/start', text:'START', style:""},
-	   {id:1, url:'#/browse', text:'BROWSE', style:""},
+	   {id:0, url:'#/browse', text:'BROWSE', style:""},
+	   {id:1, url:'#/about', text:'ABOUT', style:""},
 	   ];
 	var i;
 	for(i = 0; i < $scope.menuList.length; i++) {

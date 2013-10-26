@@ -3,6 +3,8 @@
 
 <div ng-controller="BrowseCtrl">
 
+  <p class="lead" translate>BROWSEMESSAGE</p>
+
   <h1 translate>TAGS</h1>
   <p>
       <span class="browsetag" ng-repeat="tag in allTags.tags">
@@ -13,7 +15,7 @@
 
   <h1><span translate>DOCUMENTS</span>
       <span ng-if="!notag">: {{tagname}}</span></h1>
-  <p ng-if="notag" translate>PLEASECLICK</p>
+  <p ng-if="notag"><em translate>PLEASECLICK</em></p>
   <ul ng-if="tagDocuments.documents">
     <li ng-repeat="document in tagDocuments.documents">
       <a href="#/edit/{{document.id}}">{{document.title}}</a>

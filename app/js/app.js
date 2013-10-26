@@ -15,7 +15,7 @@ var app = angular.module('guampa',
 app.config(['$locationProvider','$routeProvider',
     function($locationProvider, $routeProvider) {
       $routeProvider.
-        when('/start', {templateUrl: 'partials/start.html'}).
+        when('/about', {templateUrl: 'partials/start.html'}).
         when('/edit/:docid', {templateUrl: 'partials/edit.html',
                               controller: 'translateCtrl'}).
         when('/browse', {templateUrl: 'partials/browse.html',
@@ -27,7 +27,7 @@ app.config(['$locationProvider','$routeProvider',
                         controller: LoginCtrl}).
         when('/logout', {templateUrl: 'partials/logout.html',
                         controller: LogoutCtrl}).
-        otherwise({redirectTo: '/start'});
+        otherwise({redirectTo: '/browse'});
 }]);
 
 // Load up all of our translations.
