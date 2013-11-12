@@ -188,6 +188,19 @@ function LoginCtrl($scope, $route, $http, $rootScope, CurrentUser) {
     $scope.$on('UserChanged', function(event, user) {
         $scope.currentUser = user;
     });
+
+    $scope.personaLogin = function() {
+        navigator.id.request({
+          siteName: 'Flask Persona Example'
+        });
+        return false;
+    };
+
+    $scope.personaLogout = function() {
+        navigator.id.logout();
+        return false;
+    };
+    setupPersonaLogin($scope);
 }
 
 function LogoutCtrl($scope, $http, $rootScope, CurrentUser) {
@@ -207,4 +220,39 @@ function LogoutCtrl($scope, $http, $rootScope, CurrentUser) {
     $scope.$on('UserChanged', function(event, user) {
         $scope.currentUser = user;
     });
+}
+
+// adapted from the flask persona example:
+// https://github.com/mitsuhiko/flask/tree/master/examples/persona
+function setupPersonaLogin($scope) {
+  navigator.id.watch({
+    loggedInUser: $scope.currentUser,
+    onlogin: function(assertion) {
+      $.ajax({
+        type: 'POST',
+        url: '_auth/login',
+        data: {assertion: assertion},
+        success: function(res, status, xhr) {
+            alert("LOGIN SUCCESS");
+        },
+        error: function(xhr, status, err) {
+          box.remove();
+          navigator.id.logout();
+          alert('Login failure: ' + err);
+        }
+      });
+    },
+    onlogout: function() {
+      $.ajax({
+        type: 'POST',
+        url: '_auth/logout',
+        success: function(res, status, xhr) {
+            alert("LOGOUT SUCCESS");
+        },
+        error: function(xhr, status, err) {
+          alert('Logout failure: ' + err);
+        }
+      });
+    }
+  });
 }

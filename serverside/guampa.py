@@ -10,6 +10,7 @@ import os
 from flask import Flask, request, session, url_for, redirect, render_template,\
                   abort, g, flash, _app_ctx_stack, send_from_directory, jsonify
 from werkzeug import check_password_hash
+import requests
 
 import model
 import db
@@ -25,6 +26,12 @@ app.config.from_object(__name__)
 myfn = os.path.abspath(__file__)
 app.root_path = os.path.dirname(os.path.dirname(myfn)) + os.path.sep
 app.debug = DEBUG
+
+
+app.config.update(
+    PERSONA_JS='https://login.persona.org/include.js',
+    PERSONA_VERIFIER='https://verifier.login.persona.org/verify',
+)
 
 @utils.nocache
 @app.route('/')
@@ -217,6 +224,34 @@ def json_logout():
     """Logs the user out."""
     session.pop('user_id', None)
     return "OK"
+
+## adapted from the flask persona demo
+@app.route('/_auth/login', methods=['GET', 'POST'])
+def login_handler():
+    """This is used by the persona.js file to kick off the
+    verification securely from the server side.  If all is okay
+    the email address is remembered on the server.
+    """
+    resp = requests.post(app.config['PERSONA_VERIFIER'], data={
+        'assertion': request.form['assertion'],
+        'audience': request.host_url,
+    }, verify=True)
+    if resp.ok:
+        decoded = resp.content.decode('utf-8')
+        verification_data = json.loads(decoded)
+        if verification_data['status'] == 'okay':
+            session['email'] = verification_data['email']
+            return 'OK'
+    abort(400)
+
+@app.route('/_auth/logout', methods=['POST'])
+def logout_handler():
+    """This is what persona.js will call to sign the user
+    out again.
+    """
+    session.clear()
+    return 'OK'
+##/adapted from the flask persona demo
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
