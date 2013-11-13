@@ -217,46 +217,44 @@ def json_login():
         g.user = user
     return "OK"
 
-@app.route('/json/logout')
+@app.route('/json/logout', methods=['GET', 'POST'])
 @utils.json
 @utils.nocache
 def json_logout():
     """Logs the user out."""
-    session.pop('user_id', None)
-    return "OK"
+    session.clear()
+    return json.dumps("OK")
 
 ## adapted from the flask persona demo
 @app.route('/_auth/login', methods=['GET', 'POST'])
+@utils.json
+@utils.nocache
 def login_handler():
     """This is used by the persona js to kick off the verification securely from
     the server side.
     """
-    resp = requests.post(app.config['PERSONA_VERIFIER'], data={
-        'assertion': request.form['assertion'],
-        'audience': request.host_url,
-    }, verify=True)
-    if resp.ok:
+    resp = None
+    if request.form['assertion']:
+        resp = requests.post(app.config['PERSONA_VERIFIER'], data={
+            'assertion': request.form['assertion'],
+            'audience': request.host_url,
+        }, verify=True)
+    if resp and resp.ok:
         decoded = resp.content.decode('utf-8')
         verification_data = json.loads(decoded)
         if verification_data['status'] == 'okay':
             email = verification_data['email']
             session['email'] = email
-            user = db.lookup_user_by_email(email)
             ## See if there's an existing User with this email address.
+            user = db.lookup_user_by_email(email)
             if user:
+                print("FOUND USER:", user)
                 session['user_id'] = user.id
-            ## Otherwise, we're going to have to create one... put this part in
-            ## the js?
-            return 'OK'
+                out = {'username': user.username, 'fullname':user.fullname}
+                return json.dumps(out)
+            ## Otherwise, we're going to have to create one...
+            return json.dumps('OK')
     abort(400)
-
-@app.route('/_auth/logout', methods=['POST'])
-def logout_handler():
-    """This is what persona.js will call to sign the user
-    out again.
-    """
-    session.clear()
-    return 'OK'
 ##/adapted from the flask persona demo
 
 if __name__ == '__main__':

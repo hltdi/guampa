@@ -161,7 +161,7 @@ function sentenceCtrl($scope, $routeParams, $http, SentenceHistory,
     });
 }
 
-function LoginCtrl($scope, $route, $http, $rootScope, CurrentUser) {
+function LoginCtrl($scope, $location, $http, $rootScope, $route, CurrentUser) {
     $scope.username = "";
     $scope.password = "";
     $scope.currentUser = null;
@@ -193,20 +193,20 @@ function LoginCtrl($scope, $route, $http, $rootScope, CurrentUser) {
         navigator.id.request({
           siteName: 'Guampa'
         });
-        return false;
     };
 
     $scope.personaLogout = function() {
         navigator.id.logout();
         return false;
     };
-    setupPersonaLogin($scope);
+    setupPersonaLogin($scope, $rootScope, $http, $route, CurrentUser);
 }
 
 function LogoutCtrl($scope, $http, $rootScope, CurrentUser) {
     $scope.username = "";
     $scope.password = "";
     $scope.doLogout = function() {
+        navigator.id.logout();
         $http.get('json/logout').
             success(function() {
                 $rootScope.$broadcast('UserChanged', null);
@@ -224,7 +224,7 @@ function LogoutCtrl($scope, $http, $rootScope, CurrentUser) {
 
 // adapted from the flask persona example:
 // https://github.com/mitsuhiko/flask/tree/master/examples/persona
-function setupPersonaLogin($scope) {
+function setupPersonaLogin($scope, $rootScope, $http, $route, CurrentUser) {
   navigator.id.watch({
     loggedInUser: $scope.currentUser,
     onlogin: function(assertion) {
@@ -233,21 +233,31 @@ function setupPersonaLogin($scope) {
         url: '_auth/login',
         data: {assertion: assertion},
         success: function(res, status, xhr) {
-          // probably broadcast here.
+          if (res == 'OK') {
+            // TODO(alexr) no user found. Need to create one.
+          } else {
+            var user = CurrentUser.get();
+            $scope.currentUser = user;
+            $rootScope.$broadcast('UserChanged', user);
+            // need to call $scope.$apply() to make Angular pick up on changes
+            $route.reload();
+            $scope.$apply();
+          }
         },
         error: function(xhr, status, err) {
-          box.remove();
           navigator.id.logout();
           alert('Login failure: ' + err);
         }
       });
+
     },
     onlogout: function() {
       $.ajax({
-        type: 'POST',
-        url: '_auth/logout',
+        type: 'GET',
+        url: 'json/logout',
         success: function(res, status, xhr) {
-          // probably broadcast here.
+          $scope.currentUser = null;
+          $rootScope.$broadcast('UserChanged', null);
         },
         error: function(xhr, status, err) {
           alert('Logout failure: ' + err);
