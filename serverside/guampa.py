@@ -6,12 +6,14 @@ URLs to the functions that will be called in response.
 """
 import json
 import os
+import re
 
 from flask import Flask, request, session, url_for, redirect, render_template,\
                   abort, g, flash, _app_ctx_stack, send_from_directory, jsonify
 from werkzeug import check_password_hash
 import requests
 
+import constants
 import model
 import db
 import utils
@@ -26,7 +28,6 @@ app.config.from_object(__name__)
 myfn = os.path.abspath(__file__)
 app.root_path = os.path.dirname(os.path.dirname(myfn)) + os.path.sep
 app.debug = DEBUG
-
 
 app.config.update(
     PERSONA_JS='https://login.persona.org/include.js',
@@ -195,6 +196,16 @@ def currentuser():
         out = {'username': None, 'fullname':None}
     return(json.dumps(out))
 
+@app.route('/json/currentemail')
+@utils.json
+@utils.nocache
+def currentemail():
+    """Surface the currently logged-in Persona email address to the client."""
+    out = {'email': None}
+    if 'email' in session:
+        out['email'] = session['email']
+    return(json.dumps(out))
+
 @app.route('/json/login', methods=['POST'])
 @utils.json
 @utils.nocache
@@ -224,6 +235,35 @@ def json_logout():
     """Logs the user out."""
     session.clear()
     return json.dumps("OK")
+
+@app.route('/json/create_persona_user', methods=['POST'])
+@utils.json
+@utils.nocache
+def create_persona_user():
+    """Create a new PersonaUser and User for the associated email address and
+    passed username. Fail out if we can't do that."""
+
+    ### XXX: we should only be doing this iff:
+    ### - the user has currently verified their email address via Persona
+    ### - but has not logged in with a Guampa account
+    ### - and the email address is not yet associated with any Guampa account
+    ### - and the account name is valid
+    ### - and the account name is not yet in use
+    if 'email' in session and g.user is None:
+        d = request.get_json()
+        username = d['username']
+        email = session['email']
+        if db.lookup_user_by_email(email):
+            print("email address already in use, this should never happen")
+            abort(400)
+        if (db.lookup_username(username) or
+            not constants.USERNAMEPATTERN.match(username)):
+            abort(400)
+        user = db.create_user_with_email(username, email)
+        print(user)
+        out = {'username': user.username, 'fullname':user.fullname}
+        return json.dumps(out)
+    abort(403)
 
 ## adapted from the flask persona demo
 @app.route('/_auth/login', methods=['GET', 'POST'])

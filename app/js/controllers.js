@@ -199,7 +199,7 @@ function LoginCtrl($scope, $location, $http, $rootScope, $route, CurrentUser) {
         navigator.id.logout();
         return false;
     };
-    setupPersonaLogin($scope, $rootScope, $http, $route, CurrentUser);
+    setupPersonaLogin($scope, $rootScope, $http, $route, $location);
 }
 
 function LogoutCtrl($scope, $http, $rootScope, CurrentUser) {
@@ -224,7 +224,7 @@ function LogoutCtrl($scope, $http, $rootScope, CurrentUser) {
 
 // adapted from the flask persona example:
 // https://github.com/mitsuhiko/flask/tree/master/examples/persona
-function setupPersonaLogin($scope, $rootScope, $http, $route, CurrentUser) {
+function setupPersonaLogin($scope, $rootScope, $http, $route, $location) {
   navigator.id.watch({
     loggedInUser: $scope.currentUser,
     onlogin: function(assertion) {
@@ -235,14 +235,15 @@ function setupPersonaLogin($scope, $rootScope, $http, $route, CurrentUser) {
         success: function(res, status, xhr) {
           if (res == 'OK') {
             // TODO(alexr) no user found. Need to create one.
+            $location.path("/createuser");
           } else {
-            var user = CurrentUser.get();
+            var user = res;
             $scope.currentUser = user;
             $rootScope.$broadcast('UserChanged', user);
-            // need to call $scope.$apply() to make Angular pick up on changes
             $route.reload();
-            $scope.$apply();
           }
+          // need to call $scope.$apply() to make Angular pick up on changes
+          $scope.$apply();
         },
         error: function(xhr, status, err) {
           navigator.id.logout();
@@ -265,4 +266,26 @@ function setupPersonaLogin($scope, $rootScope, $http, $route, CurrentUser) {
       });
     }
   });
+}
+
+function CreateUserCtrl($scope, $http, $location, $route, $rootScope,
+                        CurrentEmail) {
+    $scope.email = CurrentEmail.get();
+    $scope.username = "";
+
+    $scope.submit = function(username) {
+        $http.post('json/create_persona_user',
+                   {username:username}).
+            success(function(user) {
+                alert("SUCECCS ACCOUNT CRETED");
+                $scope.currentUser = user;
+                $rootScope.$broadcast('UserChanged', user);
+                $location.path("/login");
+                $route.reload();
+                // XXX: should really log you in automatically here.
+            }).
+            error(function(){
+                alert("oh noes fail it up");
+            });
+    }
 }

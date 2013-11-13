@@ -56,3 +56,12 @@ factory('CurrentUser',
                        {query: {method:'GET', isArray:true}});
     }
 );
+
+angular.module('currentEmailService', ['ngResource']).
+factory('CurrentEmail',
+    function($resource){
+      return $resource('json/currentemail',
+                       {},
+                       {query: {method:'GET', isArray:true}});
+    }
+);

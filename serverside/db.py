@@ -161,3 +161,22 @@ def lookup_user_by_email(email):
         return None
     user = get_user(pu.userid)
     return user
+
+def create_user_with_email(username, email):
+    """Given a username and an email address, create the User and associated
+    PersonaUser. Return the User."""
+
+    session = get_session()
+    user = lookup_username(username)
+    assert user is None
+    pu = session.query(PersonaUser).filter(PersonaUser.email == email).first()
+    assert pu is None
+
+    ## second one is the fullname, we can replace that later.
+    user = User(username, username, "")
+    session.add(user)
+    session.commit()
+    pu = PersonaUser(email, user.id)
+    session.add(pu)
+    session.commit()
+    return user

@@ -9,6 +9,7 @@ var app = angular.module('guampa',
                           'documentAndTranslationService',
                           'sentenceHistoryService',
                           'currentUserService',
+                          'currentEmailService',
                           'guampa.controllers',
                           'pascalprecht.translate']);
 
@@ -27,6 +28,8 @@ app.config(['$locationProvider','$routeProvider',
                         controller: LoginCtrl}).
         when('/logout', {templateUrl: 'partials/logout.html',
                         controller: LogoutCtrl}).
+        when('/createuser', {templateUrl: 'partials/createuser.html',
+                             controller: CreateUserCtrl}).
         otherwise({redirectTo: '/browse'});
 }]);
 
