@@ -115,6 +115,20 @@ class Comment(Base):
     def __repr__(self):
        return ("<Comment(%d, '%s')>" % (self.id, self.text))
 
+class PersonaUser(Base):
+    __tablename__ = 'personausers'
+    id = Column(Integer, primary_key=True)
+    email = Column(String)
+    userid = Column(Integer, ForeignKey('users.id'))
+
+    def __init__(self, email, userid):
+        self.email = email
+        self.userid = userid
+
+    def __repr__(self):
+       return ("<PersonaUser('%d', '%s', '%d')>"
+                % (self.id, self.email, self.userid))
+
 ### relationships.
 
 documenttag_table = Table('documenttag', Base.metadata,

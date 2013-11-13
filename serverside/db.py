@@ -9,6 +9,7 @@ from model import Sentence
 from model import Tag
 from model import Translation
 from model import User
+from model import PersonaUser
 
 from flask import _app_ctx_stack
 
@@ -149,3 +150,14 @@ def save_translation(userid, docid, sentenceid, text):
 
 def save_comment(userid, docid, sentenceid, text):
     save_thing(Comment, userid, docid, sentenceid, text)
+
+def lookup_user_by_email(email):
+    """Lookup a User by email. Return the model object or None."""
+    ## There should never be a PersonaUser that doesn't have an associated User
+    ## object...
+    session = get_session()
+    pu = session.query(PersonaUser).filter(PersonaUser.email == email).first()
+    if not pu:
+        return None
+    user = get_user(pu.userid)
+    return user

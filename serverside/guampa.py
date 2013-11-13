@@ -228,9 +228,8 @@ def json_logout():
 ## adapted from the flask persona demo
 @app.route('/_auth/login', methods=['GET', 'POST'])
 def login_handler():
-    """This is used by the persona.js file to kick off the
-    verification securely from the server side.  If all is okay
-    the email address is remembered on the server.
+    """This is used by the persona js to kick off the verification securely from
+    the server side.
     """
     resp = requests.post(app.config['PERSONA_VERIFIER'], data={
         'assertion': request.form['assertion'],
@@ -240,7 +239,14 @@ def login_handler():
         decoded = resp.content.decode('utf-8')
         verification_data = json.loads(decoded)
         if verification_data['status'] == 'okay':
-            session['email'] = verification_data['email']
+            email = verification_data['email']
+            session['email'] = email
+            user = db.lookup_user_by_email(email)
+            ## See if there's an existing User with this email address.
+            if user:
+                session['user_id'] = user.id
+            ## Otherwise, we're going to have to create one... put this part in
+            ## the js?
             return 'OK'
     abort(400)
 
