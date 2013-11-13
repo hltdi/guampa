@@ -191,7 +191,7 @@ function LoginCtrl($scope, $route, $http, $rootScope, CurrentUser) {
 
     $scope.personaLogin = function() {
         navigator.id.request({
-          siteName: 'Flask Persona Example'
+          siteName: 'Guampa'
         });
         return false;
     };
@@ -233,7 +233,7 @@ function setupPersonaLogin($scope) {
         url: '_auth/login',
         data: {assertion: assertion},
         success: function(res, status, xhr) {
-            alert("LOGIN SUCCESS");
+          // probably broadcast here.
         },
         error: function(xhr, status, err) {
           box.remove();
@@ -247,7 +247,7 @@ function setupPersonaLogin($scope) {
         type: 'POST',
         url: '_auth/logout',
         success: function(res, status, xhr) {
-            alert("LOGOUT SUCCESS");
+          // probably broadcast here.
         },
         error: function(xhr, status, err) {
           alert('Logout failure: ' + err);

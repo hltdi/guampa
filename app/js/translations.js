@@ -24,6 +24,10 @@ var translationsEN = {
   SOURCESENTENCE: 'untranslated:',
   RETURNTODOCUMENT: 'return to document',
   ADDCOMMENT: 'add comment',
+  PERSONAMESSAGE: 'Sign in with your Email',
+  PERSONABEFORE: 'Secure sign in via',
+  PERSONALINK: 'Persona by Mozilla;',
+  PERSONAAFTER: 'no password required.',
 };
  
 var translationsES= {
@@ -52,6 +56,10 @@ var translationsES= {
   SOURCESENTENCE: 'en original:',
   RETURNTODOCUMENT: 'regresar al documento',
   ADDCOMMENT: 'enviar un comentario',
+  PERSONAMESSAGE: 'Iniciar sesión con tu correo electrónico',
+  PERSONABEFORE: 'Este sitio usa',
+  PERSONALINK: 'Mozilla Persona;',
+  PERSONAAFTER: 'se puede proceder seguramente sin una contraseña.',
 };
 
 var codes_to_translations = {
