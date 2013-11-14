@@ -1,0 +1,21 @@
+THE CREATE USER PAGRE
+
+<div ng-controller="CreateUserCtrl">
+
+  <p>Almost done creating your account for {{email.email}}!!</p>
+
+  <p>If you don't want a register an account with this email address, feel free
+  to <a href="#/logout">cancel!</a></p>
+
+  <form ng-submit="submit(username)" 
+        ng-if="!currentUser.username">
+    <dl>
+      <dt>Username:
+      <dd><input type=text name=username size=30
+                 ng-model="username"/>
+    </dl>
+    <div class=actions><input type=submit value="CREATEACCOUNT"></div>
+  </form>
+
+</div>
+
