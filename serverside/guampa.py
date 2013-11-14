@@ -260,7 +260,8 @@ def create_persona_user():
             not constants.USERNAMEPATTERN.match(username)):
             abort(400)
         user = db.create_user_with_email(username, email)
-        print(user)
+        session['user_id'] = user.id
+        g.user = user
         out = {'username': user.username, 'fullname':user.fullname}
         return json.dumps(out)
     abort(403)
@@ -290,6 +291,7 @@ def login_handler():
             if user:
                 print("FOUND USER:", user)
                 session['user_id'] = user.id
+                g.user = user
                 out = {'username': user.username, 'fullname':user.fullname}
                 return json.dumps(out)
             ## Otherwise, we're going to have to create one...
