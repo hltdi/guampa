@@ -165,6 +165,7 @@ function LoginCtrl($scope, $location, $http, $rootScope, $route, CurrentUser) {
     $scope.username = "";
     $scope.password = "";
     $scope.currentUser = null;
+    $scope.loginError = false;
 
     $scope.doLogin = function(u,p) {
         $http.post('json/login',
@@ -175,7 +176,7 @@ function LoginCtrl($scope, $location, $http, $rootScope, $route, CurrentUser) {
                 $rootScope.$broadcast('UserChanged', user);
             }).
             error(function(){
-                alert("oh noes couldn't log in for some reason");
+                $scope.loginError = true;
             });
     }
     $scope.refreshUser = function() {
@@ -183,6 +184,7 @@ function LoginCtrl($scope, $location, $http, $rootScope, $route, CurrentUser) {
         $scope.currentUser = user;
         $rootScope.$broadcast('UserChanged', user);
     }
+
     $scope.refreshUser();
 
     $scope.$on('UserChanged', function(event, user) {
@@ -199,6 +201,7 @@ function LoginCtrl($scope, $location, $http, $rootScope, $route, CurrentUser) {
         navigator.id.logout();
         return false;
     };
+
     setupPersonaLogin($scope, $rootScope, $http, $route, $location);
 }
 
