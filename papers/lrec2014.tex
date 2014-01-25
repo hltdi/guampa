@@ -1,0 +1,212 @@
+\documentclass[10pt, a4paper]{article}
+\usepackage{lrec2006}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\interfootnotelinepenalty=10000
+
+\title{Guampa: a Toolkit for Collaborative Translation}
+
+\name{Alex Rudnick, Taylor Skidmore, Michael Gasser} 
+
+\address{Indiana University, School of Informatics and Computing \\
+        Bloomington, IN, USA\\
+        {\tt \{alexr,taylskid,gasser\}@indiana.edu}}
+
+\abstract{Each article must include an abstract of 150 to 200 words in Times 9 pt with interlinear spacing of 10 pt.
+ The heading Abstract should be centred, font Times 10 bold. This short abstract will also be used for printing a Booklet of Abstracts 
+containing the abstracts of all papers presented at the Conference. \\ \newline \Keywords{keyword A, keyword B, keyword C}}
+
+\begin{document}
+
+\maketitleabstract
+
+\section{Introduction}
+For most of the world's language pairs, large bitext corpora are not readily
+available and would be difficult to construct. However, for some language
+pairs, not only are there many speakers of both languages, there is a community
+of activists dedicated to the continued vitality of their heritage language. In
+many of these cases, these speaker/activists recognize that there is a shortage
+of written material in their heritage language and that translation from other
+languages can help to address this problem. Thus they are often aware of the
+contribution that MT would make to their task and are eager to do their part in
+creating the bitext corpora that are required for SMT. At the same time, they
+know that in the absence of MT systems, it is up to the bilingual speakers
+themselves to perform the required translations. This is a daunting task for a
+small community, however, and collaborative translation can speed up the
+process.
+
+In such contexts it thus makes sense to consider a tool that would facilitate
+collaborative translation as well as the gathering of translation examples for
+a corpus. We know of no user-friendly FOSS software for collaboratively
+translating documents on the web, at least not with an eye towards training MT
+systems. We address this perceived need with Guampa, a free software package
+for the online collaborative translation of documents. It is meant to help both
+language activist/learner communities in generating resources for their
+heritage languages and MT researchers in building bitext corpora. We are
+especially interested in the common case of language pairs in which one
+language (normally the source for translation) has substantial resources but
+the other (normally the target) does not. Guampa includes tools for importing
+source language articles from Wikipedia as well as exporting bitext suitable
+for training MT systems.
+
+\section{Spanish and Guarani in Paraguay}
+Our group is particularly interested in building a larger bitext corpus for the
+Spanish-Guarani language pair. Spanish and Guarani are the co-official
+languages of Paraguay, where most people speak Guarani as their first language
+and many are bilingual. Guarani suffers not only from a serious lack of
+written materials but also from a neglect in all aspects of public life in
+Paraguay. To combat this neglect and save the language from what seems to many
+its inevitable decline, a small but very active group of bilinguals has come
+together in various forums. Among other things, these activists produce new
+written materials in Guarani and bilingual materials in Spanish and Guarani.
+They are well aware of the importance of language technology and of translation
+to their mission.
+
+Though we focus on Spanish and Guarani, there are many other comparable
+language pairs around the world, e.g., English/Telugu (India), French/Wolof
+(Senegal), Portuguese/Umbundu (Angola), Chinese/Zhuang (China) and
+Russian/Tatar (Russia). Our goal is for Guampa to be useful for researchers and
+activists working on any such language pair; anyone can download the Guampa
+software and run their own instance for their own purposes.
+
+\section{Related Work}
+There is a wealth of software, both open-source and proprietary, to assist
+translators in their work, but we are not aware of computer-assisted
+translation systems that are designed specifically for collaboration among
+non-professional translators. Tatoeba \cite{tatoeba} is a
+project dedicated to collecting translations of sentences in many languages.
+Users may add translations or correct the translations of other users by
+providing alternate translations. However, genuine collaboration is not
+facilitated since no history is available, and the focus is on the sentence
+rather than the document. Traduwiki \cite{traduwiki} comes closer
+to our goals; while it is intended for the collaborative translation of
+documents, it is not open-source, and does not offer an easy way to export
+training data for machine translation systems. In addition, development appears
+to have stopped in 2007.
+
+There have been a number of projects focused on using crowdsourcing to produce
+bitext corpora for training MT systems. Notably, Ambati
+\cite{ambati_naacl,ambati_act} has used active learning to construct a corpus
+for training English-Spanish SMT, automatically creating Mechanical Turk tasks
+to elicit translations for phrases that his system did not know how to
+translate, but should. The Joshua team at Johns Hopkins has also successfully
+used Mechanical Turk to crowdsource the creation of bitext corpora for SMT for
+many languages of the Indian subcontinent
+\cite{post-callisonburch-osborne:2012:WMT}. Both of these projects relied on a
+large population of MTurk users familiar with the source and target languages;
+they may not be applicable to languages spoken by smaller populations. We posit
+that in this case, supporting an online community of translators would be more
+appropriate than one-off Mechanical Turk tasks.
+
+\section{Features of Guampa}
+At its core, Guampa is a tool for translating documents. The central interface of
+Guampa shows a document's source language text, segmented by sentence,
+alongside the current translation for each sentence. For each sentence in the
+document, users can add a new translation or edit the current translation. The
+software stores the complete history of translation edits, along with comments
+on the translation of a given sentence. Users can discuss the
+best way to translate a particular passage and see the history of the proposed
+translations for a sentence. Thus, Guampa is much like a wiki for translations;
+quality control is performed through community consensus.
+
+
+Like the interface of TraduWiki, but in contrast to that of popular
+internationalization tools like Pootle, our layout is intended to be suitable
+for reading documents online. We intend it to be helpful for language learners
+as well -- a user familiar with the source language and learning the target
+language (or vice-versa) might benefit from reading translations side-by-side,
+as in dual-language books.
+
+Users will primarily select a document to read or translate on the navigation
+interface. Here one can browse the available documents by tag. Additional
+sorting criteria, such as recent activity and completeness of translation, will
+be added soon.
+
+Users must be logged in to add or edit translations, or to add comments. They
+may log in with social media accounts (using OpenID or OAuth), such as Google,
+Facebook, or Twitter. Optionally, users can also create Guampa-specific
+accounts protected by passwords.
+
+For easy adaptability to different language pairs, the interface is built with
+an internationalization package so that its strings can easily be replaced; our
+development version has interfaces in English and Spanish, with Guarani coming
+soon. Adding more languages as appropriate is straightforward, requiring very
+few code changes. Additionally, the sentence segmenter can easily be changed
+for locating sentence boundaries in different languages; our development
+version uses the Punkt segmenter for Spanish from NLTK \cite{nltkbook}.
+
+
+\subsection{Importing Documents, Exporting Bitext}
+For populating a new instance of Guampa, we include scripts to extract
+plain-text versions of Wikipedia articles from Wikipedia database dumps
+\footnote{Complete copies of Wikipedias can be downloaded at \\
+\url{http://dumps.wikimedia.org/}}, providing source-language documents for a
+new installation of Guampa. Our tool builds on the Wikipedia Extractor
+script from the Medialab at the University of Pisa \cite{pisa-wp-extractor}.
+
+However, for some source languages, such as English or Spanish, importing an
+entire Wikipedia would overwhelm both the server and the users. Fortunately,
+many Wikipedias include a list of so-called "vital articles", subjects for
+which it is felt that high-quality articles are essential in any encyclopedia.
+These lists typically contain roughly one thousand articles. We provide scripts
+to extract and import only these articles, and to tag them with their
+appropriate subcategories (such as "Science" or "Biography"), which are pulled
+from the list structure of the document.
+
+For some language pairs and user communities, it may be appropriate to import
+an entire Wikipedia into Guampa \footnote{For example, as of this writing there are fewer than three thousand articles in the Guarani Wikipedia.} for
+translation into another language. This approach is also supported.
+
+We also include a script for easy export of bitext sentences; since the system
+keeps an internal representation of sentence boundaries in the original
+documents, it is easy to export one sentence per line into the output files. To
+train an MT system, one would then run the appropriate preprocessing and
+training pipeline on these exported files. In the near term, we also plan to
+add export features in HTML and MediaWiki markup, for ease of publishing the
+translated documents and adding them to the target-language Wikipedia.
+
+
+\section{Implementation}
+Guampa is a web application, with a user interface made of the AngularJS
+\cite{angularjs} and Bootstrap \cite{bootstrap} toolkits. We internationalize
+the user interface with the angular-translate package \cite{angular-translate}.
+The server side of the application is implemented in Python 3, using the Flask
+micro-framework \cite{flask}, SQLAlchemy
+\cite{sqlalchemy} for object-relational mapping, and SQLite \cite{sqlite} as a
+database. SQLite could easily be replaced with a more industrial-scale
+database, should the need arise.
+
+\section{Conclusions and Future Work}
+In collaboration with language learners and activists in Paraguay, we will use
+Guampa to build a bitext corpus for Spanish-Guarani for our own continuing MT
+work with that language pair. This resource will be made publicly available on
+our website, along with Guampa and our other software.
+
+As we continue development of Guampa, with feedback and suggestions from our
+users, we plan to add additional features, including recognition for prolific
+translators, similar to Wikipedia's Barnstars. We would like to develop other
+game-like features, including a feature to send periodic translation tasks by
+email, so that users can be reminded to practice daily. Additionally, we will
+implement exporting over the web and into formats other than plain text -- such
+as TMX, Mediawiki markup, and HTML --  to facilitate reuse of the collected
+corpora.
+
+More technically ambitious and longer-range future features will include lookup
+in a translation memory, with pluggable morphological analysis, and integrated
+suggestions from machine translation. Our long-term goal is for Guampa to
+become a collaborative computer-assisted translation tool.
+
+Guampa is free software, released under the GPLv3 and available on GitHub at:
+\\
+\url{http://github.com/hltdi/guampa} , with a live demo server linked from that
+site. It is under active development, but is already relatively easy to install
+and adapt the particularities of different language pairs and the needs of
+different translation communities. We welcome suggestions, bug reports,
+questions, doubts, and development collaborators!
+
+\bibliographystyle{lrec2006}
+\bibliography{guampa}
+
+\end{document}
+
