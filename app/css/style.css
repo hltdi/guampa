@@ -331,3 +331,8 @@ p.startpage-para {
   -webkit-box-shadow: inset 0 -1px 0 rgba(0,0,0,0.3);
   box-shadow:     inset 0 -1px 0 rgba(0,0,0,0.3);
 }
+
+.dictionary {
+  text-align: center;
+  background: #aaaadd;
+}

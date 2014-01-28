@@ -81,7 +81,8 @@ function translateCtrl($scope, $routeParams, $http, DocumentAndTranslation,
                          docid: thedocument.translations[i].docid,
                          sentenceid: thedocument.translations[i].sentenceid,
                          editing: false}
-            var pair = [sent, trans];
+            var dictionary = thedocument.dictionaries[i];
+            var pair = [sent, trans, dictionary];
             $scope.pairs.push(pair);
         }
     });
