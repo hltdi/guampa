@@ -3,7 +3,7 @@
 import functools
 import os
 
-import preprocess
+#import preprocess
 
 HERE = os.path.dirname(os.path.realpath(__file__))
 DICTIONARYFN = HERE + "/avanee-es-gn-palabras.txt"
@@ -24,8 +24,12 @@ def load_dictionary(fn=DICTIONARYFN):
 def lookup_sent(text):
     included = set()
     d = load_dictionary()
-    # words = text.strip().lower().split()
-    lemmas = preprocess.get_lemmas(text)
+
+    ## XXX(alexr): these are not really lemmas
+    lemmas = text.strip().lower().split()
+
+    ## TODO(alexr): turn freeling back on!!
+    ##lemmas = preprocess.get_lemmas(text)
     lookups = []
     for lemma in lemmas:
         if lemma in d and lemma not in included:
