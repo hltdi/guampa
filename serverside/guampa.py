@@ -7,6 +7,7 @@ URLs to the functions that will be called in response.
 import json
 import os
 import re
+import urllib.parse
 
 from flask import Flask, request, session, url_for, redirect, render_template,\
                   abort, g, flash, _app_ctx_stack, send_from_directory, jsonify
@@ -14,10 +15,10 @@ from werkzeug import check_password_hash
 import requests
 
 import constants
-import model
 import db
+import dictionary
+import model
 import utils
-import urllib.parse
 
 DEBUG = True
 SECRET_KEY = 'development key'
@@ -94,6 +95,7 @@ def document(docid):
 
     sent_texts = []
     trans_texts = []
+    dictionaries = []
 
     ## sentence ids for which we've seen a translation
     have_translation = set()
@@ -108,7 +110,11 @@ def document(docid):
             trans_texts.append({'text':translation_text,
                                 'sentenceid':s.id,
                                 'docid':docid})
-    out = {'docid': docid, 'sentences':sent_texts, 'translations':trans_texts}
+            dictionaries.append(dictionary.lookup_sent(s.text))
+    out = {'docid': docid,
+           'sentences':sent_texts,
+           'translations':trans_texts,
+           'dictionaries':dictionaries}
     return(json.dumps(out))
 
 @app.route('/json/add_translation', methods=['post'])
