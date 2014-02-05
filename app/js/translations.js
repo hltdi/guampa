@@ -28,6 +28,7 @@ var translationsEN = {
   PERSONABEFORE: 'Secure sign in via',
   PERSONALINK: 'Persona by Mozilla;',
   PERSONAAFTER: 'no password required.',
+  PERSONAINTRO: 'Persona is a new, easy, and safe way to log into many services using only one email and password from Mozilla.'
 };
  
 var translationsES= {
