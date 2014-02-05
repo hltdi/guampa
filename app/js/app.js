@@ -30,6 +30,8 @@ app.config(['$locationProvider','$routeProvider',
                         controller: LogoutCtrl}).
         when('/createuser', {templateUrl: 'partials/createuser.html',
                              controller: CreateUserCtrl}).
+        when('/admin', {templateUrl: 'partials/admin.html',
+                             controller: LoginCtrl}).
         otherwise({redirectTo: '/browse'});
 }]);
 

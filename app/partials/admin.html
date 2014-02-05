@@ -1,0 +1,31 @@
+
+<div ng-controller="LoginCtrl">
+  <div class="container">
+    <div ng-if="loginError" class="alert alert-error">
+      <h4>Error!</h4>
+      Something went wrong on the login! Please try again!
+    </div>
+    <br>
+  </div>
+  <div class="row-fluid">
+    <div class="span6">
+      <h1 translate>LOGIN</h1>
+      <ul ng-if="currentUser.username">
+        <li><a>currently logged in as {{currentUser.username}}</a></li>
+         <li><a href="#/logout"><em>log out</em></a></li>
+      </ul>
+      <form ng-submit="doLogin(username,password)"
+            ng-if="!currentUser.username">
+        <dl>
+          <dt>Username:
+          <dd><input type=text name=username size=30
+                     ng-model="username"/>
+          <dt>Password:
+          <dd><input type=password name=password size=30
+                     ng-model="password"/>
+        </dl>
+        <button type="submit">Log In!</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -162,6 +162,7 @@ function sentenceCtrl($scope, $routeParams, $http, SentenceHistory,
     });
 }
 
+// maybe decide to break out the admin-specific functions
 function LoginCtrl($scope, $location, $http, $rootScope, $route, CurrentUser) {
     $scope.username = "";
     $scope.password = "";
