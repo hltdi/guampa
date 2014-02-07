@@ -44,6 +44,6 @@ app.config(['$translateProvider', function ($translateProvider) {
     }
   }
   $translateProvider.fallbackLanguage('en');
-  $translateProvider.preferredLanguage('en');
+  $translateProvider.preferredLanguage('es');
 }]);
 
