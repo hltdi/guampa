@@ -251,7 +251,7 @@ function setupPersonaLogin($scope, $rootScope, $http, $route, $location) {
             var user = res;
             $scope.currentUser = user;
             $rootScope.$broadcast('UserChanged', user);
-            $route.reload();
+            $location.path("/browse");
           }
           // need to call $scope.$apply() to make Angular pick up on changes
           $scope.$apply();
@@ -296,7 +296,7 @@ function CreateUserCtrl($scope, $http, $location, $route, $rootScope,
                 // XXX: should really log you in automatically here.
             }).
             error(function(){
-                alert("oh noes fail it up");
+                alert("Could not create account -- maybe the username is taken?");
             });
     }
 }
