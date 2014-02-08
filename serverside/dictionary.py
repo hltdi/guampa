@@ -11,7 +11,7 @@ DICTIONARYFN = HERE + "/avanee-es-gn-palabras.txt"
 @functools.lru_cache(maxsize=10000)
 def load_dictionary(fn=DICTIONARYFN):
     d = {}
-    with open(DICTIONARYFN) as infile:
+    with open(DICTIONARYFN, encoding="utf-8") as infile:
         for line in infile:
             line = line.strip()
             es, gn = line.split("|||")
