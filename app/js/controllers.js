@@ -288,10 +288,10 @@ function CreateUserCtrl($scope, $http, $location, $route, $rootScope,
         $http.post('json/create_persona_user',
                    {username:username}).
             success(function(user) {
-                alert("SUCECCS ACCOUNT CRETED");
+                // alert("SUCECCS ACCOUNT CRETED");
                 $scope.currentUser = user;
                 $rootScope.$broadcast('UserChanged', user);
-                $location.path("/login");
+                $location.path("/browse");
                 $route.reload();
                 // XXX: should really log you in automatically here.
             }).
