@@ -11,6 +11,7 @@ function ($scope, $location, CurrentUser) {
 	$scope.menuList = [
 	   {id:0, url:'#/browse', text:'BROWSE', style:""},
 	   {id:1, url:'#/about', text:'ABOUT', style:""},
+	   {id:2, url:'#/settings', text:'SETTINGS', style:""},
 	   ];
 	var i;
 	for(i = 0; i < $scope.menuList.length; i++) {
@@ -64,8 +65,8 @@ function ($scope, $translate) {
     };
 }]);
 
-function translateCtrl($scope, $routeParams, $http, DocumentAndTranslation,
-                       CurrentUser) {
+function translateCtrl($scope, $routeParams, $http, $rootScope,
+                       DocumentAndTranslation, CurrentUser) {
     $scope.editedItem = null;
 
     var docid = $routeParams.docid;
@@ -114,6 +115,11 @@ function translateCtrl($scope, $routeParams, $http, DocumentAndTranslation,
     $scope.$on('UserChanged', function(event, user) {
         $scope.currentUser = user;
     });
+
+    // dictionaries disabled by default for now
+    $scope.setUseDictionary = function(tf) {
+      $rootScope.useDictionary = tf;
+    }
 }
 
 function sortByTs(array) {

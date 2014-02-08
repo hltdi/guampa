@@ -15,7 +15,9 @@ var translationsEN = {
   NOTRANSLATION_NOTLOGGEDIN: 'not translated yet',
   BUTTON_LANG_ES: 'Usar la interfaz en español',
   BUTTON_LANG_EN: 'Use the interface in English',
+  INTERFACELANGUAGE: "Interface language",
   SETTINGS: 'Settings',
+  SETTINGSDESCRIPTION: 'Here you can set your preferences for the web site.',
   LOGIN: 'Local log in',
   LOGOUT: 'Log out',
   LOGOUTMSG: 'You have successfully logged out.',
@@ -29,7 +31,10 @@ var translationsEN = {
   PERSONABEFORE: 'Secure sign in via',
   PERSONALINK: 'Persona by Mozilla;',
   PERSONAAFTER: 'no password required.',
-  PERSONAINTRO: 'Persona is a new, easy, and safe way to log into many services using only one email and password from Mozilla.'
+  PERSONAINTRO: 'Persona is a new, easy, and safe way to log into many services using only one email and password from Mozilla.',
+  DICTIONARY: 'Dictionary',
+  DICTIONARY_ON: 'Dictionary enabled',
+  DICTIONARY_OFF: 'Dictionary not enabled',
 };
  
 var translationsES= {
@@ -49,7 +54,9 @@ var translationsES= {
   NOTRANSLATION_NOTLOGGEDIN: 'todavía no tiene traducción',
   BUTTON_LANG_ES: 'Usar la interfaz en español',
   BUTTON_LANG_EN: 'Use the interface in English',
+  INTERFACELANGUAGE: "Idioma de la interfaz",
   SETTINGS: 'Configuración',
+  SETTINGSDESCRIPTION: 'Aquí se puede configurar tus preferencias para el sitio web.',
   LOGIN: 'Iniciar sesión',
   LOGOUT: 'Cerrar sesión',
   LOGOUTMSG: 'Ha cerrado la sesión.',
@@ -62,6 +69,9 @@ var translationsES= {
   PERSONABEFORE: 'Este sitio usa',
   PERSONALINK: 'Mozilla Persona;',
   PERSONAAFTER: 'se puede proceder seguramente sin una contraseña.',
+  DICTIONARY: 'Diccionario',
+  DICTIONARY_ON: 'Diccionario activado',
+  DICTIONARY_OFF: 'Diccionario no activado',
 };
 
 var codes_to_translations = {

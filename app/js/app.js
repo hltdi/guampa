@@ -32,6 +32,7 @@ app.config(['$locationProvider','$routeProvider',
                              controller: CreateUserCtrl}).
         when('/admin', {templateUrl: 'partials/admin.html',
                              controller: LoginCtrl}).
+        when('/settings', {templateUrl: 'partials/settings.html'}).
         otherwise({redirectTo: '/browse'});
 }]);
 

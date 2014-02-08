@@ -35,7 +35,9 @@
                            href="#/sentence/{{pair[1].sentenceid}}"
                            translate>HISTORY</a>]
                     </div>
-                    <div class="span10 dictionary" ng-show="pair[1].editing">
+                    <div class="span10 dictionary"
+                        ng-if="useDictionary"
+                        ng-show="pair[1].editing">
                         {{ pair[2] }}
                     </div>
                 </div>

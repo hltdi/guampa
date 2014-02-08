@@ -1,0 +1,27 @@
+<h1 translate>SETTINGS</h1>
+
+<p translate>SETTINGSDESCRIPTION</p>
+
+<h3 translate>INTERFACELANGUAGE</h3>
+<ul ng-controller="TranslateCtrl">
+  <li>
+    <a ng-click="changeLanguage('es')" translate>BUTTON_LANG_ES</a>
+  </li>
+  <li>
+    <a ng-click="changeLanguage('en')" translate>BUTTON_LANG_EN</a>
+  </li>
+</ul>
+
+<div ng-controller="translateCtrl">
+  <h3 translate>DICTIONARY</h3> 
+  <ul>
+    <li>
+      <a ng-click="setUseDictionary(false)" translate>DICTIONARY_OFF</a>
+      <span ng-if="!useDictionary">✓</span>
+    </li>
+    <li>
+      <a ng-click="setUseDictionary(true)" translate>DICTIONARY_ON</a>
+      <span ng-if="useDictionary">✓</span>
+    </li>
+  </ul>
+</div>
