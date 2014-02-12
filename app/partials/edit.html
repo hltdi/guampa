@@ -5,7 +5,7 @@
                         {{ pair[0].content }}
                     </div>
                     <div ng-if="currentUser.username"
-                         class="span5 offset2" ng-dblclick="startEditing(pair[1])">
+                         class="span5 offset2" ng-click="startEditing(pair[1])">
                         <div class="translation" ng-hide="pair[1].editing">
                             <span ng-if="pair[1].content == null"
                                       class="notranslation" translate>NOTRANSLATION</span>
