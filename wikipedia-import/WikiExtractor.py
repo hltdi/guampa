@@ -614,7 +614,8 @@ def process_data(input, output_sentences, output_structure,
                     tags = vital_tags[title] if vital_tags else []
                     WikiDocumentSentences(output_sentences, id, title, tags,
                                           ''.join(page))
-                    WikiDocument(output_structure, id, title, ''.join(page))
+                    if output_structure:
+                        WikiDocument(output_structure, id, title, ''.join(page))
             id = None
             page = []
         elif tag == 'base':
@@ -691,11 +692,15 @@ def main():
 
     output_sentences = OutputSplitter(compress, file_size, output_dir,
                                       segment=True)
-    output_structure = OutputSplitter(compress, file_size, output_dir)
-    with open(args.infn) as infile:
-        process_data(infile, output_sentences, output_structure, vital_titles, vital_tags)
+    if keepSections:
+        output_structure = OutputSplitter(compress, file_size, output_dir)
+        with open(args.infn) as infile:
+            process_data(infile, output_sentences, output_structure, vital_titles, vital_tags)
+            output_structure.close()
+    else:
+        with open(args.infn) as infile:
+            process_data(infile, output_sentences, None, vital_titles, vital_tags)
     output_sentences.close()
-    output_structure.close()
 
 if __name__ == '__main__':
     main()
