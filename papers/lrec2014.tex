@@ -29,8 +29,8 @@ of activists dedicated to the continued vitality of their heritage language. In
 many of these cases, these speaker/activists recognize that there is a shortage
 of written material in their heritage language and that translation from other
 languages can help to address this problem. Thus they are often aware of the
-contribution that MT would make to their task and are eager to do their part in
-creating the bitext corpora that are required for SMT. At the same time, they
+contribution that machine translation (MT) would make to their task and are eager to do their part in
+creating the bitext corpora that are required for statistical MT (SMT). At the same time, they
 know that in the absence of MT systems, it is up to the bilingual speakers
 themselves to perform the required translations. This is a daunting task for a
 small community, however, and collaborative translation can speed up the
@@ -82,7 +82,7 @@ facilitated since no history is available, and the focus is on the sentence
 rather than the document. Traduwiki \cite{traduwiki} comes closer
 to our goals; while it is intended for the collaborative translation of
 documents, it is not open-source, and does not offer an easy way to export
-training data for machine translation systems. In addition, development appears
+training data for MT systems. In addition, development appears
 to have stopped in 2007.
 
 There have been a number of projects focused on using crowdsourcing to produce
@@ -118,7 +118,7 @@ as well -- a user familiar with the source language and learning the target
 language (or vice-versa) might benefit from reading translations side-by-side,
 as in dual-language books.
 
-Users will primarily select a document to read or translate on the navigation
+Users will normally select a document to read or translate on the navigation
 interface. Here one can browse the available documents by tag. Additional
 sorting criteria, such as recent activity and completeness of translation, will
 be added soon.
@@ -133,7 +133,7 @@ an internationalization package so that its strings can easily be replaced; our
 development version has interfaces in English and Spanish, with Guarani coming
 soon. Adding more languages as appropriate is straightforward, requiring very
 few code changes. Additionally, the sentence segmenter can easily be changed
-for locating sentence boundaries in different languages; our development
+to locate sentence boundaries in different languages; our development
 version uses the Punkt segmenter for Spanish from NLTK \cite{nltkbook}.
 
 
@@ -155,8 +155,10 @@ appropriate subcategories (such as "Science" or "Biography"), which are pulled
 from the list structure of the document.
 
 For some language pairs and user communities, it may be appropriate to import
-an entire Wikipedia into Guampa \footnote{For example, as of this writing there are fewer than three thousand articles in the Guarani Wikipedia.} for
-translation into another language. This approach is also supported.
+an entire Wikipedia into Guampa\footnote{
+For example, as of this writing there are fewer than three thousand
+articles in the Guarani Wikipedia.}
+for translation into another language. This approach is also supported.
 
 We also include a script for easy export of bitext sentences; since the system
 keeps an internal representation of sentence boundaries in the original
@@ -195,13 +197,13 @@ corpora.
 More technically ambitious and longer-range future features will include lookup
 in a translation memory, with pluggable morphological analysis, and integrated
 suggestions from machine translation. Our long-term goal is for Guampa to
-become a collaborative computer-assisted translation tool.
+become a full-fledged collaborative computer-assisted translation tool.
 
 Guampa is free software, released under the GPLv3 and available on GitHub at:
 \\
 \url{http://github.com/hltdi/guampa} , with a live demo server linked from that
-site. It is under active development, but is already relatively easy to install
-and adapt the particularities of different language pairs and the needs of
+site. It is under active development but is already relatively easy to install
+and adapt to the particularities of different language pairs and the needs of
 different translation communities. We welcome suggestions, bug reports,
 questions, doubts, and development collaborators!
 
