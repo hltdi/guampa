@@ -14,6 +14,7 @@
                         <form ng-submit="doneEditing(pair[1])" 
                               ng-show="pair[1].editing">
                             <input class="inputtranslation"
+                                   ng-change="tildes(pair[1])"
                                    ng-model="pair[1].content">
                         </form>
                         <a class="savebutton"

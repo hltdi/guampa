@@ -120,6 +120,31 @@ function translateCtrl($scope, $routeParams, $http, $rootScope,
     $scope.setUseDictionary = function(tf) {
       $rootScope.useDictionary = tf;
     }
+
+    
+    // Make it easier to type letters with tildes; if you put an uptick in front
+    // of a letter, replace it with the nasalized version of that letter.
+    $scope.tildes= function(thing) {
+      var s = thing.content;
+      s = s.replace("^a", "ã");
+      s = s.replace("^e", "ẽ");
+      s = s.replace("^i", "ĩ");
+      s = s.replace("^o", "õ");
+      s = s.replace("^u", "ũ");
+      s = s.replace("^y", "ỹ");
+      s = s.replace("^g", "g̃");
+
+      s = s.replace("^A", "Ã");
+      s = s.replace("^E", "Ẽ");
+      s = s.replace("^I", "Ĩ");
+      s = s.replace("^O", "Õ");
+      s = s.replace("^U", "Ũ");
+      s = s.replace("^Y", "Ỹ");
+      s = s.replace("^G", "G̃");
+
+      // XXX: how do we maintain the current cursor position here?
+      thing.content = s;
+    }
 }
 
 function sortByTs(array) {
