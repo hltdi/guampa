@@ -105,6 +105,7 @@ non-professional translators.
 interface has been set to Paraguayan Spanish and the document database has been
 populated with Spanish-language Wikipedia articles. Here we can browse articles
 by tag.}
+\label{fig:browse}
 \end{figure*}
 
 Tatoeba \cite{tatoeba} is a
@@ -150,14 +151,25 @@ than relying on one-off Mechanical Turk tasks.
 At its core, Guampa is a tool for translating documents. The central interface
 of Guampa shows a document's source language text, segmented by sentence,
 alongside the current translation for each sentence. For each sentence in the
-document, users can add a new translation or edit the current translation. The
-software stores the complete history of translation edits, along with comments
-on the translation of a given sentence.
+document, users can add a new translation or edit the current translation.
+This interface is shown in Figure \ref{fig:translating}.
+The software stores the complete history of translation edits, along with
+comments on the translation of a given sentence.
+
+If a bilingual dictionary for the current language pair is present,
+during editing, Guampa can present users with the relevant dictionary entries,
+looking up each word in the current sentence and displaying possible lexical
+translations underneath the editing interface. This process may be improved
+with language-specific lemmatization to aid in dictionary lookups. Our
+development version of Guampa includes a small Spanish-Guarani bilingual
+dictionary and lemmatization for Spanish. This feature is enabled per-user, and
+may easily be turned off on a settings page.
 
 Users can discuss the best way to translate a particular passage and see the
-history of the proposed translations for a sentence. Thus, Guampa is much like
-a wiki for translations; quality control is performed through community
-consensus, and newer translators can learn from feedback.
+history of the proposed translations for a sentence on a ``sentence history"
+page, which is shown in Figure \ref{fig:history}.
+Thus, Guampa is much like a wiki for translations; quality control is performed
+through community consensus, and newer translators can learn from feedback.
 
 Like the interface of Traduwiki, but in contrast to that of popular
 internationalization tools like Pootle, our layout is intended to be suitable
@@ -173,12 +185,14 @@ as in dual-language books.
 \caption{Translating an article from the Spanish Wikipedia. From this screen,
 we can edit the current translation for a sentence, or by clicking on the
 history link, see the commentary and translations provided by other users.}
+\label{fig:translating}
 \end{figure*}
 
 Users will normally select a document to read or translate on the navigation
-interface. Here one can browse the available documents by tag. Additional
-sorting criteria, such as recent activity and completeness of translation, will
-be added soon.
+interface, shown in Figure \ref{fig:browse}. Here one can browse the available
+documents by tag.
+Additional sorting criteria, such as recent activity and completeness of
+translation, will be added soon.
 
 Users must be logged in to add or edit translations, or to add comments.
 Login is handled with Mozilla's Persona federated identity system,
@@ -191,15 +205,19 @@ For easy adaptability to different language pairs, the interface is built with
 an internationalization package so that its strings can easily be replaced; our
 development version has interfaces in Spanish and English, with Guarani coming
 soon. Adding more languages as appropriate is straightforward, requiring very
-few code changes. Additionally, the sentence segmenter can easily be changed
-to locate sentence boundaries in different languages; our development
-version uses the Punkt segmenter for Spanish from NLTK \cite{nltkbook}.
+few code changes. Additionally, the sentence segmenter for the source language
+can easily be changed to locate sentence boundaries in different languages; our
+development version uses the Punkt segmenter for Spanish from NLTK
+\cite{nltkbook}.
 
 \begin{figure*}
   \begin{center}
-\includegraphics[width=12cm]{sentence-history}
+\includegraphics[width=12cm]{sentence-history-comment}
   \end{center}
-\caption{TODO: blurb about the sentence history screenshot}
+\caption{The interface for the detailed history of a sentence; here users may
+add new comments and see the translations that have been proposed for a given
+sentence.}
+\label{fig:history}
 \end{figure*}
 
 Guampa also features a simple interface for entering language-specific
@@ -215,30 +233,49 @@ be adapted to other target languages.
 
 \begin{figure}
 \includegraphics[width=8.25cm]{guampa-tildes}
-\caption{Entering Guarani-language text with nasalized vowels. This screenshot
+\caption{Entering Guarani-language text with nasalized vowels. This screen shot
 is from an early interface mockup; the deployed software may differ
 somewhat.}
+\label{fig:diacritics}
 \end{figure}
 
-\subsection{Guampa for Classroom Use}
-We are working in collaboration with Guarani institutions and Guarani
-instructors to use Guampa in Guarani translation courses in order to facilitate
-collaborative translation and discussions among the students and the
-instructor. The basic idea is to allow students translate a single document
-simultaneously, without seeing each other's translations. The instructor will
-be assigned a special role that will be able to see and moderate all
-translations. In the classroom, the instructor will display all the
-translations made by the students in order to start a discussion on each of
-them. He will also be able to comment on each translation, and approve or
-reject them. Finally, the instructor will select the best translation and set
-it as the current translation.
+\subsection{Guampa for Educational Use}
+We are working in collaboration with Guarani institutions in Paraguay,
+particularly the Ateneo de la Lengua Cultura Guarani
+\footnote{\url{http://www.ateneoguarani.edu.py/}}
+and the Fundación Yvy Mar\~{a}e'\~{y},
+\footnote{\url{http://yvymaraey.org/}}
+and the instructors at those institutions, to adapt the design of Guampa
+so that it can be used in their translation courses, translation courses.
+We want to enable collaborative translation and discussions among the students
+and the instructor, both in the classroom and for homework assignments. This
+will require allowing students to translate a single document independently,
+without seeing each other's translations, a feature not implemented as of this
+writing, but coming soon.
+
+The instructor will be assigned a special role in the software, so that they
+can see and moderate all translations entered by students. In the classroom,
+the instructor will display the translations made by the students in order to
+start a discussion on each of them.  Instructors will also be able to comment
+on and rate each student translation and select their preferred translations
+for each sentence, in order to produce a consensus translation for a given
+document.
+
+Some moderation and access control features will need to be added to support
+this use case for Guampa; in general, different communities will have varying
+norms and goals. Specifically, language style can be contentious, and
+different communities may prefer different dialects and registers. In Paraguay,
+for example, the extent to which Spanish loan-words are acceptable in written
+Guarani is a divisive issue, so the users of a given Guampa installation will
+need to address this on their own. Analogous considerations will be relevant
+for many language communities.
 
 \subsection{Importing Documents, Exporting Bitext}
 For populating a new instance of Guampa, we include scripts to extract
 plain-text versions of Wikipedia articles from Wikipedia database dumps
 \footnote{Complete copies of Wikipedias can be downloaded at \\
 \url{http://dumps.wikimedia.org/}}, providing source-language documents for a
-new installation of Guampa. Our tool builds on the Wikipedia Extractor
+new installation of Guampa. Our tools build on the Wikipedia Extractor
 script from the Medialab at the University of Pisa \cite{pisa-wp-extractor}.
 
 However, for some source languages, such as English or Spanish, importing an
@@ -247,14 +284,20 @@ many Wikipedias include a list of so-called ``vital articles", subjects for
 which it is felt that high-quality articles are essential in any encyclopedia.
 These lists typically contain roughly one thousand articles. We provide scripts
 to extract and import only these articles, and to tag them with their
-appropriate subcategories (such as ``Science" or ``Biography"), which are pulled
-from the list structure of the document.
+appropriate subcategories (such as ``Science" or ``Biography"), which are
+automatically extracted from the list structure of the document.
 
 For some language pairs and user communities, it may be appropriate to import
 an entire Wikipedia into Guampa\footnote{
 For example, as of this writing there are fewer than three thousand
 articles in the Guarani Wikipedia.}
 for translation into another language. This approach is also supported.
+
+Documents from other sources can also be imported into Guampa for translation;
+PDF, ODF, and Microsoft Word documents can be imported with the use of scripts
+that rely on Apache Tika\footnote{\url{http://tika.apache.org/}}
+to convert them into plain text. Users will have
+access to this functionality through the web interface in the near future.
 
 Guampa also includes a script for easy export of bitext sentences; since the
 system keeps an internal representation of sentence boundaries in the original
@@ -274,27 +317,37 @@ micro-framework \cite{flask}, SQLAlchemy
 database. SQLite could easily be replaced with a more industrial-scale
 database, should the need arise.
 
+Guampa is straightforward to install in production and is known to work well
+with the Apache web server on Ubuntu Linux, though other UNIX-like systems and
+WSGI-capable servers should also work. For development work, scripts are
+provided to set up the required environment (with virtualenv) and to run a
+development server; these are known to work well on both Linux and Mac OS X.
+
 \section{Conclusions and Future Work}
-In collaboration with language learners and activists in Paraguay, we will use
-Guampa to build a bitext corpus for Spanish-Guarani for our continuing MT
-work with that language pair. This resource will be made publicly available on
-our website, along with Guampa and our other software.
+Here we have described Guampa, a free software tool for collaborative online
+translation.
+In collaboration with language educators, learners, and activists in Paraguay,
+we will use Guampa to build bitext corpora for Spanish-Guarani for our
+continuing MT work with that language pair. These resources will be made
+publicly available on our website, along with Guampa and our other software.
+We will also adapt Guampa for educational use in Guarani-language classes.
 
 As we continue development of Guampa, with feedback and suggestions from our
 users, we plan to add additional features, including recognition for prolific
 translators, similar to Wikipedia's Barnstars. We would like to develop other
-game-like features, including a feature to send periodic translation tasks by
-email, so that users can be reminded to practice daily. Additionally, we will
-implement exporting over the web and into formats other than plain text -- such
-as TMX, Mediawiki markup, and HTML --  to facilitate reuse of the collected
-corpora 
+features to help users encourage themselves, including a feature to send
+periodic translation tasks by email, so that users can be reminded to practice
+daily. Additionally, we will implement exporting over the web and into formats
+other than plain text -- such as TMX, Mediawiki markup, and HTML --  to
+facilitate reuse of the collected corpora for reading, for MT-related uses, and
+for integration into the target-language Wikipedias.
 
 More technically ambitious and longer-range future features will include lookup
 in a translation memory, with pluggable morphological analysis, and integrated
 suggestions from machine translation. Our long-term goal is for Guampa to
 become a full-fledged collaborative computer-assisted translation tool.
 
-Guampa is free software, released under the GPLv3 and available on GitHub at:
+Guampa is released under the GPLv3 and available on GitHub at:
 \\
 \url{http://github.com/hltdi/guampa} , with a live demo server linked from that
 site. It is under active development but is already relatively easy to install
