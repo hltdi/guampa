@@ -3,6 +3,7 @@
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage[hidelinks]{hyperref}
+\usepackage[utf8]{inputenc}
 \interfootnotelinepenalty=10000
 
 \title{Guampa: a Toolkit for Collaborative Translation}
@@ -103,6 +104,22 @@ documents, it is not open-source, and does not offer an easy way to export
 training data for MT systems. In addition, development appears
 to have stopped in 2007.
 
+\begin{figure*}
+\includegraphics[width=17.13cm]{guampa-browse-cropped}
+\caption{Screen shot of the interface for browsing documents. Here the
+interface has been set to Paraguayan Spanish and the document database has been
+populated with Spanish-language Wikipedia articles. Here we can browse articles
+by tag.}
+\end{figure*}
+
+\begin{figure*}
+\includegraphics[width=17.13cm]{guampa-edit-cropped}
+\caption{Translating an article from the Spanish Wikipedia. From this screen,
+we can edit the current translation for a sentence, or by clicking on the
+history link, see the commentary and translations provided by other users.}
+\end{figure*}
+
+
 There have been a number of projects focused on using crowdsourcing to produce
 bitext corpora for training MT systems. Notably, Ambati
 \cite{ambati_naacl,ambati_act} has used active learning to construct a corpus
@@ -117,17 +134,18 @@ they may not be applicable to languages spoken by smaller populations. We posit
 that in this case, supporting an online community of translators would be more
 appropriate than one-off Mechanical Turk tasks.
 
-\section{Features of Guampa}
-At its core, Guampa is a tool for translating documents. The central interface of
-Guampa shows a document's source language text, segmented by sentence,
+\section{Guampa For Community Translation}
+At its core, Guampa is a tool for translating documents. The central interface
+of Guampa shows a document's source language text, segmented by sentence,
 alongside the current translation for each sentence. For each sentence in the
 document, users can add a new translation or edit the current translation. The
 software stores the complete history of translation edits, along with comments
-on the translation of a given sentence. Users can discuss the
-best way to translate a particular passage and see the history of the proposed
-translations for a sentence. Thus, Guampa is much like a wiki for translations;
-quality control is performed through community consensus.
+on the translation of a given sentence.
 
+Users can discuss the best way to translate a particular passage and see the
+history of the proposed translations for a sentence. Thus, Guampa is much like
+a wiki for translations; quality control is performed through community
+consensus, and newer translators can learn from feedback.
 
 Like the interface of TraduWiki, but in contrast to that of popular
 internationalization tools like Pootle, our layout is intended to be suitable
@@ -141,19 +159,40 @@ interface. Here one can browse the available documents by tag. Additional
 sorting criteria, such as recent activity and completeness of translation, will
 be added soon.
 
-Users must be logged in to add or edit translations, or to add comments. They
-may log in with social media accounts (using OpenID or OAuth), such as Google,
-Facebook, or Twitter. Optionally, users can also create Guampa-specific
-accounts protected by passwords.
+Users must be logged in to add or edit translations, or to add comments.
+Login is handled with Mozilla's Persona federated identity system,
+\footnote{\url{http://login.persona.org/}}
+which allows any user with an email address to log in.
+Optionally, site operators may allow Guampa-specific accounts protected by
+passwords.
 
 For easy adaptability to different language pairs, the interface is built with
 an internationalization package so that its strings can easily be replaced; our
-development version has interfaces in English and Spanish, with Guarani coming
+development version has interfaces in Spanish and English, with Guarani coming
 soon. Adding more languages as appropriate is straightforward, requiring very
 few code changes. Additionally, the sentence segmenter can easily be changed
 to locate sentence boundaries in different languages; our development
 version uses the Punkt segmenter for Spanish from NLTK \cite{nltkbook}.
 
+Guampa also features a simple interface for entering language-specific
+diacritics, which may be difficult due to differences between available
+keyboard layouts and the target language of the translations. Users may click
+on buttons to add the appropriate diacritics, or can use a simple macro
+language to type required characters; for example, the strings
+\texttt{\string^a} or 
+\texttt{\string~a} are automatically replaced with the nasalized `a',
+\texttt{\~a}.
+These features are currently specific to the Guarani language, but could easily
+be adapted to other target languages.
+
+\begin{figure}
+\includegraphics[width=8.25cm]{guampa-tildes}
+\caption{Entering Guarani-language text with nasalized vowels.}
+\end{figure}
+
+\subsection{Guampa for Classroom Use}
+
+TODO
 
 \subsection{Importing Documents, Exporting Bitext}
 For populating a new instance of Guampa, we include scripts to extract
