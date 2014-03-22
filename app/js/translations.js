@@ -48,7 +48,7 @@ var translationsES= {
   PARAGRAPH2: 'Guampa, el software, es un proyecto iniciado por el grupo HLTDI en la Universidad de Indiana. El código está libremente disponible en Github, y esperamos tus comentarios, informes de errores, preguntas y contribuciones.',
   TAGS: 'etiquetas disponibles',
   DOCUMENTS: 'documentos',
-  BROWSEMESSAGE: 'Bienvenidos a Guampa, el sitio web para traducción colaborativa! Favor de hacer clic en una etiqueta y escoger un artículo para leer. Despues de acceder al sistema, podés añadir traducciones y comentarios.',
+  BROWSEMESSAGE: '¡Bienvenidos a Guampa, el sitio web para traducción colaborativa! Hacé clic en una etiqueta y escogé un artículo para leer. Luego de acceder al sistema, podés añadir traducciones y comentarios.',
   BROWSEHEADER: 'Guampa: Navegar',
   PLEASECLICK: 'favor de hacer clic en una etiqueta',
   SAVE: 'Guardar',

@@ -12,7 +12,7 @@
 
 \address{$^1$ School of Informatics and Computing, Indiana University \\
          $^2$ Universidad Católica ``Nuestra Señora de la Asunción" \\
-         \texttt{\{alexr,taylskid,gasser\}@indiana.edu}, \texttt{alb.sama@gmail.com} \\}
+         \{alexr,taylskid,gasser\}@indiana.edu, alberto\_samaniego@uca.edu.py \\}
 
 \abstract{
 Here we present Guampa, a new software package for online
@@ -34,7 +34,9 @@ Our goal is to make it easy for anyone to set up their own instance of Guampa
 and populate it with documents -- such as automatically imported Wikipedia
 articles -- to be translated for their particular language pair. Guampa is
 freely available and relatively easy to use. \\ \newline
-\Keywords{collaboration, translation, language resources, open source}}
+\Keywords{under-resourced languages, collaboration, translation, language
+resources, open source}}
+
 
 \begin{document}
 
@@ -74,7 +76,7 @@ Our group is particularly interested in building a larger bitext corpus for the
 Spanish-Guarani language pair. Spanish and Guarani are the co-official
 languages of Paraguay, where most people speak Guarani as their first language
 and many are bilingual. Guarani suffers not only from a serious lack of
-written materials but also from a neglect in all aspects of public life in
+written materials but also from a neglect in many aspects of public life in
 Paraguay. To combat this neglect and save the language from what seems to many
 its inevitable decline, a small but very active group of bilinguals has come
 together in various forums. Among other things, these activists produce new
@@ -91,9 +93,21 @@ software and run their own instance for their own purposes.
 
 \section{Related Work}
 There is a wealth of software, both open-source and proprietary, to assist
-translators in their work, but we are not aware of computer-assisted
+translators in their work, but we are not aware of any other free online
 translation systems that are designed specifically for collaboration among
-non-professional translators. Tatoeba \cite{tatoeba} is a
+non-professional translators.
+
+\begin{figure*}
+  \begin{center}
+\includegraphics[width=12cm]{guampa-browse-cropped-updated}
+  \end{center}
+\caption{Screen shot of the interface for browsing documents. Here the
+interface has been set to Paraguayan Spanish and the document database has been
+populated with Spanish-language Wikipedia articles. Here we can browse articles
+by tag.}
+\end{figure*}
+
+Tatoeba \cite{tatoeba} is a
 project dedicated to collecting translations of sentences in many languages.
 Users may add translations or correct the translations of other users by
 providing alternate translations. However, genuine collaboration is not
@@ -104,35 +118,33 @@ documents, it is not open-source, and does not offer an easy way to export
 training data for MT systems. In addition, development appears
 to have stopped in 2007.
 
-\begin{figure*}
-\includegraphics[width=17.13cm]{guampa-browse-cropped}
-\caption{Screen shot of the interface for browsing documents. Here the
-interface has been set to Paraguayan Spanish and the document database has been
-populated with Spanish-language Wikipedia articles. Here we can browse articles
-by tag.}
-\end{figure*}
-
-\begin{figure*}
-\includegraphics[width=17.13cm]{guampa-edit-cropped}
-\caption{Translating an article from the Spanish Wikipedia. From this screen,
-we can edit the current translation for a sentence, or by clicking on the
-history link, see the commentary and translations provided by other users.}
-\end{figure*}
-
-
 There have been a number of projects focused on using crowdsourcing to produce
-bitext corpora for training MT systems. Notably, Ambati
-\cite{ambati_naacl,ambati_act} has used active learning to construct a corpus
+bitext corpora for training MT systems. Notably, Ambati \emph{et al.}
+\cite{ambati_naacl,ambati_act} have used active learning to construct a corpus
 for training English-Spanish SMT, automatically creating Mechanical Turk tasks
-to elicit translations for phrases that his system did not know how to
+to elicit translations for phrases that their system did not know how to
 translate, but should. The Joshua team at Johns Hopkins has also successfully
 used Mechanical Turk to crowdsource the creation of bitext corpora for SMT for
 many languages of the Indian subcontinent
 \cite{post-callisonburch-osborne:2012:WMT}. Both of these projects relied on a
-large population of MTurk users familiar with the source and target languages;
-they may not be applicable to languages spoken by smaller populations. We posit
-that in this case, supporting an online community of translators would be more
-appropriate than one-off Mechanical Turk tasks.
+populations of MTurk users familiar with the source and target languages.
+
+Ambati \emph{et al.} \cite{Ambati:2012:CWC:2145204.2145382} have also described
+another crowdsourcing approach that addresses the problem of finding bilingual
+or nearly-bilingual crowd workers. In this work, they employ a multi-stage
+process in which many ``weak bilinguals" (users somewhat skilled in both source
+and target language, though not necessarily fluent) translate individual
+lexical items, other turkers use these lexical items to construct candidate
+translations, and then finally fluent speakers of the target language
+synthesize sentences from these elements, without necessarily understanding the
+source language.
+
+These techniques, while exciting and applicable in many situations, may not be
+applicable to all languages or language pairs. There are many parts of the
+world in which Mechanical Turk is currently not broadly used, including most of
+South America and Africa \cite{Pavlick-EtAl-2014:TACL}.  We posit that in these
+cases, supporting an online community of translators may be more appropriate
+than relying on one-off Mechanical Turk tasks.
 
 \section{Guampa For Community Translation}
 At its core, Guampa is a tool for translating documents. The central interface
@@ -147,12 +159,21 @@ history of the proposed translations for a sentence. Thus, Guampa is much like
 a wiki for translations; quality control is performed through community
 consensus, and newer translators can learn from feedback.
 
-Like the interface of TraduWiki, but in contrast to that of popular
+Like the interface of Traduwiki, but in contrast to that of popular
 internationalization tools like Pootle, our layout is intended to be suitable
 for reading documents online. We intend it to be helpful for language learners
 as well -- a user familiar with the source language and learning the target
 language (or vice-versa) might benefit from reading translations side-by-side,
 as in dual-language books.
+
+\begin{figure*}
+  \begin{center}
+\includegraphics[width=12cm]{guampa-edit-cropped}
+  \end{center}
+\caption{Translating an article from the Spanish Wikipedia. From this screen,
+we can edit the current translation for a sentence, or by clicking on the
+history link, see the commentary and translations provided by other users.}
+\end{figure*}
 
 Users will normally select a document to read or translate on the navigation
 interface. Here one can browse the available documents by tag. Additional
@@ -174,6 +195,13 @@ few code changes. Additionally, the sentence segmenter can easily be changed
 to locate sentence boundaries in different languages; our development
 version uses the Punkt segmenter for Spanish from NLTK \cite{nltkbook}.
 
+\begin{figure*}
+  \begin{center}
+\includegraphics[width=12cm]{sentence-history}
+  \end{center}
+\caption{TODO: blurb about the sentence history screenshot}
+\end{figure*}
+
 Guampa also features a simple interface for entering language-specific
 diacritics, which may be difficult due to differences between available
 keyboard layouts and the target language of the translations. Users may click
@@ -187,12 +215,23 @@ be adapted to other target languages.
 
 \begin{figure}
 \includegraphics[width=8.25cm]{guampa-tildes}
-\caption{Entering Guarani-language text with nasalized vowels.}
+\caption{Entering Guarani-language text with nasalized vowels. This screenshot
+is from an early interface mockup; the deployed software may differ
+somewhat.}
 \end{figure}
 
 \subsection{Guampa for Classroom Use}
-
-TODO
+We are working in collaboration with Guarani institutions and Guarani
+instructors to use Guampa in Guarani translation courses in order to facilitate
+collaborative translation and discussions among the students and the
+instructor. The basic idea is to allow students translate a single document
+simultaneously, without seeing each other's translations. The instructor will
+be assigned a special role that will be able to see and moderate all
+translations. In the classroom, the instructor will display all the
+translations made by the students in order to start a discussion on each of
+them. He will also be able to comment on each translation, and approve or
+reject them. Finally, the instructor will select the best translation and set
+it as the current translation.
 
 \subsection{Importing Documents, Exporting Bitext}
 For populating a new instance of Guampa, we include scripts to extract
@@ -204,11 +243,11 @@ script from the Medialab at the University of Pisa \cite{pisa-wp-extractor}.
 
 However, for some source languages, such as English or Spanish, importing an
 entire Wikipedia would overwhelm both the server and the users. Fortunately,
-many Wikipedias include a list of so-called "vital articles", subjects for
+many Wikipedias include a list of so-called ``vital articles", subjects for
 which it is felt that high-quality articles are essential in any encyclopedia.
 These lists typically contain roughly one thousand articles. We provide scripts
 to extract and import only these articles, and to tag them with their
-appropriate subcategories (such as "Science" or "Biography"), which are pulled
+appropriate subcategories (such as ``Science" or ``Biography"), which are pulled
 from the list structure of the document.
 
 For some language pairs and user communities, it may be appropriate to import
@@ -217,14 +256,13 @@ For example, as of this writing there are fewer than three thousand
 articles in the Guarani Wikipedia.}
 for translation into another language. This approach is also supported.
 
-We also include a script for easy export of bitext sentences; since the system
-keeps an internal representation of sentence boundaries in the original
+Guampa also includes a script for easy export of bitext sentences; since the
+system keeps an internal representation of sentence boundaries in the original
 documents, it is easy to export one sentence per line into the output files. To
 train an MT system, one would then run the appropriate preprocessing and
 training pipeline on these exported files. In the near term, we also plan to
 add export features in HTML and MediaWiki markup, for ease of publishing the
 translated documents and adding them to the target-language Wikipedia.
-
 
 \section{Implementation}
 Guampa is a web application, with a user interface made of the AngularJS
@@ -238,7 +276,7 @@ database, should the need arise.
 
 \section{Conclusions and Future Work}
 In collaboration with language learners and activists in Paraguay, we will use
-Guampa to build a bitext corpus for Spanish-Guarani for our own continuing MT
+Guampa to build a bitext corpus for Spanish-Guarani for our continuing MT
 work with that language pair. This resource will be made publicly available on
 our website, along with Guampa and our other software.
 
@@ -249,7 +287,7 @@ game-like features, including a feature to send periodic translation tasks by
 email, so that users can be reminded to practice daily. Additionally, we will
 implement exporting over the web and into formats other than plain text -- such
 as TMX, Mediawiki markup, and HTML --  to facilitate reuse of the collected
-corpora.
+corpora 
 
 More technically ambitious and longer-range future features will include lookup
 in a translation memory, with pluggable morphological analysis, and integrated
@@ -268,4 +306,3 @@ questions, doubts, and development collaborators!
 \bibliography{guampa}
 
 \end{document}
-
