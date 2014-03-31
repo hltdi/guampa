@@ -61,14 +61,17 @@ def upload_file():
         here = os.path.abspath(here)
         print(here)
         file.save(os.path.join(here, "uploads", filename))
-        return redirect(url_for('tokenize_upload', filename=filename))
+        ### XXX: this redirect should really happen in the js
+        newurl = url_for('index') + "#/view_upload/" + filename
+        return redirect(newurl)
 
 @app.route('/json/segmented_upload/<filename>')
 @utils.json
 def tokenize_upload(filename):
     absfn = os.path.join(app.root_path, 'uploads', filename)
     segments = segment.read_doc_segments(absfn)
-    return json.dumps({"segments":segments})
+    numbered_segments = list(enumerate(segments))
+    return json.dumps({"segments":numbered_segments})
 
 @app.route('/partials/<fn>')
 def partials(fn):

@@ -327,6 +327,9 @@ function CreateUserCtrl($scope, $http, $location, $route, $rootScope,
 }
 
 function UploadCtrl($scope, $routeParams, SegmentedUpload) {
+}
+
+function ViewUploadCtrl($scope, $routeParams, SegmentedUpload) {
     var filename = $routeParams.filename;
     SegmentedUpload.get({filename:filename},
         function(segments) {
