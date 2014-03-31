@@ -65,3 +65,12 @@ factory('CurrentEmail',
                        {query: {method:'GET', isArray:true}});
     }
 );
+
+angular.module('segmentedUploadService', ['ngResource']).
+factory('SegmentedUpload',
+    function($resource){
+      return $resource('json/segmented_upload/:filename',
+                       {},
+                       {query: {method:'GET', isArray:true}});
+    }
+);

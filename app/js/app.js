@@ -10,6 +10,7 @@ var app = angular.module('guampa',
                           'sentenceHistoryService',
                           'currentUserService',
                           'currentEmailService',
+                          'segmentedUploadService',
                           'guampa.controllers',
                           'pascalprecht.translate']);
 
@@ -33,6 +34,8 @@ app.config(['$locationProvider','$routeProvider',
         when('/admin', {templateUrl: 'partials/admin.html',
                              controller: LoginCtrl}).
         when('/settings', {templateUrl: 'partials/settings.html'}).
+        when('/upload', {templateUrl: 'partials/upload.html',
+                          controller: UploadCtrl}).
         otherwise({redirectTo: '/browse'});
 }]);
 

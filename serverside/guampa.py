@@ -9,9 +9,12 @@ import os
 import re
 import urllib.parse
 
+import nltk
 from flask import Flask, request, session, url_for, redirect, render_template,\
                   abort, g, flash, _app_ctx_stack, send_from_directory, jsonify
+from flask import Response
 from werkzeug import check_password_hash
+from werkzeug.utils import secure_filename
 import requests
 
 import constants
@@ -19,6 +22,8 @@ import db
 import dictionary
 import model
 import utils
+
+SEGMENTER = nltk.data.load("tokenizers/punkt/spanish.pickle")
 
 DEBUG = True
 SECRET_KEY = 'development key'
@@ -39,6 +44,40 @@ app.config.update(
 @app.route('/')
 def index():
     return send_from_directory(app.root_path + 'app', 'index.html')
+
+@app.route('/upload', methods=['GET'])
+def upload():
+    return send_from_directory(app.root_path + 'app', 'upload.html')
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    file = request.files['file']
+    if file: 
+        filename = secure_filename(file.filename)
+        
+        here = os.path.dirname(os.path.abspath(__file__))
+        print(here)
+        here = os.path.join(here, "..")
+        print(here)
+        here = os.path.abspath(here)
+        print(here)
+        file.save(os.path.join(here, "uploads", filename))
+        return redirect(url_for('tokenize_upload', filename=filename))
+
+@app.route('/json/segmented_upload/<filename>')
+@utils.json
+def tokenize_upload(filename):
+    filename = os.path.join(app.root_path, 'uploads', filename)
+    with open(filename) as infile:
+        lines_list = []
+
+        for line in infile:
+            line = line.strip()
+            lines_list.append(line)
+        text = " ".join(lines_list)
+        segments = SEGMENTER.tokenize(text) 
+        out = "\n".join(segments)        
+    return json.dumps({"segments":segments})
 
 @app.route('/partials/<fn>')
 def partials(fn):

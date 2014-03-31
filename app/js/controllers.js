@@ -325,3 +325,10 @@ function CreateUserCtrl($scope, $http, $location, $route, $rootScope,
             });
     }
 }
+
+function UploadCtrl($scope, $http, $location, $route, $rootScope, SegmentedUpload) {
+    SegmentedUpload.get({filename:"reino_de_italia.txt"},
+        function(segments) {
+            $scope.segments = segments.segments;
+        });
+}
