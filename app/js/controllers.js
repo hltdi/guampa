@@ -326,8 +326,9 @@ function CreateUserCtrl($scope, $http, $location, $route, $rootScope,
     }
 }
 
-function UploadCtrl($scope, $http, $location, $route, $rootScope, SegmentedUpload) {
-    SegmentedUpload.get({filename:"reino_de_italia.txt"},
+function UploadCtrl($scope, $routeParams, SegmentedUpload) {
+    var filename = $routeParams.filename;
+    SegmentedUpload.get({filename:filename},
         function(segments) {
             $scope.segments = segments.segments;
         });

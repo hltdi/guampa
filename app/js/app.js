@@ -36,6 +36,9 @@ app.config(['$locationProvider','$routeProvider',
         when('/settings', {templateUrl: 'partials/settings.html'}).
         when('/upload', {templateUrl: 'partials/upload.html',
                           controller: UploadCtrl}).
+        when('/view_upload/:filename',
+             {templateUrl: 'partials/view_upload.html',
+               controller: UploadCtrl}).
         otherwise({redirectTo: '/browse'});
 }]);
 
