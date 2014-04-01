@@ -89,6 +89,10 @@ function translateCtrl($scope, $routeParams, $http, $rootScope,
     });
 
     $scope.startEditing = function(sentence) {
+        if ($scope.editedItem) {
+            $scope.doneEditing($scope.editedItem);
+            $scope.editedItem = null;
+        }
         sentence.editing = true;
         $scope.editedItem = sentence;
     }
