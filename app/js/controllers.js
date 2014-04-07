@@ -68,6 +68,7 @@ function ($scope, $translate) {
 function translateCtrl($scope, $routeParams, $http, $rootScope,
                        DocumentAndTranslation, CurrentUser) {
     $scope.editedItem = null;
+    $scope.oldTranslation = "";
 
     var docid = $routeParams.docid;
 
@@ -95,19 +96,25 @@ function translateCtrl($scope, $routeParams, $http, $rootScope,
         }
         sentence.editing = true;
         $scope.editedItem = sentence;
+        $scope.oldTranslation = sentence.content;
     }
 
     $scope.doneEditing = function(translation) {
-        translation.editing = false;
-        $scope.editedItem = null;
+        if (translation.content != "") {
+            translation.editing = false;
+            $scope.editedItem = null;
+        }
 
-        $http.post('json/add_translation',
-                   {text:translation.content,
-                    sentenceid: translation.sentenceid,
-                    documentid: translation.docid}).
-            error(function(){
-                alert("oh noes couldn't post translation for some reason");
-            });
+        if ($scope.oldTranslation != translation.content &&
+              translation.content != "") {
+            $http.post('json/add_translation',
+                       {text:translation.content,
+                        sentenceid: translation.sentenceid,
+                        documentid: translation.docid}).
+                error(function(){
+                    alert("oh noes couldn't post translation for some reason");
+                });
+        }
     }
 
     $scope.currentUser = null;
