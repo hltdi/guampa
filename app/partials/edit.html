@@ -5,8 +5,9 @@
                         {{ pair[0].content }}
                     </div>
                     <div ng-if="currentUser.username"
-                         class="span5 offset2" ng-click="startEditing(pair[1])">
-                        <div class="translation" ng-hide="pair[1].editing">
+                         class="span5 offset2">
+                        <div class="translation" ng-hide="pair[1].editing"
+                             ng-click="startEditing(pair[1])">
                             <span ng-if="pair[1].content == null"
                                       class="notranslation" translate>NOTRANSLATION</span>
                             {{ pair[1].content }}
@@ -18,8 +19,8 @@
                                    ng-model="pair[1].content">
                         </form>
                         <a class="savebutton"
+                           ng-click="doneEditing(pair[1])"
                            ng-show="pair[1].editing"
-                           ng-click="doneEditing(pair[1]);"
                            translate>SAVE</a>
                     </div>
                     <div ng-if="!currentUser.username"
