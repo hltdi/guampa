@@ -128,7 +128,9 @@ def add_translation():
         text = d['text']
         sentenceid = d['sentenceid']
         documentid = d['documentid']
-        db.save_translation(g.user.id, documentid, sentenceid, text)
+        last_trans = db.latest_translation_for_sentence(sentenceid)
+        if text != last_trans.__dict__['text']:
+            db.save_translation(g.user.id, documentid, sentenceid, text)
     except Exception as inst:
         import traceback
         traceback.print_exc()
