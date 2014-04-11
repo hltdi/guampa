@@ -26,65 +26,72 @@
 \begin{columns}[t]
 
 %%% left column %%% 
-  \begin{column}{.33\linewidth}
+  \begin{column}{.32\linewidth}
 
   \vfill
   %%\begin{block}{\large Contributions}
-  \begin{block}{\large Guampa: Collaborative Translation Web Application}
+  \begin{block}{\large Guampa: Online Collaborative Translation}
     \centering
     \begin{itemize}
-    \item Work together to translate documents!
-    \item Comment on and discuss translations to help others learn
-    \item Help build the available resources for under-resourced languages
-    \item Also helps machine translation researchers build bigger corpora for
-    MT system training
+    \item Work together to translate documents
+    \item Discuss translations to help others learn
+    \item For building resources for under-served languages
+    \item Also helps NLP researchers build bigger corpora for MT system training
+    \item Designed in cooperation with educators in Paraguay for online and
+    classroom use
     \end{itemize}
   \end{block}
 
   \begin{block}{\large Guampa Features}
     \centering
     \begin{itemize}
-    \item Automatic import of Wikipedia documents: build resources for your 
-    \item 
-    \item Integrated dictionaries -- 
+    \item Automatic import of Wikipedia documents and export of translated texts
+    \item Integrated dictionaries to help learners
+    \item Interface designed for online reading
+    \item Upload and tag documents to be translated
+    \item Easy login with \emph{Persona} from Mozilla
+    \item Language-independent design, easy to set up and localize for your
+    favorite language pair. Currently in Spanish and English.
+    \item Features for supporting classes coming soon!
     \end{itemize}
   \end{block}
   \centering
 
   \centering
-  \includegraphics[width=.5\linewidth]{guampa_mate.jpg}
+  \includegraphics[width=.3\linewidth]{guampa_mate.jpg}
   \end{column}
 
   %%% middle column %%%
-  \begin{column}{.33\linewidth}
+  \begin{column}{.32\linewidth}
   \vfill
   \begin{block}{\large Under-Resourced Languages}
     \begin{itemize}
-    \item Roughly 7000 languages in the world; how many do you speak?
-    \item Our goal is to support translation into languages with many speakers
-    but not lots of data. Current statistical MT approaches are great, but
-    don't work well on small data sets.
-    \item Focusing on Paraguayan Guarani and Cuzco Quechua
+    \item Roughly 7000 languages in the world -- how many do you speak?
+    \item We want to support translation into languages with many speakers
+    but not lots of data.
+    \item Focusing on Paraguayan Guarani and Cuzco Quechua -- millions of
+    speakers
     \end{itemize}
   \end{block}
 
+  \definecolor{htmlgreen}{HTML}{008000}
   \centering
-  \includegraphics[width=.33\linewidth]{Map-Most_Widely_Spoken_Native_Languages_in_Latin_America.png}
-  \begin{block}{Indigenous languages of Latin America}
+  \includegraphics[width=.40\linewidth]{Map-Most_Widely_Spoken_Native_Languages_in_Latin_America.png}
+  \begin{block}{\large Indigenous Languages of Latin America}
     \begin{tabular}{lll}
-      {\color{blue}    $\blacksquare$} Quechua &
-      {\color{yellow}  $\blacksquare$} Guarani &
-      {\color{orange}  $\blacksquare$} Aymara \\
-      {\color{red}     $\blacksquare$} Nahuatl &
-      {\color{green}   $\blacksquare$} Maya languages &
-      {\color{black}   $\blacksquare$} Mapudungún
+      {\color{blue}        $\blacksquare$} Quechua &
+      {\color{yellow}      $\blacksquare$} Guarani &
+      {\color{orange}      $\blacksquare$} Aymara \\
+      {\color{red}         $\blacksquare$} Nahuatl &
+      {\color{htmlgreen}   $\blacksquare$} Mayan languages &
+      {\color{black}       $\blacksquare$} Mapudungún
     \end{tabular}
   \end{block}
 
-  \begin{block}{\large Open Source and collaboration}
+  \begin{block}{\large Open Source and Collaboration}
     \centering
     \begin{itemize}
-    \item Working with researchers in the US, Paraguay \& Switzerland
+    \item Collaborators in the US, Paraguay \& Switzerland
     \item Check out our software!
     \item \url{http://hltdi.github.io}
     \end{itemize}
@@ -96,7 +103,7 @@
   %% TODO: put some cute pictures: the hula teddy, a chipa, a guampa
 
   %%% right column %%%
-  \begin{column}{.33\linewidth}
+  \begin{column}{.32\linewidth}
   \vfill
   \begin{block}{\large Improving lexical selection}
     \begin{itemize}
@@ -107,25 +114,28 @@
     \end{itemize}
   \end{block}
 
-  \begin{block}{\large Chipa CL-WSD system}
+  \begin{block}{\large Chipa CL-WSD System}
     \begin{itemize}
-    \item We have a lot of good data \& NLP tools for Spanish -- let's use them
-    to make better word choices while generating 
-    \item Most MT systems 
+    \item Lots of data \& NLP tools for Spanish -- use them
+    to improve word choice while generating 
+    \item Other MT systems rely on language models and phrases; not available
+    for most languages
+    \item Clustering monolingual Spanish helps significantly!
+    \item Can also use bitext with Spanish and other languages...
     \end{itemize}
   \end{block}
 
 
-  \begin{block}{\large Translation systems}
+  \begin{block}{\large Translation Systems}
     \centering
     \begin{itemize}
-    \item Chipa integrates with SQUOIA, the Spanish-Quechua MT system from Zürich (see our SALTMIL 2014 paper)
-    \item We're working on 
-    \item Reusable open source software
+    \item Chipa integrates with SQUOIA, the Spanish-Quechua MT system from Zürich
+    \item L3 system, made of dependency grammars
+    \item Coming soon: the Tereré hybrid translation system!
     \end{itemize}
   \end{block}
   \hfill
-  \includegraphics[width=.20\linewidth]{hltdi-logo-small.png}
+  \includegraphics[width=.15\linewidth]{hltdi-logo-small.png}
 
 
   \end{column}
