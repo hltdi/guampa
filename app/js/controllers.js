@@ -339,4 +339,22 @@ function ViewUploadCtrl($scope, $routeParams, SegmentedUpload) {
         function(segments) {
             $scope.segments = segments.segments;
         });
+
+
+    $scope.merge = function(segmentid) {
+        // actually do the merge.
+        alert("need to merge:" + segmentid);
+
+        for(var i = 0; i < $scope.segments.length; i++) {
+            var segment = $scope.segments[i];
+            if (segment[0] == segmentid) {
+                // once we've found it, take the text from the current one and
+                // append it to the text of the previous one.
+                var prevSegment = $scope.segments[i-1];
+                prevSegment[1] = prevSegment[1] + " " + segment[1];
+                $scope.segments.splice(i, 1);
+                break;
+            }
+        }
+    }
 }

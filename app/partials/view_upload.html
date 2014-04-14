@@ -1,11 +1,14 @@
 <div ng-controller="ViewUploadCtrl">
   <div class="container">
 
-        <div class="row-fluid" ng-repeat="segment in segments">
-        <div class="span12">
-            {{segment[1]}}
-        </div>
-        </div>
+    <div class="row-fluid" ng-repeat="segment in segments">
+      <div class="span12">
+          {{segment[1]}}
+      </div>
+      <button
+          ng-if="!$first"
+          ng-click="merge({{segment[0]}})">merge with previous</button>
+    </div>
      
   </div>
 </div>
