@@ -2,12 +2,16 @@
   <div class="container">
 
     <div class="row-fluid" ng-repeat="segment in segments">
-      <div class="span12">
+      <div id="segment{{segment[0]}}" class="span12">
           {{segment[1]}}
       </div>
       <button
           ng-if="!$first"
           ng-click="merge({{segment[0]}})">merge with previous</button>
+      <button
+          ng-click="edit({{segment[0]}})">edit/split</button>
+      <button
+          ng-click="modelsave({{segment[0]}})">modelsave</button>
     </div>
      
   </div>

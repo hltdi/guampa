@@ -340,7 +340,6 @@ function ViewUploadCtrl($scope, $routeParams, SegmentedUpload) {
             $scope.segments = segments.segments;
         });
 
-
     $scope.merge = function(segmentid) {
         // actually do the merge.
         alert("need to merge:" + segmentid);
@@ -357,4 +356,27 @@ function ViewUploadCtrl($scope, $routeParams, SegmentedUpload) {
             }
         }
     }
+
+    // make the sentence editable.
+    $scope.edit = function(segmentid) {
+        var elt = document.getElementById("segment" + segmentid);
+        elt.setAttribute("contenteditable", true);
+        elt.focus();
+    }
+
+    // Called when they hit the "save" button. Next, gotta find the line breaks
+    // and create new segments in the model.
+    $scope.modelsave = function(segmentid) {
+        var elt = document.getElementById("segment" + segmentid);
+        elt.setAttribute("contenteditable", false);
+        for(var i = 0; i < $scope.segments.length; i++) {
+            var segment = $scope.segments[i];
+            if (segment[0] == segmentid) {
+                segment[1] = elt.innerText;
+                console.log(elt.innerText);
+                break;
+            }
+        }
+    }
+
 }
