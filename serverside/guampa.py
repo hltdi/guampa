@@ -188,6 +188,25 @@ def add_comment():
         abort(500)
     return "OK"
 
+@app.route('/json/save_document', methods=['post'])
+@utils.json
+@utils.nocache
+def save_document():
+    if g.user is None:
+        abort(403)
+    try:
+        d = request.get_json()
+        segments = d['segments']
+        title = d['title']
+        tags = d['tags']
+        ## TODO: save it in the db!!
+        print(segments, title, tags)
+    except Exception as inst:
+        import traceback
+        traceback.print_exc()
+        print("it was an exception somewhere")
+        abort(500)
+    return "OK"
 
 def ts_format(timestamp):
     """Given a datetime.datetime object, format it. This could/should probably
