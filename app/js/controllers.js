@@ -342,8 +342,6 @@ function ViewUploadCtrl($scope, $routeParams, SegmentedUpload) {
 
     $scope.merge = function(segmentid) {
         // actually do the merge.
-        alert("need to merge:" + segmentid);
-
         for(var i = 0; i < $scope.segments.length; i++) {
             var segment = $scope.segments[i];
             if (segment[0] == segmentid) {
@@ -364,16 +362,41 @@ function ViewUploadCtrl($scope, $routeParams, SegmentedUpload) {
         elt.focus();
     }
 
+    function nextSegmentId() {
+        var maxid = -1;
+        for(var i = 0; i < $scope.segments.length; i++) {
+            var segment = $scope.segments[i];
+            if (segment[0] > maxid) {
+                maxid = segment[0];
+            }
+        }
+        return maxid + 1;
+    }
+
     // Called when they hit the "save" button. Next, gotta find the line breaks
     // and create new segments in the model.
     $scope.modelsave = function(segmentid) {
         var elt = document.getElementById("segment" + segmentid);
         elt.setAttribute("contenteditable", false);
+
         for(var i = 0; i < $scope.segments.length; i++) {
             var segment = $scope.segments[i];
             if (segment[0] == segmentid) {
-                segment[1] = elt.innerText;
-                console.log(elt.innerText);
+                var text = elt.innerText;
+                var splits = text.split("\n"); // try splitting on newlines
+
+                var newid = nextSegmentId();
+                var newsegments = [];
+                for (var j = 0; j < splits.length; j++) {
+                    var segmentText = splits[j].trim();
+                    if (segmentText) {
+                        var newsegment = [newid + j, segmentText];
+                        newsegments.push(newsegment);
+                    }
+                }
+                // splice all of the segments in newsegments into place
+                var args = [0, 1].concat(newsegments);
+                Array.prototype.splice.apply($scope.segments, args);
                 break;
             }
         }
