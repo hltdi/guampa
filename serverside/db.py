@@ -151,6 +151,24 @@ def save_translation(userid, docid, sentenceid, text):
 def save_comment(userid, docid, sentenceid, text):
     save_thing(Comment, userid, docid, sentenceid, text)
 
+def save_document(title, tags, segments):
+    """Given a document title, tags (as a list of strings), all the segments
+    (also a list of strings), create a new document and tag it."""
+    session = get_session()
+    document = Document(title, "bob", "es")
+    session.add(document)
+    session.commit()
+    docid = document.id
+
+    sentences = []
+    for (segmentid, s) in segments:
+        sent = Sentence(s.strip(), docid)
+        sentences.append(sent)
+    session.add_all(sentences)
+    session.commit()
+    for tag in tags:
+        tag_document(document, tag)
+
 def lookup_user_by_email(email):
     """Lookup a User by email. Return the model object or None."""
     ## There should never be a PersonaUser that doesn't have an associated User
@@ -180,3 +198,15 @@ def create_user_with_email(username, email):
     session.add(pu)
     session.commit()
     return user
+
+def tag_document(document, tagname):
+    """Given a document object, tag it with the named tag. Optionally create the
+    tag if it doesn't exist yet.
+    """
+    session = get_session()
+    tag = session.query(Tag).filter_by(text=tagname).first() 
+    if not tag:
+        tag = Tag(tagname)
+        session.add(tag)
+    document.tags.append(tag)
+    session.commit()

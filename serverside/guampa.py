@@ -198,9 +198,10 @@ def save_document():
         d = request.get_json()
         segments = d['segments']
         title = d['title']
-        tags = d['tags']
+        tags_str = d['tags']
+        tags = [tag.strip() for tag in tags_str.split(",")]
         ## TODO: save it in the db!!
-        print(segments, title, tags)
+        db.save_document(title, tags, segments)
     except Exception as inst:
         import traceback
         traceback.print_exc()

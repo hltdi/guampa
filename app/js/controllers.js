@@ -333,7 +333,11 @@ function CreateUserCtrl($scope, $http, $location, $route, $rootScope,
 function UploadCtrl($scope, $routeParams, SegmentedUpload) {
 }
 
-function ViewUploadCtrl($scope, $routeParams, $http, SegmentedUpload) {
+function ViewUploadCtrl($scope, $routeParams, $http, $location, $route, SegmentedUpload) {
+
+    $scope.title = "";
+    $scope.tags = "";
+
     var filename = $routeParams.filename;
     SegmentedUpload.get({filename:filename},
         function(segments) {
@@ -405,11 +409,15 @@ function ViewUploadCtrl($scope, $routeParams, $http, SegmentedUpload) {
     $scope.saveToServer = function() {
         $http.post('json/save_document',
                    {segments:$scope.segments,
-                    title:"document title goes here",
-                    tags:"document tags go here",
+                    title:$scope.title,
+                    tags:$scope.tags,
                     }).
+            success(function(foo) {
+                $location.path("/browse");
+                $route.reload();
+            }).
             error(function(){
-                alert("oh noes couldn't post translation for some reason");
+                alert("oh noes couldn't upload document for some reason");
             });
     }
 }
