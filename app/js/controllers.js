@@ -359,13 +359,6 @@ function ViewUploadCtrl($scope, $routeParams, $http, $location, $route, Segmente
         }
     }
 
-    // make the sentence editable.
-    $scope.edit = function(segmentid) {
-        var elt = document.getElementById("segment" + segmentid);
-        elt.setAttribute("contenteditable", true);
-        elt.focus();
-    }
-
     function nextSegmentId() {
         var maxid = -1;
         for(var i = 0; i < $scope.segments.length; i++) {
@@ -380,13 +373,11 @@ function ViewUploadCtrl($scope, $routeParams, $http, $location, $route, Segmente
     // Called when they hit the "save" button. Next, gotta find the line breaks
     // and create new segments in the model.
     $scope.modelsave = function(segmentid) {
-        var elt = document.getElementById("segment" + segmentid);
-        elt.setAttribute("contenteditable", false);
-
+        var elt = document.getElementById("editor_segment" + segmentid);
         for(var i = 0; i < $scope.segments.length; i++) {
             var segment = $scope.segments[i];
             if (segment[0] == segmentid) {
-                var text = elt.innerText;
+                var text = elt.value;
                 var splits = text.split("\n"); // try splitting on newlines
 
                 var newid = nextSegmentId();
@@ -399,7 +390,7 @@ function ViewUploadCtrl($scope, $routeParams, $http, $location, $route, Segmente
                     }
                 }
                 // splice all of the segments in newsegments into place
-                var args = [0, 1].concat(newsegments);
+                var args = [i, 1].concat(newsegments);
                 Array.prototype.splice.apply($scope.segments, args);
                 break;
             }
@@ -417,7 +408,8 @@ function ViewUploadCtrl($scope, $routeParams, $http, $location, $route, Segmente
                 $route.reload();
             }).
             error(function(){
-                alert("oh noes couldn't upload document for some reason");
+                alert("oh noes couldn't upload document for some reason."
+                      + " make sure you added a title and at least one tag?");
             });
     }
 }

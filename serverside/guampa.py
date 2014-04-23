@@ -200,7 +200,11 @@ def save_document():
         title = d['title']
         tags_str = d['tags']
         tags = [tag.strip() for tag in tags_str.split(",")]
-        ## TODO: save it in the db!!
+
+        assert title.strip(), "title should be non-empty"
+        assert len(tags) > 0
+        assert all(tag.strip() for tag in tags)
+
         db.save_document(title, tags, segments)
     except Exception as inst:
         import traceback

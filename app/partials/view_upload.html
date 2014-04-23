@@ -7,17 +7,13 @@
             class="btn btn-default">UPLOAD</button>
     <hr/>
     <div class="row-fluid" ng-repeat="segment in segments">
-      <div id="segment{{segment[0]}}" class="span12">
-          {{segment[1]}}
-      </div>
+      <hr ng-if="!$first" />
+      <textarea id="editor_segment{{segment[0]}}" class="span12">{{segment[1]}}</textarea>
       <button
           ng-if="!$first"
           ng-click="merge({{segment[0]}})">merge with previous</button>
       <button
-          ng-click="edit({{segment[0]}})">edit/split</button>
-      <button
-          ng-click="modelsave({{segment[0]}})">modelsave</button>
+          ng-click="modelsave({{segment[0]}})">save edits</button>
     </div>
-     
   </div>
 </div>
