@@ -12,6 +12,7 @@ function ($scope, $location, CurrentUser) {
 	   {id:0, url:'#/browse', text:'BROWSE', style:""},
 	   {id:1, url:'#/about', text:'ABOUT', style:""},
 	   {id:2, url:'#/settings', text:'SETTINGS', style:""},
+	   {id:3, url:'#/upload', text:'UPLOAD', style:""},
 	   ];
 	var i;
 	for(i = 0; i < $scope.menuList.length; i++) {

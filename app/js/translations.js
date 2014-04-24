@@ -37,6 +37,8 @@ var translationsEN = {
   DICTIONARY: 'Dictionary',
   DICTIONARY_ON: 'Dictionary enabled',
   DICTIONARY_OFF: 'Dictionary not enabled',
+  UPLOAD: 'Upload a document',
+  UPLOADBUTTON: 'Submit',
 };
  
 var translationsES= {
@@ -76,6 +78,8 @@ var translationsES= {
   DICTIONARY: 'Diccionario',
   DICTIONARY_ON: 'Diccionario activado',
   DICTIONARY_OFF: 'Diccionario no activado',
+  UPLOAD: 'Subir un documento',
+  UPLOADBUTTON: 'Sumitir',
 };
 
 var codes_to_translations = {

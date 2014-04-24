@@ -11,8 +11,10 @@
       <textarea id="editor_segment{{segment[0]}}" class="span12">{{segment[1]}}</textarea>
       <button
           ng-if="!$first"
+          class="btn btn-default btn-lg"
           ng-click="merge({{segment[0]}})">merge with previous</button>
       <button
+          class="btn btn-default btn-lg"
           ng-click="modelsave({{segment[0]}})">save edits</button>
     </div>
   </div>
