@@ -1,0 +1,19 @@
+<div ng-controller="ViewUploadCtrl">
+  <div class="container">
+    <p>title: <input type="text" ng-model="title"></p>
+    <p>tags (comma-separated): <input type="text" ng-model="tags"></p>
+    <button ng-click="saveToServer()"
+            type="submit"
+            class="btn btn-default">UPLOAD</button>
+    <hr/>
+    <div class="row-fluid" ng-repeat="segment in segments">
+      <hr ng-if="!$first" />
+      <textarea id="editor_segment{{segment[0]}}" class="span12">{{segment[1]}}</textarea>
+      <button
+          ng-if="!$first"
+          ng-click="merge({{segment[0]}})">merge with previous</button>
+      <button
+          ng-click="modelsave({{segment[0]}})">save edits</button>
+    </div>
+  </div>
+</div>

@@ -11,14 +11,18 @@ import urllib.parse
 
 from flask import Flask, request, session, url_for, redirect, render_template,\
                   abort, g, flash, _app_ctx_stack, send_from_directory, jsonify
+from flask import Response
 from werkzeug import check_password_hash
+from werkzeug.utils import secure_filename
 import requests
 
 import constants
 import db
 import dictionary
 import model
+import segment
 import utils
+
 
 DEBUG = True
 SECRET_KEY = 'development key'
@@ -39,6 +43,35 @@ app.config.update(
 @app.route('/')
 def index():
     return send_from_directory(app.root_path + 'app', 'index.html')
+
+@app.route('/upload', methods=['GET'])
+def upload():
+    return send_from_directory(app.root_path + 'app', 'upload.html')
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    file = request.files['file']
+    if file: 
+        filename = secure_filename(file.filename)
+        
+        here = os.path.dirname(os.path.abspath(__file__))
+        print(here)
+        here = os.path.join(here, "..")
+        print(here)
+        here = os.path.abspath(here)
+        print(here)
+        file.save(os.path.join(here, "uploads", filename))
+        ### XXX: this redirect should really happen in the js
+        newurl = url_for('index') + "#/view_upload/" + filename
+        return redirect(newurl)
+
+@app.route('/json/segmented_upload/<filename>')
+@utils.json
+def tokenize_upload(filename):
+    absfn = os.path.join(app.root_path, 'uploads', filename)
+    segments = segment.read_doc_segments(absfn)
+    numbered_segments = list(enumerate(segments))
+    return json.dumps({"segments":numbered_segments})
 
 @app.route('/partials/<fn>')
 def partials(fn):
@@ -157,6 +190,30 @@ def add_comment():
         abort(500)
     return "OK"
 
+@app.route('/json/save_document', methods=['post'])
+@utils.json
+@utils.nocache
+def save_document():
+    if g.user is None:
+        abort(403)
+    try:
+        d = request.get_json()
+        segments = d['segments']
+        title = d['title']
+        tags_str = d['tags']
+        tags = [tag.strip() for tag in tags_str.split(",")]
+
+        assert title.strip(), "title should be non-empty"
+        assert len(tags) > 0
+        assert all(tag.strip() for tag in tags)
+
+        db.save_document(title, tags, segments)
+    except Exception as inst:
+        import traceback
+        traceback.print_exc()
+        print("it was an exception somewhere")
+        abort(500)
+    return "OK"
 
 def ts_format(timestamp):
     """Given a datetime.datetime object, format it. This could/should probably

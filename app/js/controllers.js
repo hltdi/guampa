@@ -336,3 +336,87 @@ function CreateUserCtrl($scope, $http, $location, $route, $rootScope,
             });
     }
 }
+
+function UploadCtrl($scope, $routeParams, SegmentedUpload) {
+}
+
+function ViewUploadCtrl($scope, $routeParams, $http, $location, $route, SegmentedUpload) {
+
+    $scope.title = "";
+    $scope.tags = "";
+
+    var filename = $routeParams.filename;
+    SegmentedUpload.get({filename:filename},
+        function(segments) {
+            $scope.segments = segments.segments;
+        });
+
+    $scope.merge = function(segmentid) {
+        // actually do the merge.
+        for(var i = 0; i < $scope.segments.length; i++) {
+            var segment = $scope.segments[i];
+            if (segment[0] == segmentid) {
+                // once we've found it, take the text from the current one and
+                // append it to the text of the previous one.
+                var prevSegment = $scope.segments[i-1];
+                prevSegment[1] = prevSegment[1] + " " + segment[1];
+                $scope.segments.splice(i, 1);
+                break;
+            }
+        }
+    }
+
+    function nextSegmentId() {
+        var maxid = -1;
+        for(var i = 0; i < $scope.segments.length; i++) {
+            var segment = $scope.segments[i];
+            if (segment[0] > maxid) {
+                maxid = segment[0];
+            }
+        }
+        return maxid + 1;
+    }
+
+    // Called when they hit the "save" button. Next, gotta find the line breaks
+    // and create new segments in the model.
+    $scope.modelsave = function(segmentid) {
+        var elt = document.getElementById("editor_segment" + segmentid);
+        for(var i = 0; i < $scope.segments.length; i++) {
+            var segment = $scope.segments[i];
+            if (segment[0] == segmentid) {
+                var text = elt.value;
+                var splits = text.split("\n"); // try splitting on newlines
+
+                var newid = nextSegmentId();
+                var newsegments = [];
+                for (var j = 0; j < splits.length; j++) {
+                    var segmentText = splits[j].trim();
+                    if (segmentText) {
+                        var newsegment = [newid + j, segmentText];
+                        newsegments.push(newsegment);
+                    }
+                }
+                // splice all of the segments in newsegments into place
+                var args = [i, 1].concat(newsegments);
+                Array.prototype.splice.apply($scope.segments, args);
+                break;
+            }
+        }
+    }
+
+    $scope.saveToServer = function() {
+        $http.post('json/save_document',
+                   {segments:$scope.segments,
+                    title:$scope.title,
+                    tags:$scope.tags,
+                    }).
+            success(function(foo) {
+                $location.path("/browse");
+                $route.reload();
+            }).
+            error(function(){
+                alert("oh noes couldn't upload document for some reason."
+                      + " make sure you added a title and at least one tag?");
+            });
+    }
+}
