@@ -60,10 +60,10 @@ def upload_file():
             here = os.path.abspath(here)
             file.save(os.path.join(here, "uploads", filename))
             ### XXX: this redirect should really happen in the js
-            newurl = url_for('index') + "#/view_upload/" + filename
+            newurl = url_for('index') + "/#/view_upload/" + filename
             return redirect(newurl)
         except: pass
-    newurl = url_for('index') + "#/upload" 
+    newurl = url_for('index') + "/#/upload" 
     return redirect(newurl)
 
 @app.route('/json/segmented_upload/<filename>')
