@@ -1,21 +1,25 @@
 <div ng-controller="ViewUploadCtrl">
   <div class="container">
-    <p>title: <input type="text" ng-model="title"></p>
-    <p>tags (comma-separated): <input type="text" ng-model="tags"></p>
+    <p class="lead" translate>VIEW_UPLOAD_MESSAGE</p>
+    <hr/>
+    <p><span translate>TITLE_VIEWUPLOAD</span>: <input type="text" ng-model="title"></p>
+    <p><span translate>TAGS_VIEWUPLOAD</span>: <input type="text" ng-model="tags"></p>
     <button ng-click="saveToServer()"
             type="submit"
-            class="btn btn-default">UPLOAD</button>
+            class="btn btn-default" translate>UPLOADBUTTON</button>
     <hr/>
     <div class="row-fluid" ng-repeat="segment in segments">
       <hr ng-if="!$first" />
       <textarea id="editor_segment{{segment[0]}}" class="span12">{{segment[1]}}</textarea>
       <button
+          class="btn btn-default btn-lg"
+          ng-click="modelsave({{segment[0]}})"
+          translate>SAVE_EDITS</button>
+      <button
           ng-if="!$first"
           class="btn btn-default btn-lg"
-          ng-click="merge({{segment[0]}})">merge with previous</button>
-      <button
-          class="btn btn-default btn-lg"
-          ng-click="modelsave({{segment[0]}})">save edits</button>
+          ng-click="merge({{segment[0]}})"
+          translate>MERGE_WITH_PREVIOUS</button>
     </div>
   </div>
 </div>

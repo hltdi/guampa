@@ -39,9 +39,15 @@ var translationsEN = {
   DICTIONARY_OFF: 'Dictionary not enabled',
   UPLOAD: 'Upload a document',
   UPLOADBUTTON: 'Submit',
+  UPLOADMESSAGE: 'Here you can upload a document for translation. You must be logged in to upload documents.',
+  TITLE_VIEWUPLOAD: 'title',
+  TAGS_VIEWUPLOAD: 'tags (comma-separated):',
+  SAVE_EDITS: 'save edits',
+  MERGE_WITH_PREVIOUS: 'merge with previous',
+  VIEW_UPLOAD_MESSAGE: 'To add your document to Guampa, please enter a title and one or more tags below. We have tried to automatically find the sentences in the document you uploaded, but you can make edits below. To split the texts below into multiple sentences, put a blank line where any sentence boundaries should be, then click "save edits".',
 };
  
-var translationsES= {
+var translationsES = {
   START: 'Inicio',
   ABOUT: 'Acerca de',
   BROWSE: 'Navegar',
@@ -80,6 +86,12 @@ var translationsES= {
   DICTIONARY_OFF: 'Diccionario no activado',
   UPLOAD: 'Subir un documento',
   UPLOADBUTTON: 'Sumitir',
+  UPLOADMESSAGE: 'Aquí podés subir un documento para la traducción. Hay que iniciar sesión para subir documentos.',
+  TITLE_VIEWUPLOAD: 'título',
+  TAGS_VIEWUPLOAD: 'etiquetas (separadas por comas):',
+  SAVE_EDITS: 'guardar ediciones',
+  MERGE_WITH_PREVIOUS: 'unir con frase anterior',
+  VIEW_UPLOAD_MESSAGE: 'Para añadir el documento a Guampa, favor de poner un título y una o más etiquetas abajo. Hemos tratado de encontrar automáticamente las frases del documento, pero podés hacer cambios abajo. Para dividir los textos abajo en múltiples frases, poné una nueva linea donde las límites de las frases deben estar y hacé clic en "guardar ediciones".',
 };
 
 var codes_to_translations = {
