@@ -21,7 +21,7 @@ def read_doc_segments(filename):
     if any(filename.lower().endswith(ext) for ext in tika_exts):
         text = read_file_with_tika(filename)
     else:
-        with open(filename) as infile:
+        with open(filename, encoding="utf-8", errors="surrogateescape") as infile:
             text = infile.read()
     return segment_string(text)
     
