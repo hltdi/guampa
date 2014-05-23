@@ -8,7 +8,8 @@
 \usepackage{amsmath,amsthm, amssymb, latexsym}
 \usefonttheme[onlymath]{serif}
 \boldmath
-\usepackage[size=custom,width=90,height=150,scale=2,orientation=landscape]{beamerposter}
+%%\usepackage[size=custom,width=84.1,height=118.9,scale=2,orientation=portrait]{beamerposter}
+\usepackage[size=A0,scale=2,orientation=portrait]{beamerposter}
 \title{Guampa Poster}
 \author{HLTDI}
 \institute[Indiana University]{School of Informatics and Computing, Indiana University}
@@ -30,35 +31,38 @@
 
   \vfill
   %%\begin{block}{\large Contributions}
-  \begin{block}{\large Guampa: Online Collaborative Translation}
+  \begin{block}{\large Introducing Guampa}
     \centering
     \begin{itemize}
-    \item Work together to translate documents
-    \item Discuss translations to help others learn
-    \item For building resources for under-served languages
-    \item Also helps NLP researchers build bigger corpora for MT system training
-    \item Designed in cooperation with educators in Paraguay for online and
-    classroom use
+    \item Software to support a community translating documents into
+    under-served or heritage languages
+    \item ... while building bitext corpora to support machine translation
+    system training!
+    \item Also supports discussions about translations so that users can help
+    each other learn
+    \item Designed in cooperation with educators in Paraguay for both online
+    and classroom use
+    \item Free Software, modifiable for your use case
+    \item Features easy installation with setup instructions
     \end{itemize}
   \end{block}
-
-  \begin{block}{\large Guampa Features}
-    \centering
-    \begin{itemize}
-    \item Automatic import of Wikipedia documents and export of translated texts
-    \item Integrated dictionaries to help learners
-    \item Interface designed for online reading
-    \item Upload and tag documents to be translated
-    \item Easy login with \emph{Persona} from Mozilla
-    \item Language-independent design, easy to set up and localize for your
-    favorite language pair. Currently in Spanish and English.
-    \item Features for supporting classes coming soon!
-    \end{itemize}
-  \end{block}
-  \centering
 
   \centering
   \includegraphics[width=.3\linewidth]{guampa_mate.jpg}
+
+  \begin{block}{\large Importing Documents for Translation}
+    \centering
+    \begin{itemize}
+    \item Automatic import of Wikipedia documents and export of translated texts
+    \item Upload and tag documents to be translated
+    \item Supports many document formats with Apache Tika: PDF, MS Word, plain
+    text...
+    \item Configurable sentence segmentation with NLTK
+    \item Language-independent design, easy to set up and localize for your
+    favorite language pair.
+    \end{itemize}
+  \end{block}
+
   \end{column}
 
   %%% middle column %%%
@@ -69,8 +73,7 @@
     \item Roughly 7000 languages in the world -- how many do you speak?
     \item We want to support translation into languages with many speakers
     but not lots of data.
-    \item Focusing on Paraguayan Guarani and Cuzco Quechua -- millions of
-    speakers
+    \item Focusing on Paraguayan Guarani -- millions of speakers
     \end{itemize}
   \end{block}
 
@@ -92,7 +95,7 @@
     \centering
     \begin{itemize}
     \item Working with educators in Paraguay
-    \item Check out our software!
+    \item Contributions and feedback welcome!
     \item \url{http://hltdi.github.io}
     \end{itemize}
   \end{block}
@@ -102,19 +105,44 @@
 
   %%% right column %%%
   \begin{column}{.32\linewidth}
+
   \vfill
+
+  \begin{block}{\large Translation Interface}
+    \centering
+    \begin{itemize}
+    \item Integrated dictionaries to help learners
+    \item Interface designed for online reading
+    \item Features for supporting classes coming soon!
+    \end{itemize}
+  \end{block}
+
   \begin{block}{\large More Features}
     \begin{itemize}
-    \item Frame picking the right word during translation as a word-sense disambiguation problem
-    \item Languages make different distinctions!
-    \item Have to learn to distinguish between uses of a source-language word
-    that get translated to different target-language words
+    \item Easy login with \emph{Persona} from Mozilla
+    \item Interface already translated into Paraguayan Spanish and US English.
+    \item Language-independent design, easy to set up and localize for your
+    favorite language pair. Currently in Spanish and English.
     \end{itemize}
   \end{block}
 
   \hfill
+  \begin{block}{\large Future Work}
+    \begin{itemize}
+    \item Easy login with \emph{Persona} from Mozilla
+    \item Access control, assigning translation as homework, and other features
+    for supporting use in school classes coming soon!
+    \end{itemize}
+  \end{block}
+
+  \hfill
+  \begin{block}{\large HLTDI}
+      \begin{itemize}
+      \item is pronounced as:
+      \end{itemize}
+  \end{block}
   \begin{center}
-  \includegraphics[width=.30\linewidth]{hltdi-logo-small.png}
+    \includegraphics[width=.30\linewidth]{hltdi-logo-small.png}
   \end{center}
 
   \end{column}
