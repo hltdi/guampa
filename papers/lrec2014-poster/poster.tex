@@ -20,7 +20,7 @@
   \begin{block}
     {\centering \Huge Guampa: a Toolkit for Collaborative Translation}\par
     \centering
-    {\large Alex Rudnick, Taylor Skidmore, Alberto Samaniego, and Michael Gasser}
+    {\large Alex Rudnick, Taylor Skidmore, Alberto Samaniego, and Michael Gasser} \\
     \par
   \end{block}
 
@@ -48,7 +48,7 @@
   \end{block}
 
   \centering
-  \includegraphics[width=.3\linewidth]{guampa_mate.jpg}
+  \includegraphics[width=.5\linewidth]{guampa_mate.jpg}
 
   \begin{block}{\large Importing Documents for Translation}
     \centering
@@ -59,7 +59,7 @@
     text...
     \item Configurable sentence segmentation with NLTK
     \item Language-independent design, easy to set up and localize for your
-    favorite language pair.
+    language pair.
     \end{itemize}
   \end{block}
 
@@ -67,13 +67,16 @@
 
   %%% middle column %%%
   \begin{column}{.32\linewidth}
+
   \vfill
   \begin{block}{\large Under-Resourced Languages}
     \begin{itemize}
     \item Roughly 7000 languages in the world -- how many do you speak?
     \item We want to support translation into languages with many speakers
-    but not lots of data.
-    \item Focusing on Paraguayan Guarani -- millions of speakers
+    but not lots of data; how to help activists help NLP research?
+    \item Focusing on Paraguayan Guarani -- millions of speakers and an
+    official language of Paraguay and Mercosur. Still under-served!
+    \item Maybe your language is in a similar position.
     \end{itemize}
   \end{block}
 
@@ -101,41 +104,6 @@
   \end{block}
 
 
-  \end{column}
-
-  %%% right column %%%
-  \begin{column}{.32\linewidth}
-
-  \vfill
-
-  \begin{block}{\large Translation Interface}
-    \centering
-    \begin{itemize}
-    \item Integrated dictionaries to help learners
-    \item Interface designed for online reading
-    \item Features for supporting classes coming soon!
-    \end{itemize}
-  \end{block}
-
-  \begin{block}{\large More Features}
-    \begin{itemize}
-    \item Easy login with \emph{Persona} from Mozilla
-    \item Interface already translated into Paraguayan Spanish and US English.
-    \item Language-independent design, easy to set up and localize for your
-    favorite language pair. Currently in Spanish and English.
-    \end{itemize}
-  \end{block}
-
-  \hfill
-  \begin{block}{\large Future Work}
-    \begin{itemize}
-    \item Easy login with \emph{Persona} from Mozilla
-    \item Access control, assigning translation as homework, and other features
-    for supporting use in school classes coming soon!
-    \end{itemize}
-  \end{block}
-
-  \hfill
   \begin{block}{\large HLTDI}
       \begin{itemize}
       \item is pronounced as:
@@ -144,6 +112,55 @@
   \begin{center}
     \includegraphics[width=.30\linewidth]{hltdi-logo-small.png}
   \end{center}
+
+
+  \end{column}
+
+  %%% right column %%%
+  \begin{column}{.32\linewidth}
+
+  \begin{block}{\large Why Guampa?}
+    \begin{itemize}
+    \item We couldn't find any good free software to do this, so we're
+    developing it!
+    \item There are some tools that are close: offline CAT tools like OmegaT,
+    translation webapps like Tatoeba and TraduWiki and localization tools like
+    Pootle have similarities.
+    \item We wanted a relatively simple open-source webapp for translating
+    documents and building bitext corpora.
+    \end{itemize}
+  \end{block}
+
+
+  \begin{block}{\large Translation Interface}
+    \centering
+    \begin{itemize}
+    \item Interface designed for online reading; view sentences in context,
+    with text in source and target languages.
+    \item Integrated dictionaries to help learners with limited vocabularies
+    \item History of translations and comments are viewable on the sentence
+    detail screen.
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{\large More Features}
+    \begin{itemize}
+    \item Easy login with \emph{Persona} from Mozilla
+    \item Interface already translated into Spanish and English.
+    \item Language-independent design, easy to set up and localize for your
+    favorite language pair
+    \item Modern web application made of Python 3, AngularJS and Flask
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{\large Future Work}
+    \begin{itemize}
+    \item Access control, assigning translation as homework, and other features
+    for supporting use in school classes coming soon!
+    \item Integration of MT systems for full online computer-aided translation
+    (CAT)
+    \end{itemize}
+  \end{block}
 
   \end{column}
 \end{columns}
