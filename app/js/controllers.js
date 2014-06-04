@@ -274,7 +274,7 @@ function LogoutCtrl($scope, $http, $rootScope, CurrentUser) {
 // https://github.com/mitsuhiko/flask/tree/master/examples/persona
 function setupPersonaLogin($scope, $rootScope, $http, $route, $location) {
   navigator.id.watch({
-    loggedInUser: $scope.currentUser,
+    loggedInUser: $scope.currentUser.username,
     onlogin: function(assertion) {
       $.ajax({
         type: 'POST',
